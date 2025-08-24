@@ -59,12 +59,13 @@ export default function Header() {
                     style={{
                         fontSize: "1.7rem",
                         fontWeight: 700,
+                        fontFamily: "Poppins, Arial, sans-serif",
                         color: "#ffffff",
                         letterSpacing: "2px",
                         textShadow: "0 1px 8px #082d0f",
                     }}
                 >
-                    DC Farm
+                    HA Farm
                 </span>
             </div>
             {/* Right: Nav Buttons */}

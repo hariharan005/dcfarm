@@ -41,7 +41,7 @@ const Hero = () => {
                         textShadow: "0 2px 16px rgba(0,0,0,0.3)",
                     }}
                 >
-                    DC Farm
+                    HA Farm
                 </h1>
             </div>
         </section>

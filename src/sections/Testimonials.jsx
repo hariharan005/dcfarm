@@ -8,7 +8,7 @@ import ProfilePic5 from "../assets/images/profile5.jpg";
 
 const testimonials = [
     {
-        text: "DCFarm made my farming journey so much easier. Highly recommended!",
+        text: "HA Farm made my farming journey so much easier. Highly recommended!",
         rating: 5,
     },
     {

@@ -11,6 +11,7 @@ import About from '../sections/About';
 import Carousel from '../components/Carousel';
 import WhatsApp from '../sections/WhatsApp';
 import Testimonials from '../sections/Testimonials';
+import Footer from '../components/Footer';
 
 const Home = () => {
     return (
@@ -21,8 +22,7 @@ const Home = () => {
             <Carousel />
             <WhatsApp />
             <Testimonials />
-            {/* <MainContent /> */}
-            {/* <Footer /> */}
+            <Footer />
         </div>
     );
 };
