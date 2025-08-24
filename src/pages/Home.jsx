@@ -5,14 +5,22 @@ import React from 'react';
 // import Footer from '../components/Footer';
 // import MainContent from '../components/MainContent';
 
+import Header from '../components/Header';
+import Hero from '../sections/Hero';
+import About from '../sections/About';
+import Carousel from '../components/Carousel';
+import WhatsApp from '../sections/WhatsApp';
+
 const Home = () => {
     return (
         <div>
-            {/* Add your components below */}
-            {/* <Header /> */}
+            <Header />
+            <Hero />
+            <About />
+            <Carousel />
+            <WhatsApp />
             {/* <MainContent /> */}
             {/* <Footer /> */}
-            <h1>Welcome to the Home Page</h1>
         </div>
     );
 };
