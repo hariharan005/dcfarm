@@ -1,70 +1,120 @@
-# Getting Started with Create React App
+# 🌱 DC Farm Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to the **DC Farm Website** project!  
+This is a **single-page application (SPA)** built with **React** to showcase our organic farming business, products, and vision while allowing customers to connect directly with us through **WhatsApp**.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚜 About DC Farm
 
-### `npm start`
+At **DC Farm**, we believe in bringing **fresh, chemical-free, and organically grown vegetables & fruits** directly from our farm to your table.  
+We also emphasize **community support**, giving back to orphanages with donations, and building a sustainable food ecosystem.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📌 Website Features
 
-### `npm test`
+The website is designed as a modern, responsive single-page app with:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. **Header**
+    - Logo
+    - Navigation links: Home, About, Products, Blog (future), Contact
 
-### `npm run build`
+2. **Hero Section**
+    - Attractive **background image**
+    - Brand name: **DC Farm**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. **Carousel Section**
+    - Slideshow of fresh organic crops & farm highlights
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+4. **About Section**
+    - About Us
+    - Vision
+    - Mission
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+5. **WhatsApp QR Section**
+    - Scan & **join our customer WhatsApp group**
+    - Direct ordering made simple
 
-### `npm run eject`
+6. **Testimonials Section**
+    - Real feedback from our happy customers
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+7. **Footer**
+    - Contact details
+    - Address
+    - Social media links
+    - Copyright notice
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 🛠️ Tech Stack
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- **Frontend:** React (Create React App)
+- **Styling:** CSS / Tailwind CSS (optional)
+- **Deployment:** Vercel (CI/CD setup for future domain: `dcfarm.com`)
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 📂 Project Structure
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+dcfarm/
+├── public/
+│   └── index.html
+├── src/
+│   ├── assets/         # Images, icons, and static files
+│   ├── components/     # Reusable UI components (Header, Footer, Carousel, etc.)
+│   ├── sections/       # Page sections (Hero, About, Testimonials, etc.)
+│   ├── App.jsx         # Main app structure
+│   ├── index.js        # Entry point
+│   └── styles/         # CSS files (if not using Tailwind)
+└── README.md
+```
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 🚀 Getting Started
 
-### Analyzing the Bundle Size
+### 1️⃣ Clone the repo
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```bash
+git clone https://github.com/your-username/dcfarm.git
+cd dcfarm
+```
 
-### Making a Progressive Web App
+### 2️⃣ Install dependencies
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```bash
+npm install
+```
 
-### Advanced Configuration
+### 3️⃣ Run locally
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```bash
+npm start
+```
 
-### Deployment
+### 4️⃣ Build for production
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```bash
+npm run build
+```
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 🌍 Deployment
+
+The project is set up for deployment on **Vercel**.  
+Simply push changes to the `main` branch, and Vercel will auto-deploy.
+
+---
+
+## 📞 Contact DC Farm
+
+📍 Location: [Your Farm Address]  
+📧 Email: [your email]  
+📱 WhatsApp: [phone number]
+
+👉 **Join our community** via WhatsApp QR on the site!
+
+---
