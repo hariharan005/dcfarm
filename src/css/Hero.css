@@ -1,0 +1,51 @@
+.brand-name {
+    font-family: 'Georgia Pro', Georgia, serif;
+    font-size: 144px;
+    color: #fff;
+    margin: 0;
+    letter-spacing: 2px;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+
+    /* Animation */
+    transform: scale(0.5);
+    opacity: 0;
+    animation: zoomIn 1.5s ease-out forwards;
+}
+
+@keyframes zoomIn {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+.tagline {
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+    color: #fff;
+    margin-top: 10px;
+    text-align: center;
+    font-weight: normal;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+
+    /* Animation */
+    transform: translateY(20px);
+    opacity: 0;
+    animation: slideUp 1.5s ease-out forwards;
+    animation-delay: 0.5s; /* Delay to start after brand name */
+}
+@keyframes slideUp {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

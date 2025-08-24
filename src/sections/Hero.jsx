@@ -1,6 +1,7 @@
 import React from "react";
-
+import "../css/Hero.css"; // <-- add this CSS file
 import grapesImage from "../assets/images/grapes.jpg";
+
 const backgroundImageUrl = grapesImage;
 
 const Hero = () => {
@@ -29,20 +30,7 @@ const Hero = () => {
                     justifyContent: "center",
                 }}
             >
-                <h1
-                    style={{
-                        fontFamily: "'Georgia Pro', Georgia, serif",
-                        fontSize: "144px",
-                        color: "#fff",
-                        margin: 0,
-                        letterSpacing: "2px",
-                        textAlign: "center",
-                        fontWeight: "bold",
-                        textShadow: "0 2px 16px rgba(0,0,0,0.3)",
-                    }}
-                >
-                    HA Farm
-                </h1>
+                <h1 className="brand-name">HA Farm</h1>
             </div>
         </section>
     );
