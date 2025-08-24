@@ -10,6 +10,7 @@ import Hero from '../sections/Hero';
 import About from '../sections/About';
 import Carousel from '../components/Carousel';
 import WhatsApp from '../sections/WhatsApp';
+import Testimonials from '../sections/Testimonials';
 
 const Home = () => {
     return (
@@ -19,6 +20,7 @@ const Home = () => {
             <About />
             <Carousel />
             <WhatsApp />
+            <Testimonials />
             {/* <MainContent /> */}
             {/* <Footer /> */}
         </div>
