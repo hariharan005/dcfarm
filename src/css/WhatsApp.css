@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Oleo+Script:wght@400;700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+  --heading: 'Lora', serif;
+  --body: 'Work Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+.whatsapp-section {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(8, 45, 15, 0.08);
+    padding: 2rem;
+    max-width: 400px;
+    margin: 2rem auto;
+    text-align: center;
+}
+
+.whatsapp-heading {
+    font-family: var(--heading);
+    color: #082d0f;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.whatsapp-subheading {
+    font-family: var(--body);
+    color: #082d0f;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.whatsapp-qr {
+    width: 180px;
+    height: 180px;
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+    border: 2px solid #d9ba0b;
+    background: #fff;
+    object-fit: cover;
+}
+
+.whatsapp-button {
+    font-family: var(--heading);
+    background: #d9ba0b;
+    color: #082d0f;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(8, 45, 15, 0.08);
+    transition: background 0.2s;
+}
+
+.whatsapp-button:hover {
+    background: #c4a50a;
+}
+@media (max-width: 480px) {
+    .whatsapp-section {
+        padding: 1.5rem;
+        max-width: 90%;
+    }
+
+    .whatsapp-qr {
+        width: 140px;
+        height: 140px;
+    }
+
+    .whatsapp-button {
+        width: 100%;
+        padding: 0.75rem;
+    }
+}

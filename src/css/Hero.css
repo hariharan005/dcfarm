@@ -1,11 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Oleo+Script:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+:root {
+  --heading: 'Lora', serif;
+  --body: 'Work Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
 .brand-name {
-    font-family: 'Georgia Pro', Georgia, serif;
+    font-family: var(--heading);
+    font-weight: 700;
+    letter-spacing: 0.2px;
     font-size: 144px;
     color: #fff;
     margin: 0;
     letter-spacing: 2px;
     text-align: center;
-    font-weight: bold;
     text-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
 
     /* Animation */

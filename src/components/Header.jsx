@@ -1,105 +1,75 @@
-import React from "react";
-import Logo from '../assets/images/icons/Logo.png';
-
+import React, { useState, useEffect, useRef } from "react";
+import Logo from "../assets/images/icons/Logo.png";
+import "../css/Header.css";
 
 const navItems = [
-    { name: "Home", href: "#" },
-    { name: "About", href: "#" },
-    { name: "Products", href: "#" },
-    { name: "Contact", href: "#" },
+  { name: "Home", href: "#" },
+  { name: "About", href: "#" },
+  { name: "Products", href: "#" },
+  { name: "Contact", href: "#" },
 ];
 
 export default function Header() {
-    return (
-        <header
-            style={{
-                background: "linear-gradient(90deg, rgba(8,45,15,0.7) 0%, rgba(217,186,11,0.3) 100%)",
-                backdropFilter: "blur(12px)",
-                WebkitBackdropFilter: "blur(12px)",
-                borderBottom: "1px solid rgba(255,255,255,0.15)",
-                padding: "0.5rem 2rem",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                width: "100%",
-                boxSizing: "border-box",
-                position: "fixed",
-                top: 0,
-                left: 0,
-                zIndex: 1000,
-            }}
-        >
-            {/* Left: Logo and Brand */}
-            <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                {/* Logo */}
-                <div
-                    style={{
-                        width: 48,
-                        height: 48,
-                        background: "rgba(8,45,15,0.5)",
-                        borderRadius: "50%",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        border: "2px solid #d9ba0b",
-                        boxShadow: "0 2px 8px rgba(8,45,15,0.15)",
-                        overflow: "hidden",
-                    }}
-                >
-                    {/* Replace SVG with your image */}
-                    <img
-                        src= {Logo}
-                        alt="Logo"
-                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                    />
-                </div>
-                    
-                {/* Brand Name */}
-                <span
-                    style={{
-                        fontSize: "1.7rem",
-                        fontWeight: 700,
-                        fontFamily: "Poppins, Arial, sans-serif",
-                        color: "#ffffff",
-                        letterSpacing: "2px",
-                        textShadow: "0 1px 8px #082d0f",
-                    }}
-                >
-                    HA Farm
-                </span>
-            </div>
-            {/* Right: Nav Buttons */}
-            <nav style={{ display: "flex", gap: "1rem" }}>
-                {navItems.map((item) => (
-                    <a
-                        key={item.name}
-                        href={item.href}
-                        style={{
-                            padding: "0.5rem 1.2rem",
-                            borderRadius: "999px",
-                            background: "rgba(217,186,11,0.15)",
-                            color: "#ffffff",
-                            fontWeight: 500,
-                            textDecoration: "none",
-                            transition: "all 0.2s",
-                            border: "1px solid transparent",
-                            boxShadow: "0 1px 4px rgba(8,45,15,0.10)",
-                        }}
-                        onMouseEnter={e => {
-                            e.target.style.background = "#d9ba0b";
-                            e.target.style.color = "#082d0f";
-                            e.target.style.border = "1px solid #082d0f";
-                        }}
-                        onMouseLeave={e => {
-                            e.target.style.background = "rgba(217,186,11,0.15)";
-                            e.target.style.color = "#ffffff";
-                            e.target.style.border = "1px solid transparent";
-                        }}
-                    >
-                        {item.name}
-                    </a>
-                ))}
-            </nav>
-        </header>
-    );
+  const [menuOpen, setMenuOpen] = useState(false);
+  const headerRef = useRef(null);
+
+  // Close when clicking outside
+  useEffect(() => {
+    function onClick(e) {
+      if (menuOpen && headerRef.current && !headerRef.current.contains(e.target)) {
+        setMenuOpen(false);
+      }
+    }
+    window.addEventListener("click", onClick);
+    return () => window.removeEventListener("click", onClick);
+  }, [menuOpen]);
+
+  // Close on ESC
+  useEffect(() => {
+    function onKey(e) {
+      if (e.key === "Escape") setMenuOpen(false);
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  return (
+    <header className="header" ref={headerRef}>
+      {/* Left: Logo + Brand */}
+      <div className="header-left">
+        <a className="logo-container" href="/" aria-label="HA Farm home">
+          <img src={Logo} alt="HA Farm logo" className="logo" />
+        </a>
+        <span className="header-brand-name">HA Farm</span>
+      </div>
+
+      {/* Hamburger toggle (mobile) */}
+      <button
+        className={`menu-toggle ${menuOpen ? "open" : ""}`}
+        onClick={() => setMenuOpen((v) => !v)}
+        aria-label="Toggle menu"
+        aria-expanded={menuOpen}
+        aria-controls="site-nav"
+        type="button"
+      >
+        <span className="bar" />
+        <span className="bar" />
+        <span className="bar" />
+      </button>
+
+      {/* Nav */}
+      <nav id="site-nav" className={`nav ${menuOpen ? "active" : ""}`}>
+        {navItems.map((item) => (
+          <a
+            key={item.name}
+            href={item.href}
+            className="nav-link"
+            onClick={() => setMenuOpen(false)}
+          >
+            {item.name}
+          </a>
+        ))}
+      </nav>
+    </header>
+  );
 }

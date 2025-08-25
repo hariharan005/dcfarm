@@ -1,9 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Oleo+Script:wght@400;700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+  --heading: 'Lora', serif;
+  --body: 'Work Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
 .testimonials-section {
     background: #0c2c13;
     padding: 2rem 0;
     text-align: center;
 }
 .testimonials-title {
+    font-family: 'Oleo Script', cursive;
     color: #fff;
     font-size: 2.5rem;
     font-weight: bold;
@@ -40,7 +48,13 @@
     border-radius: 50%;
     border: 2px solid #b3a32b;
 }
+.testimonial-name {
+    font-family: var(--heading);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
 .testimonial-text {
+    font-family: var(--body);
     font-size: 0.95rem;
     margin-top: 0.5rem;
     text-align: center;
