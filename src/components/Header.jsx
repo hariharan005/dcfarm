@@ -1,17 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Link, useLocation } from "react-router-dom"; // ⬅️ Import Link + useLocation
 import Logo from "../assets/images/icons/Logo.png";
 import "../css/Header.css";
 
 const navItems = [
-  { name: "Home", href: "#" },
-  { name: "About", href: "#" },
-  { name: "Products", href: "#" },
-  { name: "Contact", href: "#" },
+  { name: "Home", path: "/" },
+  { name: "About", path: "/about" },
+  { name: "Products", path: "/products" },
+  { name: "Contact", path: "/contact" },
+  { name: "Journey", path: "/journey" }, // ⬅️ Route for journey
 ];
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const headerRef = useRef(null);
+  const location = useLocation(); // ⬅️ Get current path
 
   // Close when clicking outside
   useEffect(() => {
@@ -37,9 +40,9 @@ export default function Header() {
     <header className="header" ref={headerRef}>
       {/* Left: Logo + Brand */}
       <div className="header-left">
-        <a className="logo-container" href="/" aria-label="HA Farm home">
+        <Link className="logo-container" to="/" aria-label="HA Farm home">
           <img src={Logo} alt="HA Farm logo" className="logo" />
-        </a>
+        </Link>
         <span className="header-brand-name">HA Farm</span>
       </div>
 
@@ -60,14 +63,14 @@ export default function Header() {
       {/* Nav */}
       <nav id="site-nav" className={`nav ${menuOpen ? "active" : ""}`}>
         {navItems.map((item) => (
-          <a
+          <Link
             key={item.name}
-            href={item.href}
-            className="nav-link"
+            to={item.path}
+            className={`nav-link ${location.pathname === item.path ? "active" : ""}`} // highlight active
             onClick={() => setMenuOpen(false)}
           >
             {item.name}
-          </a>
+          </Link>
         ))}
       </nav>
     </header>
