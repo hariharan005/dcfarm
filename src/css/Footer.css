@@ -146,3 +146,14 @@
     color: #d9ba0b;
     text-decoration: none;
 }
+
+@media (max-width: 768px) {
+    .footer-logo {
+        justify-content: center;
+        margin-bottom: 16px;
+    }
+
+    .footer-map {
+        margin: 16px 0 0 0;
+    }
+}
