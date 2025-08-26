@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/About.css"; // Create this CSS file for styles
+import "../css/About.css"; 
 import aboutCompanyImg from "../assets/images/6.jpg";
 import visionImg from "../assets/images/1.jpg";
 import missionImg from "../assets/images/4.jpg";
@@ -8,6 +8,7 @@ const About = () => {
     return (
         <section className="about-section">
             <h2 className="about-heading">About Us</h2>
+
             <div className="about-row">
                 <div className="about-col about-text">
                     <h3>About Company</h3>
@@ -19,6 +20,7 @@ const About = () => {
                     <img src={aboutCompanyImg} alt="About Company" />
                 </div>
             </div>
+
             <div className="about-row reverse">
                 <div className="about-col about-img">
                     <img src={visionImg} alt="Vision" />
@@ -30,6 +32,7 @@ const About = () => {
                     </p>
                 </div>
             </div>
+
             <div className="about-row">
                 <div className="about-col about-text">
                     <h3>Our Mission</h3>

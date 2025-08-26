@@ -1,61 +1,132 @@
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Oleo+Script:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Oleo+Script:wght@400;700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
   --heading: 'Lora', serif;
   --body: 'Work Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
 }
 
-.brand-name {
-    font-family: var(--heading);
-    font-weight: 700;
-    letter-spacing: 0.2px;
-    font-size: 144px;
-    color: #fff;
-    margin: 0;
-    letter-spacing: 2px;
-    text-align: center;
-    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+.hero-section {
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px; /* prevent text cutoff on small screens */
+  text-align: center;
+}
 
-    /* Animation */
-    transform: scale(0.5);
-    opacity: 0;
-    animation: zoomIn 1.5s ease-out forwards;
+.hero-overlay {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 32px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.15);
+  padding: 32px 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-name {
+  font-family: var(--heading);
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: 144px;
+  color: #082d0f;
+  margin: 0;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+
+  /* Animation */
+  transform: scale(0.5);
+  opacity: 0;
+  animation: zoomIn 1.5s ease-out forwards;
+}
+.tagline {
+  font-family: var(--body);
+  font-weight: 400;
+  font-size: 24px;
+  color: #ffffff;
+  margin-top: 16px;
+
+  /* Animation */
+  transform: translateY(20px);
+  opacity: 0;
+  animation: slideUp 1.5s ease-out forwards;
+  animation-delay: 0.5s; /* start after brand name */
 }
 
 @keyframes zoomIn {
-    0% {
-        transform: scale(0.5);
-        opacity: 0;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
-.tagline {
-    font-family: 'Arial', sans-serif;
-    font-size: 24px;
-    color: #fff;
-    margin-top: 10px;
-    text-align: center;
-    font-weight: normal;
-    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
 
-    /* Animation */
+
+
+@keyframes slideUp {
+  0% {
     transform: translateY(20px);
     opacity: 0;
-    animation: slideUp 1.5s ease-out forwards;
-    animation-delay: 0.5s; /* Delay to start after brand name */
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
-@keyframes slideUp {
-    0% {
-        transform: translateY(20px);
-        opacity: 0;
-    }
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
+
+/* ===================== */
+/* RESPONSIVE DESIGN */
+/* ===================== */
+
+/* Tablets */
+@media (max-width: 1024px) {
+    .hero-section {
+    height: 70vh; /* shorter hero */
+  }
+  .brand-name {
+    font-size: 96px;
+  }
+
+  .hero-overlay {
+    padding: 24px 48px;
+    border-radius: 24px;
+  }
+}
+
+/* Large phones */
+@media (max-width: 768px) {
+    .hero-section {
+    height: 60vh; /* even smaller */
+  }
+  .brand-name {
+    font-size: 64px;
+  }
+
+  .hero-overlay {
+    padding: 20px 32px;
+    border-radius: 20px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+    .hero-section {
+    height: 50vh; /* compact hero */
+  }
+  .brand-name {
+    font-size: 42px;
+    letter-spacing: 1px;
+  }
+
+  .hero-overlay {
+    padding: 16px 24px;
+    border-radius: 16px;
+  }
 }

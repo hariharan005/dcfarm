@@ -1,36 +1,16 @@
 import React from "react";
-import "../css/Hero.css"; // <-- add this CSS file
+import "../css/Hero.css"; // styles moved here
 import grapesImage from "../assets/images/grapes.jpg";
-
-const backgroundImageUrl = grapesImage;
 
 const Hero = () => {
     return (
         <section
-            style={{
-                width: "100vw",
-                height: "100vh",
-                backgroundImage: `url(${backgroundImageUrl})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-            }}
+            className="hero-section"
+            style={{ backgroundImage: `url(${grapesImage})` }}
         >
-            <div
-                style={{
-                    background: "rgba(255, 255, 255, 0.15)",
-                    borderRadius: "48px",
-                    backdropFilter: "blur(12px)",
-                    boxShadow: "0 4px 32px rgba(0,0,0,0.15)",
-                    padding: "48px 96px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}
-            >
+            <div className="hero-overlay">
                 <h1 className="brand-name">HA Farm</h1>
+                <p className="tagline">Fresh from our farm to your table</p>
             </div>
         </section>
     );
