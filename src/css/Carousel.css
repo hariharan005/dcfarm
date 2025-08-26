@@ -6,7 +6,6 @@
     justify-content: center;
     /* Control the height of the carousel */
     min-height: 400px;
-    background: linear-gradient(135deg, #082d0f 0%, #1a4d2e 100%);
     transition: background-color 0.6s cubic-bezier(.4,0,.2,1);
     padding: 2rem 0;
 }
@@ -70,11 +69,15 @@
 
 @media (max-width: 700px) {
     .carousel-container {
-        max-width: 95vw;
+        max-width: 75vw;
         height: 220px;
     }
     .carousel-section {
         min-height: 250px;
         padding: 1rem 0;
+    }
+    .indicator {
+        width: 10px;
+        height: 10px;
     }
 }

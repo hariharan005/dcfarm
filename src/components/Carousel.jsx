@@ -43,7 +43,7 @@ const Carousel = () => {
     React.useEffect(() => {
         const timer = setTimeout(() => {
             setCurrent(current === images.length - 1 ? 0 : current + 1);
-        }, 3000);
+        }, 2000);
         return () => clearTimeout(timer);
     }, [current]);
 
