@@ -9,6 +9,7 @@ const navItems = [
   { name: "Products", path: "/products" },
   { name: "Contact", path: "/contact" },
   { name: "Journey", path: "/journey" }, // ⬅️ Route for journey
+  { name: "Blog", path: "/blog" } // ⬅️ Route for blog
 ];
 
 export default function Header() {
