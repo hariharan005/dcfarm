@@ -23,6 +23,8 @@
 }
 
 .journey-hero h1 {
+  position: relative;
+  top: 20px;
   font-size: 3rem;
   font-weight: 700;
 }
@@ -34,6 +36,8 @@
 }
 
 .journey-hero iframe {
+  position: relative;
+  top: -10px;
   margin-top: 1.5rem;
   width: 100%;
   max-width: 700px;
@@ -145,7 +149,7 @@
 
 /* -------------------- CTA Section -------------------- */
 .journey-cta {
-  background: #15803d; /* green-700 */
+  background: #082d0f; /* green-700 */
   color: #fff;
   text-align: center;
   padding: 3rem 1rem;
@@ -184,12 +188,14 @@
   .timeline-item-left,
   .timeline-item-right {
     width: 90%;
-    margin: 0 auto;
+    margin: 10 auto;
+  }
+  .journey-timeline::before {
+    display: none;
   }
 
   .timeline-dot {
-    left: 50% !important;
-    transform: translateX(-50%);
+    display: none;
   }
 }
 

@@ -46,6 +46,12 @@ export default function Header() {
         <span className="header-brand-name">HA Farm</span>
       </div>
 
+
+      {/* Festival Notification */}
+      <div className="festival-banner">
+        <p>🙏🐘🌸✨ Happy Vinayagar Chathurthi! Wishing you peace, prosperity, and happiness ✨🌸🐘🙏</p>
+      </div>
+
       {/* Hamburger toggle (mobile) */}
       <button
         className={`menu-toggle ${menuOpen ? "open" : ""}`}
