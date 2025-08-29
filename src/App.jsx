@@ -4,6 +4,7 @@ import JourneyPage from "./pages/Journey";
 import Home from "./pages/Home";
 import NotFound from "./pages/Notfound";
 import Blog from "./pages/Blog";
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   return (
@@ -15,6 +16,8 @@ function App() {
         <Route path="/blog" element={<Blog />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      {/* ✅ Add Analytics here so it's loaded on every page */}
+      <Analytics />
     </Router>
   );
 }
