@@ -1,0 +1,37 @@
+{
+  "files": {
+    "main.css": "/dcfarm/static/css/main.4ce6dbc2.css",
+    "main.js": "/dcfarm/static/js/main.644b41ef.js",
+    "static/js/453.6c7b878d.chunk.js": "/dcfarm/static/js/453.6c7b878d.chunk.js",
+    "static/media/profile2.jpg": "/dcfarm/static/media/profile2.bf96e4a5da996e68630b.jpg",
+    "static/media/11.jpg": "/dcfarm/static/media/11.4f62633b6dcdc0f059e0.jpg",
+    "static/media/profile3.jpg": "/dcfarm/static/media/profile3.f3f528ebe981c6186b42.jpg",
+    "static/media/10.jpg": "/dcfarm/static/media/10.a0e83b0bdfe456fbd3fd.jpg",
+    "static/media/9.jpg": "/dcfarm/static/media/9.d8a91e46a8c4cca1d87c.jpg",
+    "static/media/3.jpg": "/dcfarm/static/media/3.3bba7ac0fd965337a028.jpg",
+    "static/media/4.jpg": "/dcfarm/static/media/4.7eb0df05a7f9433458ca.jpg",
+    "static/media/Okra.jpg": "/dcfarm/static/media/Okra.c18ef1d80e3c89ebb30b.jpg",
+    "static/media/7.jpg": "/dcfarm/static/media/7.50bd8b7fe2e24b3fbd0e.jpg",
+    "static/media/2.jpg": "/dcfarm/static/media/2.8a149fa6c7db4a642f84.jpg",
+    "static/media/Carrot.jpg": "/dcfarm/static/media/Carrot.8a149fa6c7db4a642f84.jpg",
+    "static/media/profile4.jpg": "/dcfarm/static/media/profile4.190dc01e3e0bee44118b.jpg",
+    "static/media/8.jpg": "/dcfarm/static/media/8.e395308ff03055205f97.jpg",
+    "static/media/6.jpg": "/dcfarm/static/media/6.62a6e30fe5e91d254286.jpg",
+    "static/media/grapes.jpg": "/dcfarm/static/media/grapes.e982a51a5773829a3e10.jpg",
+    "static/media/5.jpg": "/dcfarm/static/media/5.b9678592e50636fe4400.jpg",
+    "static/media/Logo.png": "/dcfarm/static/media/Logo.f95c7d1d75fd6d3b5ebc.png",
+    "static/media/12.jpg": "/dcfarm/static/media/12.f19a236fd2d6a0029e50.jpg",
+    "static/media/1.jpg": "/dcfarm/static/media/1.ec80cb2c4a6e07d34921.jpg",
+    "static/media/profile5.jpg": "/dcfarm/static/media/profile5.0050a7f601e849793326.jpg",
+    "static/media/profile1.jpg": "/dcfarm/static/media/profile1.dda43b0ff5633a004682.jpg",
+    "static/media/qr.png": "/dcfarm/static/media/qr.53a72c5cac0ffc2f3fcf.png",
+    "index.html": "/dcfarm/index.html",
+    "main.4ce6dbc2.css.map": "/dcfarm/static/css/main.4ce6dbc2.css.map",
+    "main.644b41ef.js.map": "/dcfarm/static/js/main.644b41ef.js.map",
+    "453.6c7b878d.chunk.js.map": "/dcfarm/static/js/453.6c7b878d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4ce6dbc2.css",
+    "static/js/main.644b41ef.js"
+  ]
+}
