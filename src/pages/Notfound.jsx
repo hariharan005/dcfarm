@@ -48,7 +48,7 @@ export default function NotFound() {
         <span
           key={particle.id}
           className="sand"
-          style={{ left: particle.x, top: particle.y }}
+          style={{ top: particle.y, left: particle.x }}
         >
           •
         </span>

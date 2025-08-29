@@ -48,11 +48,11 @@ export default function Header() {
       </div>
 
 
-      {/* Festival Notification */}
+      {/* Festival Notification 
       <div className="festival-banner">
         <p>🙏🐘🌸✨ Happy Vinayagar Chathurthi! Wishing you peace, prosperity, and happiness ✨🌸🐘🙏</p>
-      </div>
-
+      </div>  */}
+      
       {/* Hamburger toggle (mobile) */}
       <button
         className={`menu-toggle ${menuOpen ? "open" : ""}`}
