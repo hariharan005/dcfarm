@@ -42,13 +42,13 @@ const teamMembers = [
     {
         name: "Archana Hariharan",
         role: "Operations & Markets",
-        bio: "Manages market relationships, packaging and customer education programs.",
+        bio: "Manages marketing, packaging and customer education programs.",
         img: TEAM_PLACEHOLDER,
     },
     {
         name: "Shamnath",
-        role: "Soil & Agronomy Specialist",
-        bio: "Focuses on soil biology, compost program and crop planning.",
+        role: "Photographer & Storyteller",
+        bio: "Focuses on Picturing, video editing, poster design.",
         img: TEAM_PLACEHOLDER,
     },
 ];
@@ -277,11 +277,11 @@ export default function AboutPage() {
                     </p>
                     <div className="contact-grid">
                         <address>
-                            <strong>Harvest & Hearth Farm</strong>
-                            <div>Village Road, Near Greenfield, Tamil Nadu</div>
-                            <div>Phone: +91 98X XX0 XXXX</div>
+                            <strong>HA Farm</strong>
+                            <div>Kadambadi, Mahabalipuram</div>
+                            <div>Phone: +91 7603918492</div>
                             <div>
-                                Email: <a href="mailto:hello@harvestfarm.example">hello@harvestfarm.example</a>
+                                Email: <a href="mailto:hello@hafarm.com">hello@hafarm.com</a>
                             </div>
                         </address>
 
