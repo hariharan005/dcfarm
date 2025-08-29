@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import NotFound from "./pages/Notfound";
 import Blog from "./pages/Blog";
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       </Routes>
       {/* ✅ Add Analytics here so it's loaded on every page */}
       <Analytics />
+      <SpeedInsights />
     </Router>
   );
 }
