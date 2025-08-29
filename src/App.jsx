@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "../src/components/Header";
 import JourneyPage from "./pages/Journey";
 import Home from "./pages/Home";
+import AboutPage from "./pages/Aboutpage";
 import NotFound from "./pages/Notfound";
 import Blog from "./pages/Blog";
 import { Analytics } from '@vercel/analytics/react';
@@ -13,6 +14,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<AboutPage />} />
         <Route path="/journey" element={<JourneyPage />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="*" element={<NotFound />} />
