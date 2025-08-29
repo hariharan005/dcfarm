@@ -32,14 +32,6 @@ const images = [
 const Carousel = () => {
     const [current, setCurrent] = useState(0);
 
-    const prevSlide = () => {
-        setCurrent(current === 0 ? images.length - 1 : current - 1);
-    };
-
-    const nextSlide = () => {
-        setCurrent(current === images.length - 1 ? 0 : current + 1);
-    };
-
     React.useEffect(() => {
         const timer = setTimeout(() => {
             setCurrent(current === images.length - 1 ? 0 : current + 1);
