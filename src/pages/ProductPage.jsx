@@ -12,22 +12,6 @@ const productsData = {
     { id: 4, name: "Apple", price: 180, unit: "kg", image: "https://via.placeholder.com/150" },
     { id: 5, name: "Banana", price: 60, unit: "dozen", image: "https://via.placeholder.com/150" },
   ],
-  Rices: [
-    { id: 6, name: "Basmati Rice", price: 90, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 7, name: "Brown Rice", price: 120, unit: "kg", image: "https://via.placeholder.com/150" },
-  ],
-  Millets: [
-    { id: 8, name: "Ragi", price: 70, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 9, name: "Foxtail Millet", price: 85, unit: "kg", image: "https://via.placeholder.com/150" },
-  ],
-  "Dairy Products": [
-    { id: 10, name: "Milk", price: 50, unit: "litre", image: "https://via.placeholder.com/150" },
-    { id: 11, name: "Curd", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
-  ],
-  Oils: [
-    { id: 12, name: "Coconut Oil", price: 250, unit: "litre", image: "https://via.placeholder.com/150" },
-    { id: 13, name: "Groundnut Oil", price: 230, unit: "litre", image: "https://via.placeholder.com/150" },
-  ],
 };
 
 const ProductPage = () => {
@@ -36,7 +20,7 @@ const ProductPage = () => {
   const [cart, setCart] = useState([]);
   const [quantities, setQuantities] = useState({});
 
-  // Load cart and quantities from localStorage on mount
+  // Load cart & quantities from localStorage on mount
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem("cartItems")) || [];
     setCart(storedCart);
@@ -48,25 +32,25 @@ const ProductPage = () => {
     setQuantities(initialQuantities);
   }, []);
 
-  // Save cart to localStorage whenever it changes
+  // Update localStorage whenever cart changes
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cart));
   }, [cart]);
 
-  // Increase quantity
   const handleIncrease = (product) => {
     const newQty = (quantities[product.id] || 0) + 1;
     setQuantities({ ...quantities, [product.id]: newQty });
 
     const existingItem = cart.find(item => item.id === product.id);
     if (existingItem) {
-      setCart(cart.map(item => item.id === product.id ? { ...item, qty: newQty, total: newQty * item.price } : item));
+      setCart(cart.map(item =>
+        item.id === product.id ? { ...item, qty: newQty, total: newQty * item.price } : item
+      ));
     } else {
       setCart([...cart, { ...product, qty: 1, total: product.price }]);
     }
   };
 
-  // Decrease quantity
   const handleDecrease = (product) => {
     const currentQty = quantities[product.id] || 0;
     if (currentQty <= 0) return;
@@ -77,7 +61,9 @@ const ProductPage = () => {
     if (newQty === 0) {
       setCart(cart.filter(item => item.id !== product.id));
     } else {
-      setCart(cart.map(item => item.id === product.id ? { ...item, qty: newQty, total: newQty * item.price } : item));
+      setCart(cart.map(item =>
+        item.id === product.id ? { ...item, qty: newQty, total: newQty * item.price } : item
+      ));
     }
   };
 
@@ -85,7 +71,6 @@ const ProductPage = () => {
 
   return (
     <div className="product-page">
-      {/* Sidebar */}
       <div className="sidebar">
         <h2>Categories</h2>
         <ul>
@@ -101,7 +86,6 @@ const ProductPage = () => {
         </ul>
       </div>
 
-      {/* Products */}
       <div className="products">
         <h2>{selectedCategory}</h2>
         <div className="product-grid">
@@ -123,7 +107,6 @@ const ProductPage = () => {
           })}
         </div>
 
-        {/* Cart Button */}
         <button
           className="checkout-btn"
           onClick={handleViewCart}

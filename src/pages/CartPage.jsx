@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/CartPage.css";
 
@@ -11,14 +11,29 @@ const CartPage = () => {
     setCartItems(storedCart);
   }, []);
 
-  const grandTotal = cartItems.reduce((sum, item) => sum + item.total, 0);
+  const handleRemoveItem = (id) => {
+    const updatedCart = cartItems.filter(item => item.id !== id);
+    setCartItems(updatedCart);
+    localStorage.setItem("cartItems", JSON.stringify(updatedCart));
+
+    // Trigger storage event for real-time sync
+    window.dispatchEvent(new Event("storage"));
+  };
 
   const handleCheckout = () => {
-    alert("Proceeding to checkout...");
-    localStorage.removeItem("cartItems"); // clear after checkout
-    setCartItems([]); // reset state
+    if (cartItems.length === 0) return;
+
+    alert("Checkout successful!");
+    localStorage.removeItem("cartItems");
+    setCartItems([]);
+
+    // Trigger storage event for real-time sync
+    window.dispatchEvent(new Event("storage"));
+
     navigate("/products");
   };
+
+  const grandTotal = cartItems.reduce((sum, item) => sum + item.total, 0);
 
   return (
     <div className="cart-page">
@@ -28,15 +43,15 @@ const CartPage = () => {
       ) : (
         <>
           <ul>
-            {cartItems.map((item) => (
+            {cartItems.map(item => (
               <li key={item.id}>
                 <span>{item.name}</span>
-                <span>
-                  {item.qty} × ₹{item.price} = ₹{item.total}
-                </span>
+                <span>{item.qty} × ₹{item.price} = ₹{item.total}</span>
+                <button onClick={() => handleRemoveItem(item.id)}>Remove</button>
               </li>
             ))}
           </ul>
+
           <h3>Grand Total: ₹{grandTotal}</h3>
           <button onClick={handleCheckout}>Checkout</button>
         </>
