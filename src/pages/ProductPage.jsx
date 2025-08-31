@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/ProductPage.css";
 
@@ -31,37 +31,57 @@ const productsData = {
 };
 
 const ProductPage = () => {
-  const [selectedCategory, setSelectedCategory] = useState("Vegetables");
-  const [quantities, setQuantities] = useState({});
   const navigate = useNavigate();
+  const [selectedCategory, setSelectedCategory] = useState("Vegetables");
+  const [cart, setCart] = useState([]);
+  const [quantities, setQuantities] = useState({});
 
-  const handleIncrease = (id) => {
-    setQuantities((prev) => ({
-      ...prev,
-      [id]: (prev[id] || 0) + 1,
-    }));
-  };
+  // Load cart and quantities from localStorage on mount
+  useEffect(() => {
+    const storedCart = JSON.parse(localStorage.getItem("cartItems")) || [];
+    setCart(storedCart);
 
-  const handleDecrease = (id) => {
-    setQuantities((prev) => ({
-      ...prev,
-      [id]: prev[id] > 0 ? prev[id] - 1 : 0,
-    }));
-  };
+    const initialQuantities = {};
+    storedCart.forEach(item => {
+      initialQuantities[item.id] = item.qty;
+    });
+    setQuantities(initialQuantities);
+  }, []);
 
-  const cartItems = [];
-  for (let category in productsData) {
-    for (let product of productsData[category]) {
-      const qty = quantities[product.id] || 0;
-      if (qty > 0) {
-        cartItems.push({ ...product, qty, total: qty * product.price });
-      }
+  // Save cart to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cart));
+  }, [cart]);
+
+  // Increase quantity
+  const handleIncrease = (product) => {
+    const newQty = (quantities[product.id] || 0) + 1;
+    setQuantities({ ...quantities, [product.id]: newQty });
+
+    const existingItem = cart.find(item => item.id === product.id);
+    if (existingItem) {
+      setCart(cart.map(item => item.id === product.id ? { ...item, qty: newQty, total: newQty * item.price } : item));
+    } else {
+      setCart([...cart, { ...product, qty: 1, total: product.price }]);
     }
-  }
-
-  const goToCart = () => {
-    navigate("/cart", { state: { cartItems } }); // pass cart data via state
   };
+
+  // Decrease quantity
+  const handleDecrease = (product) => {
+    const currentQty = quantities[product.id] || 0;
+    if (currentQty <= 0) return;
+
+    const newQty = currentQty - 1;
+    setQuantities({ ...quantities, [product.id]: newQty });
+
+    if (newQty === 0) {
+      setCart(cart.filter(item => item.id !== product.id));
+    } else {
+      setCart(cart.map(item => item.id === product.id ? { ...item, qty: newQty, total: newQty * item.price } : item));
+    }
+  };
+
+  const handleViewCart = () => navigate("/cart");
 
   return (
     <div className="product-page">
@@ -69,7 +89,7 @@ const ProductPage = () => {
       <div className="sidebar">
         <h2>Categories</h2>
         <ul>
-          {Object.keys(productsData).map((category) => (
+          {Object.keys(productsData).map(category => (
             <li
               key={category}
               className={selectedCategory === category ? "active" : ""}
@@ -85,31 +105,31 @@ const ProductPage = () => {
       <div className="products">
         <h2>{selectedCategory}</h2>
         <div className="product-grid">
-          {productsData[selectedCategory].map((product) => {
+          {productsData[selectedCategory].map(product => {
             const qty = quantities[product.id] || 0;
-            const totalPrice = qty * product.price;
-
             return (
               <div key={product.id} className="product-card">
                 <img src={product.image} alt={product.name} />
                 <h3>{product.name}</h3>
                 <p>₹{product.price}/{product.unit}</p>
-
                 <div className="quantity-controls">
-                  <button onClick={() => handleDecrease(product.id)}>-</button>
+                  <button onClick={() => handleDecrease(product)}>-</button>
                   <span>{qty}</span>
-                  <button onClick={() => handleIncrease(product.id)}>+</button>
+                  <button onClick={() => handleIncrease(product)}>+</button>
                 </div>
-
-                {qty > 0 && <p className="total">Total: ₹{totalPrice}</p>}
+                {qty > 0 && <p className="total">Total: ₹{qty * product.price}</p>}
               </div>
             );
           })}
         </div>
 
-        {/* Go to cart button */}
-        <button className="checkout-btn" onClick={goToCart} disabled={cartItems.length === 0}>
-          View Cart ({cartItems.length})
+        {/* Cart Button */}
+        <button
+          className="checkout-btn"
+          onClick={handleViewCart}
+          disabled={cart.length === 0}
+        >
+          View Cart ({cart.length})
         </button>
       </div>
     </div>

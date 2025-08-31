@@ -1,16 +1,23 @@
-import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "../css/CartPage.css";
 
 const CartPage = () => {
-  const location = useLocation();
   const navigate = useNavigate();
-  const cartItems = location.state?.cartItems || [];
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    const storedCart = JSON.parse(localStorage.getItem("cartItems")) || [];
+    setCartItems(storedCart);
+  }, []);
 
   const grandTotal = cartItems.reduce((sum, item) => sum + item.total, 0);
 
   const handleCheckout = () => {
     alert("Proceeding to checkout...");
-    navigate("/products"); // back to products after checkout
+    localStorage.removeItem("cartItems"); // clear after checkout
+    setCartItems([]); // reset state
+    navigate("/products");
   };
 
   return (
