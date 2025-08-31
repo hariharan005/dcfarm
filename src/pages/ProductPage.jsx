@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/ProductPage.css";
+import { addOrUpdateItem, removeItem, getAllItems } from "../DB/CartDB";
 
 const productsData = {
   Vegetables: [
@@ -18,56 +19,56 @@ const ProductPage = () => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState("Vegetables");
   const [cart, setCart] = useState([]);
-  const [quantities, setQuantities] = useState({});
 
-  // Load cart & quantities from localStorage on mount
+  // Load cart from IndexedDB
+  const loadCart = async () => {
+    const items = await getAllItems();
+    setCart(items);
+  };
+
   useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem("cartItems")) || [];
-    setCart(storedCart);
+    loadCart();
+    const handleCartChange = () => loadCart();
+    window.addEventListener("cartChanged", handleCartChange);
 
-    const initialQuantities = {};
-    storedCart.forEach(item => {
-      initialQuantities[item.id] = item.qty;
-    });
-    setQuantities(initialQuantities);
+    return () => {
+      window.removeEventListener("cartChanged", handleCartChange);
+    };
   }, []);
 
-  // Update localStorage whenever cart changes
-  useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cart));
-  }, [cart]);
+  const getQty = (id) => {
+    const item = cart.find(i => i.id === id);
+    return item ? item.qty : 0;
+  };
 
-  const handleIncrease = (product) => {
-    const newQty = (quantities[product.id] || 0) + 1;
-    setQuantities({ ...quantities, [product.id]: newQty });
-
-    const existingItem = cart.find(item => item.id === product.id);
+  const handleIncrease = async (product) => {
+    const existingItem = cart.find(i => i.id === product.id);
     if (existingItem) {
-      setCart(cart.map(item =>
-        item.id === product.id ? { ...item, qty: newQty, total: newQty * item.price } : item
-      ));
+      const updatedItem = { ...existingItem, qty: existingItem.qty + 1, total: (existingItem.qty + 1) * product.price };
+      await addOrUpdateItem(updatedItem);
     } else {
-      setCart([...cart, { ...product, qty: 1, total: product.price }]);
+      const newItem = { ...product, qty: 1, total: product.price };
+      await addOrUpdateItem(newItem);
     }
   };
 
-  const handleDecrease = (product) => {
-    const currentQty = quantities[product.id] || 0;
-    if (currentQty <= 0) return;
+  const handleDecrease = async (product) => {
+    const existingItem = cart.find(i => i.id === product.id);
+    if (!existingItem) return;
 
-    const newQty = currentQty - 1;
-    setQuantities({ ...quantities, [product.id]: newQty });
-
-    if (newQty === 0) {
-      setCart(cart.filter(item => item.id !== product.id));
+    if (existingItem.qty === 1) {
+      await removeItem(product.id);
     } else {
-      setCart(cart.map(item =>
-        item.id === product.id ? { ...item, qty: newQty, total: newQty * item.price } : item
-      ));
+      const updatedItem = { ...existingItem, qty: existingItem.qty - 1, total: (existingItem.qty - 1) * product.price };
+      await addOrUpdateItem(updatedItem);
     }
   };
 
   const handleViewCart = () => navigate("/cart");
+
+  // Mini cart summary
+  const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+  const totalPrice = cart.reduce((sum, item) => sum + item.total, 0);
 
   return (
     <div className="product-page">
@@ -90,14 +91,14 @@ const ProductPage = () => {
         <h2>{selectedCategory}</h2>
         <div className="product-grid">
           {productsData[selectedCategory].map(product => {
-            const qty = quantities[product.id] || 0;
+            const qty = getQty(product.id);
             return (
               <div key={product.id} className="product-card">
                 <img src={product.image} alt={product.name} />
                 <h3>{product.name}</h3>
                 <p>₹{product.price}/{product.unit}</p>
                 <div className="quantity-controls">
-                  <button onClick={() => handleDecrease(product)}>-</button>
+                  <button onClick={() => handleDecrease(product)} disabled={qty === 0}>-</button>
                   <span>{qty}</span>
                   <button onClick={() => handleIncrease(product)}>+</button>
                 </div>
@@ -107,12 +108,18 @@ const ProductPage = () => {
           })}
         </div>
 
+        {/* Mini cart summary */}
+        <div className="mini-cart-summary">
+          <p>Total Items: {totalItems}</p>
+          <p>Total Price: ₹{totalPrice}</p>
+        </div>
+
         <button
           className="checkout-btn"
           onClick={handleViewCart}
           disabled={cart.length === 0}
         >
-          View Cart ({cart.length})
+          View Cart ({totalItems})
         </button>
       </div>
     </div>
