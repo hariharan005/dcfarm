@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/CartPage.css";
-import { getAllItems, clearCart, removeItem } from "../DB/CartDB";
+import { getAllItems, clearCart, removeItem, addOrUpdateItem } from "../DB/CartDB";
 
 const CartPage = () => {
   const navigate = useNavigate();
@@ -24,13 +24,32 @@ const CartPage = () => {
   const grandTotal = cartItems.reduce((sum, item) => sum + item.total, 0);
 
   const handleCheckout = async () => {
-    await clearCart(); // clear cart from IndexedDB
+    await clearCart();
     alert("Checkout successful!");
-    navigate("/products"); // back to products
+    navigate("/products");
   };
 
   const handleRemoveItem = async (id) => {
-    await removeItem(id); // remove single item
+    await removeItem(id);
+    loadCart();
+  };
+
+  const handleIncrease = async (id) => {
+    const item = cartItems.find((i) => i.id === id);
+    if (item) {
+      await addOrUpdateItem({ ...item, qty: item.qty + 1, total: (item.qty + 1) * item.price });
+      loadCart();
+    }
+  };
+
+  const handleDecrease = async (id) => {
+    const item = cartItems.find((i) => i.id === id);
+    if (item && item.qty > 1) {
+      await addOrUpdateItem({ ...item, qty: item.qty - 1, total: (item.qty - 1) * item.price });
+    } else {
+      await removeItem(id);
+    }
+    loadCart();
   };
 
   return (
@@ -45,7 +64,10 @@ const CartPage = () => {
               <li key={item.id}>
                 <span>{item.name}</span>
                 <span>
-                  {item.qty} × ₹{item.price} = ₹{item.total}
+                  <button onClick={() => handleDecrease(item.id)}>-</button>
+                  <span style={{ margin: "0 6px" }}>{item.qty}</span>
+                  <button onClick={() => handleIncrease(item.id)}>+</button>
+                  × ₹{item.price} = ₹{item.total}
                 </span>
                 <button onClick={() => handleRemoveItem(item.id)}>Remove</button>
               </li>

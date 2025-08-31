@@ -26,22 +26,30 @@
     --shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
   }
 }
-
-.cart-icon {
+/* ====== Cart Icon ====== */
+.cart-container {
   position: relative;
-  font-size: 1.5rem;
-  padding: 0.5rem;
-  text-decoration: none;
+  margin-left: 1rem;
+}
+
+.cart-icon-btn {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
   color: var(--bg);
-  transition: transform 0.2s ease;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
 }
 
-.cart-icon:hover {
-  transform: scale(1.1);
+.cart-icon-btn:hover {
   color: var(--link-hover);
+  transform: scale(1.1);
+  transition: 0.2s ease;
 }
 
-.cart-badge {
+.cart-count {
   position: absolute;
   top: -6px;
   right: -6px;
@@ -50,9 +58,90 @@
   font-size: 0.75rem;
   font-weight: bold;
   border-radius: 50%;
-  padding: 3px 6px;
-  min-width: 20px;
+  padding: 2px 6px;
+  min-width: 18px;
   text-align: center;
+}
+
+/* ====== Mini Cart Dropdown ====== */
+.mini-cart-dropdown {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  width: 280px;
+  max-height: 400px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+  padding: 10px;
+  z-index: 1500;
+  overflow-y: auto;
+  animation: fadeIn 0.3s ease;
+}
+
+.mini-cart-dropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mini-cart-dropdown li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.mini-cart-dropdown li span button {
+  background: var(--brand);
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  padding: 2px 6px;
+  margin: 0 3px;
+  cursor: pointer;
+}
+
+.mini-cart-dropdown li span button:hover {
+  background: var(--link-hover);
+}
+
+.mini-cart-dropdown p {
+  font-weight: 600;
+  margin-top: 5px;
+  text-align: right;
+}
+
+.mini-cart-dropdown .checkout-btn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 6px 0;
+  background: var(--brand);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.mini-cart-dropdown .checkout-btn:hover {
+  background: var(--link-hover);
+}
+
+/* Animation */
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(-10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Mini Cart */
+@media (max-width: 900px) {
+  .mini-cart-dropdown {
+    right: 10px;
+    width: 90%;
+  }
 }
 
 /* ====== Festival ====== */

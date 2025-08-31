@@ -1,45 +1,83 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom"; // ⬅️ Import Link + useLocation
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { FaShoppingCart } from "react-icons/fa";
 import Logo from "../assets/images/icons/Logo.png";
 import "../css/Header.css";
+import { getAllItems, addOrUpdateItem, removeItem, clearCart } from "../DB/CartDB";
 
 const navItems = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
   { name: "Products", path: "/products" },
   { name: "Contact", path: "/contact" },
-  { name: "Journey", path: "/journey" }, // ⬅️ Route for journey
-  { name: "Blog", path: "/blog" } // ⬅️ Route for blog
+  { name: "Journey", path: "/journey" },
+  { name: "Blog", path: "/blog" }
 ];
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
   const headerRef = useRef(null);
-  const location = useLocation(); // ⬅️ Get current path
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  // Close when clicking outside
+  // Load cart
+  const loadCart = async () => {
+    const items = await getAllItems();
+    setCartItems(items);
+  };
+
   useEffect(() => {
-    function onClick(e) {
-      if (menuOpen && headerRef.current && !headerRef.current.contains(e.target)) {
+    loadCart();
+    const handleCartChange = () => loadCart();
+    window.addEventListener("cartChanged", handleCartChange);
+
+    return () => window.removeEventListener("cartChanged", handleCartChange);
+  }, []);
+
+  // Close menu/cart when clicking outside
+  useEffect(() => {
+    const onClick = (e) => {
+      if (
+        headerRef.current &&
+        !headerRef.current.contains(e.target)
+      ) {
         setMenuOpen(false);
+        setCartOpen(false);
       }
-    }
+    };
     window.addEventListener("click", onClick);
     return () => window.removeEventListener("click", onClick);
-  }, [menuOpen]);
-
-  // Close on ESC
-  useEffect(() => {
-    function onKey(e) {
-      if (e.key === "Escape") setMenuOpen(false);
-    }
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
   }, []);
+
+  const totalItems = cartItems.reduce((sum, item) => sum + item.qty, 0);
+  const grandTotal = cartItems.reduce((sum, item) => sum + item.total, 0);
+
+  const handleIncrease = async (item) => {
+    const updatedItem = { ...item, qty: item.qty + 1, total: (item.qty + 1) * item.price };
+    await addOrUpdateItem(updatedItem);
+  };
+
+  const handleDecrease = async (item) => {
+    if (item.qty === 1) {
+      await removeItem(item.id);
+    } else {
+      const updatedItem = { ...item, qty: item.qty - 1, total: (item.qty - 1) * item.price };
+      await addOrUpdateItem(updatedItem);
+    }
+  };
+
+  const handleCheckout = async () => {
+    if (cartItems.length === 0) return;
+    await clearCart();
+    alert("Checkout successful!");
+    setCartOpen(false);
+    navigate("/products");
+  };
 
   return (
     <header className="header" ref={headerRef}>
-      {/* Left: Logo + Brand */}
       <div className="header-left">
         <Link className="logo-container" to="/" aria-label="HA Farm home">
           <img src={Logo} alt="HA Farm logo" className="logo" />
@@ -47,19 +85,12 @@ export default function Header() {
         <span className="header-brand-name">HA Farm</span>
       </div>
 
-
-      {/* Festival Notification 
-      <div className="festival-banner">
-        <p>🙏🐘🌸✨ Happy Vinayagar Chathurthi! Wishing you peace, prosperity, and happiness ✨🌸🐘🙏</p>
-      </div>  */}
-      
-      {/* Hamburger toggle (mobile) */}
+      {/* Hamburger */}
       <button
         className={`menu-toggle ${menuOpen ? "open" : ""}`}
         onClick={() => setMenuOpen((v) => !v)}
         aria-label="Toggle menu"
         aria-expanded={menuOpen}
-        aria-controls="site-nav"
         type="button"
       >
         <span className="bar" />
@@ -73,13 +104,51 @@ export default function Header() {
           <Link
             key={item.name}
             to={item.path}
-            className={`nav-link ${location.pathname === item.path ? "active" : ""}`} // highlight active
+            className={`nav-link ${location.pathname === item.path ? "active" : ""}`}
             onClick={() => setMenuOpen(false)}
           >
             {item.name}
           </Link>
         ))}
       </nav>
+
+      {/* Cart Icon */}
+      <div className="cart-container">
+        <button
+          className="cart-icon-btn"
+          onClick={() => setCartOpen((v) => !v)}
+        >
+          <FaShoppingCart size={24} />
+          {totalItems > 0 && <span className="cart-count">{totalItems}</span>}
+        </button>
+
+        {/* Mini Cart Dropdown */}
+        {cartOpen && (
+          <div className="mini-cart-dropdown">
+            {cartItems.length === 0 ? (
+              <p>Your cart is empty</p>
+            ) : (
+              <>
+                <ul>
+                  {cartItems.map((item) => (
+                    <li key={item.id}>
+                      <span>{item.name}</span>
+                      <span>
+                        <button onClick={() => handleDecrease(item)} disabled={item.qty === 0}>-</button>
+                        {item.qty}
+                        <button onClick={() => handleIncrease(item)}>+</button>
+                        = ₹{item.total}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                <p>Grand Total: ₹{grandTotal}</p>
+                <button className="checkout-btn" onClick={handleCheckout}>Checkout</button>
+              </>
+            )}
+          </div>
+        )}
+      </div>
     </header>
   );
 }
