@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../css/ProductPage.css";
 
 const productsData = {
@@ -32,6 +33,7 @@ const productsData = {
 const ProductPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("Vegetables");
   const [quantities, setQuantities] = useState({});
+  const navigate = useNavigate();
 
   const handleIncrease = (id) => {
     setQuantities((prev) => ({
@@ -47,24 +49,18 @@ const ProductPage = () => {
     }));
   };
 
-  // Build cart items
   const cartItems = [];
   for (let category in productsData) {
     for (let product of productsData[category]) {
       const qty = quantities[product.id] || 0;
       if (qty > 0) {
-        cartItems.push({
-          ...product,
-          qty,
-          total: qty * product.price,
-        });
+        cartItems.push({ ...product, qty, total: qty * product.price });
       }
     }
   }
-  const grandTotal = cartItems.reduce((sum, item) => sum + item.total, 0);
 
-  const handleCheckout = () => {
-    alert("Proceeding to checkout... (this can be connected to payment/order API)");
+  const goToCart = () => {
+    navigate("/cart", { state: { cartItems } }); // pass cart data via state
   };
 
   return (
@@ -110,35 +106,11 @@ const ProductPage = () => {
             );
           })}
         </div>
-      </div>
 
-      {/* Cart */}
-      <div className="cart">
-        <h2>🛒 Cart</h2>
-        {cartItems.length === 0 ? (
-          <p>Your cart is empty</p>
-        ) : (
-          <>
-            <ul>
-              {cartItems.map((item) => (
-                <li key={item.id}>
-                  <span>{item.name}</span>
-                  <span>
-                    {item.qty} × ₹{item.price} = ₹{item.total}
-                  </span>
-                </li>
-              ))}
-            </ul>
-            <h3 className="grand-total">Grand Total: ₹{grandTotal}</h3>
-            <button
-              className="checkout-btn"
-              onClick={handleCheckout}
-              disabled={cartItems.length === 0}
-            >
-              Checkout
-            </button>
-          </>
-        )}
+        {/* Go to cart button */}
+        <button className="checkout-btn" onClick={goToCart} disabled={cartItems.length === 0}>
+          View Cart ({cartItems.length})
+        </button>
       </div>
     </div>
   );

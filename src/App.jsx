@@ -10,6 +10,7 @@ import Blog from "./pages/Blog";
 
 // Product Page
 import ProductPage from "./pages/ProductPage";
+import CartPage from "./pages/CartPage";
 
 
 // Vercel Analytics
@@ -19,11 +20,12 @@ import { SpeedInsights } from "@vercel/speed-insights/react"
 function App() {
   return (
     <Router>
-     {/* <Header />*/} 
+     <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/products" element={<ProductPage />} />
+        <Route path="/cart" element={<CartPage />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/journey" element={<JourneyPage />} />
         <Route path="/blog" element={<Blog />} />

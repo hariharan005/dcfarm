@@ -27,6 +27,33 @@
   }
 }
 
+.cart-icon {
+  position: relative;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  text-decoration: none;
+  color: var(--bg);
+  transition: transform 0.2s ease;
+}
+
+.cart-icon:hover {
+  transform: scale(1.1);
+  color: var(--link-hover);
+}
+
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #d9ba0b;
+  color: #082d0f;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: 50%;
+  padding: 3px 6px;
+  min-width: 20px;
+  text-align: center;
+}
 
 /* ====== Festival ====== */
 .festival-banner {
