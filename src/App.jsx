@@ -12,10 +12,22 @@ import Blog from "./pages/Blog";
 import ProductPage from "./pages/ProductPage";
 import CartPage from "./pages/CartPage";
 
+// Checkout Page
+import Checkout from "./pages/Checkout";
+
 
 // Vercel Analytics
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from "@vercel/speed-insights/react"
+
+
+// Policy Page
+import CancellationPolicy from "./pages/Policy/CancellationPolicy";
+import PrivacyPolicy from "./pages/Policy/PrivacyPolicy";
+//import RefundPolicy from "./pages/Policy/RefundPolicy";
+import ShippingPolicy from "./pages/Policy/ShippingPolicy";
+import TermsAndService from "./pages/Policy/TermsAndConditions";
+
 
 function App() {
   return (
@@ -26,11 +38,22 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/products" element={<ProductPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/journey" element={<JourneyPage />} />
         <Route path="/blog" element={<Blog />} />
+
+        {/*Policy Routes*/}
+        <Route path="/cancellation-policy" element={<CancellationPolicy />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        {/* <Route path="/refund-policy" element={<RefundPolicy />} /> */}
+        <Route path="/shipping-policy" element={<ShippingPolicy />} />
+        <Route path="/terms-and-conditions" element={<TermsAndService />} />
+
+        {/*Not Found Routes*/}
         <Route path="*" element={<NotFound />} />
       </Routes>
+      
       {/* ✅ Add Analytics here so it's loaded on every page */}
       <Analytics />
       <SpeedInsights />

@@ -26,7 +26,7 @@ const CartPage = () => {
   const handleCheckout = async () => {
     await clearCart();
     alert("Checkout successful!");
-    navigate("/products");
+    navigate("/");
   };
 
   const handleRemoveItem = async (id) => {

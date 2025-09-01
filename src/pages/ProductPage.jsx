@@ -5,13 +5,29 @@ import { addOrUpdateItem, removeItem, getAllItems } from "../DB/CartDB";
 
 const productsData = {
   Vegetables: [
-    { id: 1, name: "Tomato", price: 40, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 2, name: "Onion", price: 35, unit: "kg", image: "https://via.placeholder.com/150" },
+    { id: 1, name: "Tomato", price: 40, unit: "kg", image: "https://via.placeholder.com/150" }, 
+    { id: 2, name: "Onion", price: 35, unit: "kg", image: "https://via.placeholder.com/150" }, 
     { id: 3, name: "Carrot", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
-  ],
+  ], 
   Fruits: [
-    { id: 4, name: "Apple", price: 180, unit: "kg", image: "https://via.placeholder.com/150" },
+    { id: 4, name: "Apple", price: 180, unit: "kg", image: "https://via.placeholder.com/150" }, 
     { id: 5, name: "Banana", price: 60, unit: "dozen", image: "https://via.placeholder.com/150" },
+  ], 
+  Rices: [
+    { id: 6, name: "Basmati Rice", price: 90, unit: "kg", image: "https://via.placeholder.com/150" }, 
+    { id: 7, name: "Brown Rice", price: 120, unit: "kg", image: "https://via.placeholder.com/150" },
+  ], 
+  Millets: [
+    { id: 8, name: "Ragi", price: 70, unit: "kg", image: "https://via.placeholder.com/150" }, 
+    { id: 9, name: "Foxtail Millet", price: 85, unit: "kg", image: "https://via.placeholder.com/150" },
+  ], 
+  DairyProducts: [
+    { id: 10, name: "Milk", price: 50, unit: "litre", image: "https://via.placeholder.com/150" }, 
+    { id: 11, name: "Curd", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
+  ], 
+  Oils: [
+    { id: 12, name: "Coconut Oil", price: 250, unit: "litre", image: "https://via.placeholder.com/150" }, 
+    { id: 13, name: "Groundnut Oil", price: 230, unit: "litre", image: "https://via.placeholder.com/150" },
   ],
 };
 

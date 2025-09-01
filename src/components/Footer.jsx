@@ -67,6 +67,16 @@ const Footer = () => {
                         </a>
                     </div>
                 </div>
+                {/* Terms and Policies */}
+                <div className="footer-section">
+                    <div className="footer-title">Terms & Policies</div>
+                    <div className="footer-links">
+                        <a href="/privacy-policy" className="footer-link" target="_blank">Privacy Policy</a>
+                        <a href="/terms-and-conditions" className="footer-link" target="_blank">Terms & Conditions</a>
+                        <a href="/shipping-policy" className="footer-link" target="_blank">Shipping Policy</a>
+                        <a href="/cancellation-policy" className="footer-link" target="_blank">Cancellation Policy</a>
+                    </div>
+                </div>
 
                 {/* Embedded Map */}
                 <div className="footer-map">
