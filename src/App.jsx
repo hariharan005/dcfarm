@@ -13,7 +13,7 @@ import ProductPage from "./pages/ProductPage";
 import CartPage from "./pages/CartPage";
 
 // Checkout Page
-import Checkout from "./pages/Checkout";
+import Checkout from "./pages/Checkout/Checkout";
 
 
 // Vercel Analytics

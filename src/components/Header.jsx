@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import Logo from "../assets/images/icons/Logo.png";
 import "../css/Header.css";
-import { getAllItems, addOrUpdateItem, removeItem, clearCart } from "../DB/CartDB";
+import { getAllItems, addOrUpdateItem, removeItem } from "../DB/CartDB";
 
 const navItems = [
   { name: "Home", path: "/" },
@@ -69,11 +69,12 @@ export default function Header() {
   };
 
   const handleCheckout = async () => {
-    if (cartItems.length === 0) return;
-    await clearCart();
-    alert("Checkout successful!");
-    setCartOpen(false);
-    navigate("/");
+    if (cartItems.length === 0) {
+      alert("Your cart is empty!");
+      return;
+    }
+    //alert("Checkout successful!");
+    navigate("/checkout", { state: { cartItems, grandTotal } });
   };
 
   return (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getAllItems, clearCart } from '../DB/CartDB';
+import { getAllItems, clearCart } from '../../DB/CartDB';
 import { useNavigate } from 'react-router-dom';
 
 const Checkout = () => {

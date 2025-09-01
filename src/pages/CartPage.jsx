@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/CartPage.css";
-import { getAllItems, clearCart, removeItem, addOrUpdateItem } from "../DB/CartDB";
+import { getAllItems, removeItem, addOrUpdateItem } from "../DB/CartDB";
 
 const CartPage = () => {
   const navigate = useNavigate();
@@ -24,9 +24,12 @@ const CartPage = () => {
   const grandTotal = cartItems.reduce((sum, item) => sum + item.total, 0);
 
   const handleCheckout = async () => {
-    await clearCart();
-    alert("Checkout successful!");
-    navigate("/");
+    if (cartItems.length === 0) {
+      alert("Your cart is empty!");
+      return;
+    }
+    //alert("Checkout successful!");
+    navigate("/checkout", { state: { cartItems, grandTotal } });
   };
 
   const handleRemoveItem = async (id) => {
