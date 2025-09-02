@@ -4,9 +4,7 @@
   background: #f8f9fa;
   font-family: Arial, sans-serif;
 }
-.products, .cart {
-  margin-left: 220px; /* Adjust based on sidebar width */
-}
+
 /* Sidebar */
 .sidebar {
   width: 220px;
@@ -14,13 +12,6 @@
   color: #fff;
   padding: 20px;
   flex-shrink: 0;
-
-  /* Make Sidebar Fixed */
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  overflow-y: auto;
 }
 
 .sidebar h2 {

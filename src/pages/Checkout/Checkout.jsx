@@ -7,7 +7,6 @@ const Checkout = () => {
     name: '',
     address: '',
     email: '',
-    payment: '',
   });
   const [cartItems, setCartItems] = useState([]);
   const [submitted, setSubmitted] = useState(false);
@@ -28,11 +27,38 @@ const Checkout = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // ✅ Trigger GPay / UPI Payment
+  const handleUPIPayment = async () => {
+    const orderId = `ORDER_${Date.now()}`;
+    const upiId = "your-vpa@upi"; // Replace with your UPI ID
+    const payeeName = "MyStore"; // Replace with your store name
+
+    // Construct UPI URL (works with GPay, PhonePe, Paytm, etc.)
+    const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&mc=0000&tid=${orderId}&tr=${orderId}&am=${grandTotal}&cu=INR`;
+
+    // Open in new tab (on mobile will try to open UPI apps)
+    window.location.href = upiUrl;
+
+    // NOTE: Since you’re not using a payment gateway,
+    // you cannot auto-verify payment.
+    // For testing, we simulate payment success:
+    setTimeout(async () => {
+      await clearCart();
+      setSubmitted(true);
+
+      // In real system: send order data to backend
+      console.log("Order Placed:", {
+        ...form,
+        items: cartItems,
+        amount: grandTotal,
+        orderId,
+      });
+    }, 5000); // simulate delay
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you would typically send the data to your backend for order processing
-    await clearCart(); // clear cart after order
-    setSubmitted(true);
+    handleUPIPayment();
   };
 
   if (submitted) {
@@ -97,20 +123,12 @@ const Checkout = () => {
               />
             </div>
             <div style={{ marginBottom: 12 }}>
-              <label>Payment Method:</label>
-              <select
-                name="payment"
-                value={form.payment}
-                onChange={handleChange}
-                required
-                style={{ width: '100%', padding: 6 }}
-              >
-                <option value="">Select</option>
-                <option value="card">Credit Card</option>
-                <option value="paypal">PayPal</option>
-              </select>
+              <label>UPI Payment (via GPay, PhonePe, Paytm)</label>
+              <p style={{ fontSize: 12, color: 'gray' }}>
+                You will be redirected to your UPI app to complete the payment.
+              </p>
             </div>
-            <button type="submit" style={{ marginTop: 16 }}>Place Order</button>
+            <button type="submit" style={{ marginTop: 16 }}>Pay ₹{grandTotal}</button>
           </form>
         </>
       )}

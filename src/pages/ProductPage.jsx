@@ -172,7 +172,7 @@ const ProductPage = () => {
       </div>
 
       <div className="products">
-        <h2>{selectedCategory}</h2>
+        <h2 className="Selcat">{selectedCategory}</h2>
         <div className="product-grid">
           {productsData[selectedCategory].map(product => {
             const qty = getQty(product.id);
