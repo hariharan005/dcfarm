@@ -74,7 +74,7 @@ export default function Header() {
       return;
     }
     //alert("Checkout successful!");
-    navigate("/checkout", { state: { cartItems, grandTotal } });
+    navigate("/cart", { state: { cartItems, grandTotal } });
   };
 
   return (
@@ -144,7 +144,7 @@ export default function Header() {
                   ))}
                 </ul>
                 <p>Grand Total: ₹{grandTotal}</p>
-                <button className="checkout-btn" onClick={handleCheckout}>Checkout</button>
+                <button className="checkout-btn" onClick={handleCheckout}>View Cart</button>
               </>
             )}
           </div>
