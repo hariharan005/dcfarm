@@ -349,7 +349,7 @@
 .bar {
   width: 22px;
   height: 2px;
-  background-color: var(--fg);
+  background-color: #ffffff;
   border-radius: 2px;
   margin: 3px 0;
   transition: all 0.3s ease;
