@@ -3,54 +3,76 @@ const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const session = require("express-session"); // ✅ session middleware
+const session = require("express-session");
+const Razorpay = require("razorpay");
+const crypto = require("crypto");
 const sendEmail = require("../backend/utils/SendEmails");
-const { ADMIN_USER, ADMIN_PASS } = require("./config");
+const { ADMIN_USER, ADMIN_PASS, RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET } = require("./config");
 
 const app = express();
 const PORT = 5000;
 
 app.use(
   cors({
-    origin: "http://localhost:3000", // your React app
-    credentials: true, // ✅ allow cookies
+    origin: "http://localhost:3000", // frontend
+    credentials: true,
   })
 );
 app.use(bodyParser.json());
-
-// ✅ setup session (6h expiry)
 app.use(
   session({
-    secret: "supersecretkey", // change to env variable in production
+    secret: "supersecretkey",
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 6 * 60 * 60 * 1000, httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax" }, // 6 hours
+    cookie: { maxAge: 6 * 60 * 60 * 1000, httpOnly: true, secure: false, sameSite: "lax" },
   })
 );
 
 const ordersFile = path.join(__dirname, "orders.json");
 
-// ensure file exists
-if (!fs.existsSync(ordersFile)) {
-  fs.writeFileSync(ordersFile, JSON.stringify([]));
-}
+// ✅ Razorpay instance
+const razorpay = new Razorpay({
+  key_id: RAZORPAY_KEY_ID,
+  key_secret: RAZORPAY_KEY_SECRET,
+});
 
-// ✅ Place order
-app.post("/api/orders", async (req, res) => {
+// ✅ Create Razorpay order
+app.post("/api/payment/order", async (req, res) => {
   try {
-    const { customerName, customerEmail, items, totalAmount, paymentStatus } = req.body;
+    const { amount } = req.body;
+    const options = {
+      amount: amount * 100, // paise
+      currency: "INR",
+      receipt: "receipt_" + Date.now(),
+    };
+    const order = await razorpay.orders.create(options);
+    res.json(order);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Payment order creation failed" });
+  }
+});
 
-    if (paymentStatus !== "SUCCESS") {
-      return res.status(400).json({ message: "Payment failed!" });
+// ✅ Verify Razorpay signature
+app.post("/api/payment/verify", async (req, res) => {
+  try {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, customerName, customerEmail, items, totalAmount } = req.body;
+
+    const sign = razorpay_order_id + "|" + razorpay_payment_id;
+    const expectedSign = crypto.createHmac("sha256", RAZORPAY_KEY_SECRET).update(sign).digest("hex");
+
+    if (razorpay_signature !== expectedSign) {
+      return res.status(400).json({ message: "Invalid signature" });
     }
 
+    // ✅ Save order only if signature is valid
     const order = {
-      id: Date.now(),
+      id: razorpay_payment_id,
       customerName,
       customerEmail,
       items,
       totalAmount,
-      paymentStatus,
+      paymentStatus: "SUCCESS",
       date: new Date().toLocaleString(),
     };
 
@@ -65,46 +87,11 @@ app.post("/api/orders", async (req, res) => {
       `Hello ${customerName},\n\nYour order has been placed successfully.\nOrder ID: ${order.id}\nTotal: ₹${totalAmount}\n\nThank you for shopping with us!`
     );
 
-    res.json({ message: "Order placed successfully", order });
+    res.json({ message: "Payment verified and order placed", order });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Payment verification failed" });
   }
-});
-
-// ✅ Admin login
-app.post("/api/admin/login", (req, res) => {
-  const { username, password } = req.body;
-  if (username === ADMIN_USER && password === ADMIN_PASS) {
-    req.session.admin = true; // ✅ store session
-    return res.json({ success: true });
-  }
-  res.status(401).json({ success: false, message: "Invalid credentials" });
-});
-
-// ✅ Admin logout
-app.post("/api/admin/logout", (req, res) => {
-  req.session.destroy();
-  res.json({ success: true, message: "Logged out" });
-});
-
-// ✅ Check if logged in
-app.get("/api/admin/check", (req, res) => {
-  if (req.session.admin) {
-    res.json({ loggedIn: true });
-  } else {
-    res.json({ loggedIn: false });
-  }
-});
-
-// ✅ Get orders (admin, protected)
-app.get("/api/admin/orders", (req, res) => {
-  if (!req.session.admin) {
-    return res.status(401).json({ success: false, message: "Unauthorized" });
-  }
-
-  const data = JSON.parse(fs.readFileSync(ordersFile));
-  res.json(data.sort((a, b) => new Date(b.date) - new Date(a.date)));
 });
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
