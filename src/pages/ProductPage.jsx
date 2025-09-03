@@ -5,7 +5,7 @@ import { addOrUpdateItem, removeItem, getAllItems } from "../DB/CartDB";
 
 const productsData = {
   Vegetables: [
-    { id: 1, name: "Tomato", price: 40, unit: "kg", image: "https://via.placeholder.com/150" }, 
+    { id: 1, name: "Tomato", price: 1, unit: "kg", image: "https://via.placeholder.com/150" }, 
     { id: 2, name: "Onion", price: 35, unit: "kg", image: "https://via.placeholder.com/150" }, 
     { id: 3, name: "Brinjal", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
     { id: 4, name: "Ladies Finger", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
