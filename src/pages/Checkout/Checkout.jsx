@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { getAllItems, clearCart } from '../../DB/CartDB';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { getAllItems, clearCart } from "../../DB/CartDB";
+import { useNavigate } from "react-router-dom";
+import "../../css/Checkout.css"; // ✅ import CSS
 
 const Checkout = () => {
   const [form, setForm] = useState({
-    name: '',
-    address: '',
-    email: '',
+    name: "",
+    address: "",
+    email: "",
   });
   const [cartItems, setCartItems] = useState([]);
   const [submitted, setSubmitted] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState(""); // track payment
   const navigate = useNavigate();
 
   // Load cart items on mount
@@ -27,33 +29,55 @@ const Checkout = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // ✅ Trigger GPay / UPI Payment
+  // ✅ Trigger UPI Payment
   const handleUPIPayment = async () => {
     const orderId = `ORDER_${Date.now()}`;
     const upiId = "your-vpa@upi"; // Replace with your UPI ID
     const payeeName = "MyStore"; // Replace with your store name
 
-    // Construct UPI URL (works with GPay, PhonePe, Paytm, etc.)
-    const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&mc=0000&tid=${orderId}&tr=${orderId}&am=${grandTotal}&cu=INR`;
+    const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(
+      payeeName
+    )}&mc=0000&tid=${orderId}&tr=${orderId}&am=${grandTotal}&cu=INR`;
 
-    // Open in new tab (on mobile will try to open UPI apps)
+    // Open UPI app
     window.location.href = upiUrl;
 
-    // NOTE: Since you’re not using a payment gateway,
-    // you cannot auto-verify payment.
-    // For testing, we simulate payment success:
-    setTimeout(async () => {
-      await clearCart();
-      setSubmitted(true);
+    // 🚨 Manual Confirmation
+    const userConfirmed = window.confirm(
+      "Did your UPI payment go through successfully?"
+    );
 
-      // In real system: send order data to backend
-      console.log("Order Placed:", {
-        ...form,
-        items: cartItems,
-        amount: grandTotal,
-        orderId,
-      });
-    }, 5000); // simulate delay
+    if (userConfirmed) {
+      setPaymentStatus("success");
+
+      // ✅ Send order to backend
+      try {
+        const response = await fetch("http://localhost:5000/api/orders", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            orderId,
+            customerName: form.name,
+            customerAddress: form.address,
+            customerEmail: form.email,
+            items: cartItems,
+            amount: grandTotal,
+            status: "paid",
+          }),
+        });
+
+        if (!response.ok) throw new Error("Failed to save order");
+
+        await clearCart();
+        setSubmitted(true);
+      } catch (error) {
+        console.error("Order save error:", error);
+        alert("Something went wrong while saving your order.");
+      }
+    } else {
+      setPaymentStatus("failed");
+      alert("Payment failed or cancelled. Order not placed.");
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -63,10 +87,10 @@ const Checkout = () => {
 
   if (submitted) {
     return (
-      <div style={{ maxWidth: 400, margin: '40px auto', textAlign: 'center' }}>
+      <div className="thankyou-container">
         <h2>Thank you for your order!</h2>
-        <p>Your checkout is complete.</p>
-        <button onClick={() => navigate('/products')} style={{ marginTop: 16 }}>
+        <p>Your payment was successful and your order is placed.</p>
+        <button onClick={() => navigate("/products")}>
           Back to Products
         </button>
       </div>
@@ -74,62 +98,61 @@ const Checkout = () => {
   }
 
   return (
-    <div style={{ maxWidth: 400, margin: '40px auto' }}>
+    <div className="checkout-container">
       <h2>Checkout</h2>
       {cartItems.length === 0 ? (
         <p>Your cart is empty</p>
       ) : (
         <>
-          <ul style={{ marginBottom: 20 }}>
-            {cartItems.map(item => (
-              <li key={item.id} style={{ marginBottom: 8 }}>
-                {item.name} × {item.qty} = ₹{item.total}
+          <ul className="cart-list">
+            {cartItems.map((item) => (
+              <li key={item.id}>
+                <span>{item.name} × {item.qty}</span>
+                <span>₹{item.total}</span>
               </li>
             ))}
           </ul>
-          <h3>Total Amount: ₹{grandTotal}</h3>
-          <form onSubmit={handleSubmit}>
-            <div style={{ marginBottom: 12 }}>
-              <label>Name:</label>
-              <input
-                name="name"
-                type="text"
-                value={form.name}
-                onChange={handleChange}
-                required
-                style={{ width: '100%', padding: 6 }}
-              />
-            </div>
-            <div style={{ marginBottom: 12 }}>
-              <label>Address:</label>
-              <input
-                name="address"
-                type="text"
-                value={form.address}
-                onChange={handleChange}
-                required
-                style={{ width: '100%', padding: 6 }}
-              />
-            </div>
-            <div style={{ marginBottom: 12 }}>
-              <label>Email:</label>
-              <input
-                name="email"
-                type="email"
-                value={form.email}
-                onChange={handleChange}
-                required
-                style={{ width: '100%', padding: 6 }}
-              />
-            </div>
-            <div style={{ marginBottom: 12 }}>
-              <label>UPI Payment (via GPay, PhonePe, Paytm)</label>
-              <p style={{ fontSize: 12, color: 'gray' }}>
-                You will be redirected to your UPI app to complete the payment.
-              </p>
-            </div>
-            <button type="submit" style={{ marginTop: 16 }}>Pay ₹{grandTotal}</button>
+          <h3 className="total-amount">Total Amount: ₹{grandTotal}</h3>
+          <form className="checkout-form" onSubmit={handleSubmit}>
+            <label>Name:</label>
+            <input
+              name="name"
+              type="text"
+              value={form.name}
+              onChange={handleChange}
+              required
+            />
+
+            <label>Address:</label>
+            <input
+              name="address"
+              type="text"
+              value={form.address}
+              onChange={handleChange}
+              required
+            />
+
+            <label>Email:</label>
+            <input
+              name="email"
+              type="email"
+              value={form.email}
+              onChange={handleChange}
+              required
+            />
+
+            <label>UPI Payment (via GPay, PhonePe, Paytm)</label>
+            <p className="payment-info">
+              You will be redirected to your UPI app to complete the payment.
+            </p>
+
+            <button type="submit">Pay ₹{grandTotal}</button>
           </form>
+          {paymentStatus === "failed" && (
+            <p className="payment-failed">
+              Payment failed. Please try again.
+            </p>
+          )}
         </>
       )}
     </div>

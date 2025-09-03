@@ -1,8 +1,11 @@
+/* Base Layout */
 .product-page {
   display: flex;
   min-height: 100vh;
   background: #f8f9fa;
   font-family: Arial, sans-serif;
+  max-width: 1400px; /* optional to avoid too much space on very wide screens */
+  margin: 0 auto;
 }
 
 /* Sidebar */
@@ -12,6 +15,13 @@
   color: #fff;
   padding: 20px;
   flex-shrink: 0;
+
+  /* Fixed Sidebar */
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  overflow-y: auto;
 }
 
 .sidebar h2 {
@@ -46,6 +56,7 @@
 .products {
   flex: 1;
   padding: 20px;
+  margin-left: 220px; /* space for sidebar */
 }
 
 .products h2 {
@@ -53,9 +64,10 @@
   color: #333;
 }
 
+/* Product Grid */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(4, 1fr); /* 4 cards per row on desktop/laptop */
   gap: 20px;
 }
 
@@ -138,6 +150,13 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  /* Fixed Cart */
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
 }
 
 .cart h2 {
@@ -191,42 +210,55 @@
   cursor: not-allowed;
 }
 
-/* ✅ Responsive Styles */
+/* Responsive Styles */
+
+/* Tablet: 2 cards, sidebar/cart relative */
 @media (max-width: 1024px) {
   .product-page {
     flex-direction: column;
   }
 
   .sidebar {
+    position: relative;
     width: 100%;
+    height: auto;
     order: -1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
   }
 
-  .sidebar ul {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .sidebar li {
-    margin: 5px;
+  .products {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
   }
 
   .cart {
+    position: relative;
     width: 100%;
     margin-top: 20px;
     border-left: none;
     border-top: 2px solid #ddd;
     box-shadow: none;
   }
+
+  .sidebar ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .sidebar li {
+    margin: 5px;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row */
+  }
 }
 
+/* Mobile: 1 card, horizontal scroll for sidebar */
 @media (max-width: 600px) {
-  .product-grid {
-    grid-template-columns: 1fr;
+  .sidebar {
+    padding: 10px;
   }
 
   .sidebar ul {
@@ -238,5 +270,13 @@
     display: inline-block;
     margin: 5px;
     white-space: nowrap;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr; /* 1 card per row */
+  }
+
+  .products, .cart {
+    padding: 10px;
   }
 }

@@ -1,0 +1,169 @@
+/* Checkout container */
+.checkout-container {
+  max-width: 500px;
+  margin: 50px auto 40px auto; /* space for header */
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  width: 90%; /* responsive width */
+}
+
+/* Heading */
+.checkout-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 1.8rem;
+}
+
+/* Cart list */
+.cart-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.cart-list li {
+  margin-bottom: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+  color: #444;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Total */
+.total-amount {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #2e7d32;
+}
+
+/* Form */
+.checkout-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.checkout-form input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+  transition: border 0.2s;
+}
+
+.checkout-form input:focus {
+  outline: none;
+  border: 1px solid #2e7d32;
+}
+
+/* Payment info text */
+.payment-info {
+  font-size: 0.8rem;
+  color: gray;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+/* Buttons */
+.checkout-form button,
+.thankyou-container button {
+  width: 100%;
+  padding: 12px;
+  background: #2e7d32;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s;
+}
+
+.checkout-form button:hover,
+.thankyou-container button:hover {
+  background: #256628;
+}
+
+/* Thank you message */
+.thankyou-container {
+  max-width: 500px;
+  margin: 100px auto;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  width: 90%;
+  padding: 20px;
+}
+
+.thankyou-container h2 {
+  margin-bottom: 10px;
+  color: #2e7d32;
+  font-size: 1.8rem;
+}
+
+.payment-failed {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* ========================
+   RESPONSIVE STYLES
+   ======================== */
+
+/* Small devices (phones) */
+@media (max-width: 480px) {
+  .checkout-container,
+  .thankyou-container {
+    margin: 80px auto 20px auto;
+    padding: 15px;
+  }
+
+  .checkout-container h2,
+  .thankyou-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .checkout-form input {
+    font-size: 0.9rem;
+    padding: 8px 10px;
+  }
+
+  .checkout-form button {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+}
+
+/* Tablets */
+@media (min-width: 481px) and (max-width: 768px) {
+  .checkout-container,
+  .thankyou-container {
+    max-width: 90%;
+    margin: 90px auto 30px auto;
+  }
+
+  .checkout-container h2,
+  .thankyou-container h2 {
+    font-size: 1.6rem;
+  }
+}
+
+/* Large screens */
+@media (min-width: 1024px) {
+  .checkout-container,
+  .thankyou-container {
+    max-width: 600px;
+  }
+}
