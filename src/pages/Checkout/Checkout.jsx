@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { getAllItems, clearCart } from "../../DB/CartDB";
 import { useNavigate } from "react-router-dom";
-import "../../css/Checkout.css"; // ✅ import CSS
 
 const Checkout = () => {
-  const [form, setForm] = useState({
-    name: "",
-    address: "",
-    email: "",
-  });
+  const [form, setForm] = useState({ name: "", address: "", email: "" });
   const [cartItems, setCartItems] = useState([]);
   const [submitted, setSubmitted] = useState(false);
-  const [paymentStatus, setPaymentStatus] = useState(""); // track payment
+  const [paymentStatus, setPaymentStatus] = useState("");
   const navigate = useNavigate();
 
-  // Load cart items on mount
+  // Load cart
   useEffect(() => {
     const loadCart = async () => {
       const items = await getAllItems();
@@ -29,68 +24,104 @@ const Checkout = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // ✅ Trigger UPI Payment
-  const handleUPIPayment = async () => {
-    const orderId = `ORDER_${Date.now()}`;
-    const upiId = "harichella005-1@okhdfcbank"; // Replace with your UPI ID
-    const payeeName = "Hariharan C"; // Replace with your store name
+  // ✅ Handle Razorpay Payment
+  const handlePayment = async (e) => {
+    e.preventDefault();
 
-    const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(
-      payeeName
-    )}&mc=0000&tid=${orderId}&tr=${orderId}&am=${grandTotal}&cu=INR`;
+    if (!form.name || !form.address || !form.email) {
+      alert("Please fill all details");
+      return;
+    }
 
-    // Open UPI app
-    window.location.href = upiUrl;
+    try {
+      // 1. Create order in backend
+      const orderRes = await fetch("http://localhost:5000/api/orders/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ totalAmount: grandTotal }),
+      });
 
-    // 🚨 Manual Confirmation
-    const userConfirmed = window.confirm(
-      "Did your UPI payment go through successfully?"
-    );
-
-    if (userConfirmed) {
-      setPaymentStatus("success");
-
-      // ✅ Send order to backend
-      try {
-        const response = await fetch("http://localhost:5000/api/orders", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            orderId,
-            customerName: form.name,
-            customerAddress: form.address,
-            customerEmail: form.email,
-            items: cartItems,
-            amount: grandTotal,
-            status: "paid",
-          }),
-        });
-
-        if (!response.ok) throw new Error("Failed to save order");
-
-        await clearCart();
-        setSubmitted(true);
-      } catch (error) {
-        console.error("Order save error:", error);
-        alert("Something went wrong while saving your order.");
+      const orderData = await orderRes.json();
+      if (!orderData.id) {
+        throw new Error("Failed to create Razorpay order");
       }
-    } else {
-      setPaymentStatus("failed");
-      alert("Payment failed or cancelled. Order not placed.");
+
+      // 2. Load Razorpay script if not already loaded
+      if (!window.Razorpay) {
+        const script = document.createElement("script");
+        script.src = "https://checkout.razorpay.com/v1/checkout.js";
+        script.async = true;
+        document.body.appendChild(script);
+        await new Promise((resolve) => {
+          script.onload = resolve;
+        });
+      }
+
+      // 3. Razorpay options
+      const options = {
+        key: "rzp_test_RD73HneQyWEpFH", // replace with your Razorpay key_id
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: "MyStore",
+        description: "Order Payment",
+        order_id: orderData.id,
+        prefill: {
+          name: form.name,
+          email: form.email,
+        },
+        handler: async function (response) {
+          // 4. Verify payment with backend
+          try {
+            const verifyRes = await fetch("http://localhost:5000/api/payment/verify", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                customerName: form.name,
+                customerEmail: form.email,
+                items: cartItems,
+                totalAmount: grandTotal,
+              }),
+            });
+
+            const verifyData = await verifyRes.json();
+
+            if (verifyData.success) {
+              setPaymentStatus("success");
+              await clearCart();
+              setSubmitted(true);
+            } else {
+              setPaymentStatus("failed");
+              alert("Payment verification failed!");
+            }
+          } catch (err) {
+            console.error("Verification error:", err);
+            setPaymentStatus("failed");
+          }
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      // 5. Open Razorpay checkout
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (err) {
+      console.error("Payment error:", err);
+      alert("Something went wrong. Try again!");
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    handleUPIPayment();
-  };
-
+  // ✅ Order confirmation page
   if (submitted) {
     return (
-      <div className="thankyou-container">
-        <h2>Thank you for your order!</h2>
+      <div style={{ maxWidth: 400, margin: "40px auto", textAlign: "center" }}>
+        <h2>🎉 Thank you for your order!</h2>
         <p>Your payment was successful and your order is placed.</p>
-        <button onClick={() => navigate("/products")}>
+        <button onClick={() => navigate("/products")} style={{ marginTop: 16 }}>
           Back to Products
         </button>
       </div>
@@ -98,58 +129,60 @@ const Checkout = () => {
   }
 
   return (
-    <div className="checkout-container">
+    <div style={{ maxWidth: 400, margin: "40px auto" }}>
       <h2>Checkout</h2>
       {cartItems.length === 0 ? (
         <p>Your cart is empty</p>
       ) : (
         <>
-          <ul className="cart-list">
+          <ul style={{ marginBottom: 20 }}>
             {cartItems.map((item) => (
-              <li key={item.id}>
-                <span>{item.name} × {item.qty}</span>
-                <span>₹{item.total}</span>
+              <li key={item.id} style={{ marginBottom: 8 }}>
+                {item.name} × {item.qty} = ₹{item.total}
               </li>
             ))}
           </ul>
-          <h3 className="total-amount">Total Amount: ₹{grandTotal}</h3>
-          <form className="checkout-form" onSubmit={handleSubmit}>
-            <label>Name:</label>
-            <input
-              name="name"
-              type="text"
-              value={form.name}
-              onChange={handleChange}
-              required
-            />
-
-            <label>Address:</label>
-            <input
-              name="address"
-              type="text"
-              value={form.address}
-              onChange={handleChange}
-              required
-            />
-
-            <label>Email:</label>
-            <input
-              name="email"
-              type="email"
-              value={form.email}
-              onChange={handleChange}
-              required
-            />
-
-            <label>UPI Payment (via GPay, PhonePe, Paytm)</label>
-            <p className="payment-info">
-              You will be redirected to your UPI app to complete the payment.
-            </p>
-
-            <button type="submit">Pay ₹{grandTotal}</button>
+          <h3>Total Amount: ₹{grandTotal}</h3>
+          <form onSubmit={handlePayment}>
+            <div style={{ marginBottom: 12 }}>
+              <label>Name:</label>
+              <input
+                name="name"
+                type="text"
+                value={form.name}
+                onChange={handleChange}
+                required
+                style={{ width: "100%", padding: 6 }}
+              />
+            </div>
+            <div style={{ marginBottom: 12 }}>
+              <label>Address:</label>
+              <input
+                name="address"
+                type="text"
+                value={form.address}
+                onChange={handleChange}
+                required
+                style={{ width: "100%", padding: 6 }}
+              />
+            </div>
+            <div style={{ marginBottom: 12 }}>
+              <label>Email:</label>
+              <input
+                name="email"
+                type="email"
+                value={form.email}
+                onChange={handleChange}
+                required
+                style={{ width: "100%", padding: 6 }}
+              />
+            </div>
+            <button type="submit" style={{ marginTop: 16 }}>
+              Pay ₹{grandTotal}
+            </button>
           </form>
           {paymentStatus === "failed" && (
-            <p className="payment-failed">
+            <p style={{ color: "red", marginTop: 10 }}>
               Payment failed. Please try again.
             </p>
           )}
