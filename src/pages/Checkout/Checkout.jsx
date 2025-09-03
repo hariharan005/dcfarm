@@ -32,8 +32,8 @@ const Checkout = () => {
   // ✅ Trigger UPI Payment
   const handleUPIPayment = async () => {
     const orderId = `ORDER_${Date.now()}`;
-    const upiId = "your-vpa@upi"; // Replace with your UPI ID
-    const payeeName = "MyStore"; // Replace with your store name
+    const upiId = "harichella005-1@okhdfcbank"; // Replace with your UPI ID
+    const payeeName = "Hariharan C"; // Replace with your store name
 
     const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(
       payeeName
