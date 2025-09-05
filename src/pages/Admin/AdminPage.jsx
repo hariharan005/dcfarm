@@ -110,15 +110,12 @@ const AdminPage = () => {
   return (
     <div className="admin-layout">
       {/* Sidebar */}
-      <AdminSidebar onNavigate={(section) => setActiveSection(section)} />
+      <AdminSidebar onNavigate={(section) => setActiveSection(section)} onLogout={handleLogout} />
 
       {/* Main Content */}
       <div className="admin-main">
         <div className="admin-header">
           <h2>{activeSection}</h2>
-          <button className="logout-btn" onClick={handleLogout}>
-            Logout
-          </button>
         </div>
 
         {/* ✅ Render content based on active section */}
