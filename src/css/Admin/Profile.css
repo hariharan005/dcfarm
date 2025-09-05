@@ -1,17 +1,43 @@
-/* Container */
-.profile-container {
+/* =========================
+   Profile Page Container
+========================= */
+.profile-page {
   padding: 20px;
   max-width: 900px;
   margin: auto;
   font-family: "Arial", sans-serif;
+  color: #333;
 }
 
-.profile-container h2 {
-  margin-bottom: 20px;
-  color: #064e3b; /* Dark Green */
+/* Alerts */
+.alert {
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 14px;
 }
 
-/* Profile Card */
+.alert-success {
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #10b981;
+}
+
+.alert-error {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #ef4444;
+}
+
+.alert-info {
+  background: #dbeafe;
+  color: #1e3a8a;
+  border: 1px solid #3b82f6;
+}
+
+/* =========================
+   Profile Card
+========================= */
 .profile-card {
   display: flex;
   align-items: flex-start;
@@ -22,58 +48,68 @@
   margin-bottom: 25px;
 }
 
-.profile-pic {
+.profile-left {
   text-align: center;
   margin-right: 20px;
 }
 
-.profile-pic img {
+.avatar {
   width: 120px;
   height: 120px;
   border-radius: 50%;
   border: 3px solid #10b981;
+  object-fit: cover;
 }
 
-.upload-btn {
-  margin-top: 10px;
-  padding: 6px 12px;
-  background: #10b981;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
+.hidden-input {
+  display: none;
 }
 
-.upload-btn:hover {
-  background: #059669;
+/* =========================
+   Profile Right Section
+========================= */
+.profile-right {
+  flex: 1;
 }
 
-.profile-info p {
-  margin: 8px 0;
+.profile-row {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.label {
+  font-weight: bold;
+  color: #064e3b;
+  width: 150px;
+  display: inline-block;
+}
+
+.value {
   font-size: 15px;
-  color: #333;
 }
 
-/* Editable Inputs */
-.profile-info input {
-  padding: 6px;
-  margin-left: 10px;
+.value.muted {
+  color: #6b7280;
+}
+
+.input {
+  padding: 6px 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 14px;
+  flex: 1;
 }
 
-.profile-info input:focus {
+.input:focus {
   border-color: #10b981;
   outline: none;
 }
 
-/* Action Buttons */
-.edit-btn,
-.save-btn,
-.cancel-btn {
-  margin-top: 12px;
+/* =========================
+   Buttons
+========================= */
+.btn {
   padding: 8px 14px;
   border: none;
   border-radius: 6px;
@@ -81,35 +117,42 @@
   font-size: 14px;
 }
 
-.edit-btn {
+.btn-primary {
   background: #064e3b;
-  color: white;
+  color: #fff;
 }
 
-.edit-btn:hover {
+.btn-primary:hover {
   background: #047857;
 }
 
-.save-btn {
-  background: #10b981;
-  color: white;
-  margin-right: 10px;
-}
-
-.save-btn:hover {
-  background: #059669;
-}
-
-.cancel-btn {
+.btn-danger {
   background: #ef4444;
-  color: white;
+  color: #fff;
 }
 
-.cancel-btn:hover {
+.btn-danger:hover {
   background: #dc2626;
 }
 
-/* Password Change Card */
+.btn-secondary {
+  background: #10b981;
+  color: #fff;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.btn-secondary:hover {
+  background: #059669;
+}
+
+.profile-actions {
+  margin-top: 15px;
+}
+
+/* =========================
+   Password Card
+========================= */
 .password-card {
   background: #fff;
   padding: 20px;
@@ -122,34 +165,34 @@
   color: #064e3b;
 }
 
-.password-card form {
+.password-form {
   display: flex;
   flex-direction: column;
 }
 
-.password-card input {
-  padding: 10px;
+.password-form .input {
   margin-bottom: 12px;
-  border: 1px solid #ccc;
+  padding: 10px;
   border-radius: 8px;
-  outline: none;
-  font-size: 14px;
 }
 
-.password-card input:focus {
-  border-color: #10b981;
-}
-
-.password-card .save-btn {
+.password-form .btn-primary {
   padding: 10px;
   background: #064e3b;
-  color: white;
-  border: none;
   border-radius: 8px;
-  cursor: pointer;
   font-size: 15px;
 }
 
-.password-card .save-btn:hover {
+.password-form .btn-primary:hover {
   background: #047857;
+}
+
+/* =========================
+   Loading & Error States
+========================= */
+.profile-loading,
+.profile-error {
+  text-align: center;
+  padding: 20px;
+  color: #6b7280;
 }
