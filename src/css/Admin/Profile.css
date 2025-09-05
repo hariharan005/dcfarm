@@ -1,0 +1,155 @@
+/* Container */
+.profile-container {
+  padding: 20px;
+  max-width: 900px;
+  margin: auto;
+  font-family: "Arial", sans-serif;
+}
+
+.profile-container h2 {
+  margin-bottom: 20px;
+  color: #064e3b; /* Dark Green */
+}
+
+/* Profile Card */
+.profile-card {
+  display: flex;
+  align-items: flex-start;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 25px;
+}
+
+.profile-pic {
+  text-align: center;
+  margin-right: 20px;
+}
+
+.profile-pic img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid #10b981;
+}
+
+.upload-btn {
+  margin-top: 10px;
+  padding: 6px 12px;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.upload-btn:hover {
+  background: #059669;
+}
+
+.profile-info p {
+  margin: 8px 0;
+  font-size: 15px;
+  color: #333;
+}
+
+/* Editable Inputs */
+.profile-info input {
+  padding: 6px;
+  margin-left: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.profile-info input:focus {
+  border-color: #10b981;
+  outline: none;
+}
+
+/* Action Buttons */
+.edit-btn,
+.save-btn,
+.cancel-btn {
+  margin-top: 12px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.edit-btn {
+  background: #064e3b;
+  color: white;
+}
+
+.edit-btn:hover {
+  background: #047857;
+}
+
+.save-btn {
+  background: #10b981;
+  color: white;
+  margin-right: 10px;
+}
+
+.save-btn:hover {
+  background: #059669;
+}
+
+.cancel-btn {
+  background: #ef4444;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background: #dc2626;
+}
+
+/* Password Change Card */
+.password-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.password-card h3 {
+  margin-bottom: 15px;
+  color: #064e3b;
+}
+
+.password-card form {
+  display: flex;
+  flex-direction: column;
+}
+
+.password-card input {
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  font-size: 14px;
+}
+
+.password-card input:focus {
+  border-color: #10b981;
+}
+
+.password-card .save-btn {
+  padding: 10px;
+  background: #064e3b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.password-card .save-btn:hover {
+  background: #047857;
+}

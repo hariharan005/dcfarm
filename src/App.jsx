@@ -28,7 +28,7 @@ import PrivacyPolicy from "./pages/Policy/PrivacyPolicy";
 import ShippingPolicy from "./pages/Policy/ShippingPolicy";
 import TermsAndService from "./pages/Policy/TermsAndConditions";
 
-import AdminPage from "./pages/AdminPage";
+import AdminPage from "./pages/Admin/AdminPage";
 
 
 function App() {

@@ -1,0 +1,93 @@
+/* ✅ General layout */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f9fafb;
+  font-family: Arial, sans-serif;
+}
+
+/* ✅ Main content area */
+.admin-main {
+  flex: 1;
+  padding: 20px;
+  margin-left: 250px; /* space for sidebar */
+  transition: margin-left 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .admin-main {
+    margin-left: 0;
+  }
+}
+
+/* ✅ Loading state */
+.loading-text {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 16px;
+  color: #374151;
+}
+
+/* ✅ Login form */
+.login-container {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 20px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #fff;
+  text-align: center;
+}
+
+.login-container h2 {
+  margin-bottom: 20px;
+}
+
+.login-container input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 12px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.login-container button {
+  padding: 10px 20px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 5px;
+  background: #065f46;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.login-container button:hover {
+  background: #047857;
+}
+
+/* ✅ Logout button */
+.logout-btn {
+  margin-bottom: 20px;
+  padding: 8px 16px;
+  background: #dc2626;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background: #b91c1c;
+}
+
+/* ✅ Order cards */
+.order-card {
+  border: 1px solid #e5e7eb;
+  margin: 12px 0;
+  padding: 15px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
