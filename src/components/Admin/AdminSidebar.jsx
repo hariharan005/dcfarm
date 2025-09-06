@@ -1,4 +1,3 @@
-// src/components/Admin/AdminSidebar.jsx
 import React, { useState } from "react";
 import {
   Home,
@@ -12,9 +11,9 @@ import {
   User,
   LogOut,
 } from "lucide-react";
-import "../../css/Admin/AdminSidebar.css";
+import "../../css/Admin/AdminSidebar.css"; // ✅ Make sure this path is correct
 
-const AdminSidebar = ({ onNavigate, onLogout }) => {
+const AdminSidebar = ({ onNavigate }) => {
   const [active, setActive] = useState("Dashboard");
 
   const menuItems = [
@@ -67,10 +66,6 @@ const AdminSidebar = ({ onNavigate, onLogout }) => {
             <button
               className={active === item.name ? "active" : ""}
               onClick={() => {
-                if (item.name === "Logout") {
-                  if (onLogout) onLogout();
-                  return;
-                }
                 setActive(item.name);
                 if (onNavigate) onNavigate(item.name);
               }}

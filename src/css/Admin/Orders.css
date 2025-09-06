@@ -100,3 +100,54 @@
   font-size: 12px;
   color: #6b7280;
 }
+
+
+
+/* Tabs */
+.orders-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+  background: #e5e7eb;
+}
+
+.tab-btn.active {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+/* New Status Badges */
+.status-packed {
+  background: #3b82f6; /* blue */
+}
+
+.status-shipped {
+  background: #0ea5e9; /* sky */
+}
+
+.status-delivered {
+  background: #16a34a; /* green */
+}
+
+.status-cancelled {
+  background: #ef4444; /* red */
+}
+
+.status-failed {
+  background: #6b7280; /* gray */
+}

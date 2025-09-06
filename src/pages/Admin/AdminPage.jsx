@@ -6,7 +6,7 @@ import AdminDashboard from "./Dashboard";
 import AdminProfile from "./ProfileAndAuth";
 import AdminSettings from "./Settings";
 import CustomersData from "./Customers";
-import Orders from "./Orders";  // ✅ Import Orders page
+import Orders from "./Orders";
 
 axios.defaults.withCredentials = true;
 
@@ -15,6 +15,7 @@ const AdminPage = () => {
   const [login, setLogin] = useState({ username: "", password: "" });
   const [loading, setLoading] = useState(true);
   const [activeSection, setActiveSection] = useState("Dashboard");
+  const [activeSub, setActiveSub] = useState(""); // ✅ Track submenu click
 
   useEffect(() => {
     const checkSession = async () => {
@@ -80,18 +81,33 @@ const AdminPage = () => {
 
   return (
     <div className="admin-layout">
-      <AdminSidebar onNavigate={setActiveSection} onLogout={handleLogout} />
+      <AdminSidebar
+        activeSection={activeSection}
+        activeSub={activeSub}
+        onNavigate={(name, sub = "") => {
+          setActiveSection(name);
+          setActiveSub(sub);
+        }}
+        onLogout={handleLogout}
+      />
 
       <div className="admin-main">
         <div className="admin-header">
-          <h2>{activeSection}</h2>
+          {/* ✅ Show section and sub clearly */}
+          <h2>
+            {activeSection}
+            {activeSub ? ` › ${activeSub}` : ""}
+          </h2>
         </div>
 
+        {/* ✅ Render pages based on section */}
         {activeSection === "Dashboard" && <AdminDashboard />}
         {activeSection === "Customers" && <CustomersData />}
         {activeSection === "Settings" && <AdminSettings />}
         {activeSection === "Profile" && <AdminProfile />}
-        {activeSection === "Orders" && <Orders />} {/* ✅ Use separate file */}
+        {activeSection === "Orders" && (
+          <Orders filter={activeSub || "All Orders"} />
+        )}
       </div>
     </div>
   );
