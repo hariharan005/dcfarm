@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import "../../css/Admin/AdminSidebar.css"; // ✅ Make sure this path is correct
 
-const AdminSidebar = ({ onNavigate }) => {
+const AdminSidebar = ({ onNavigate, onLogout }) => {
   const [active, setActive] = useState("Dashboard");
 
   const menuItems = [
@@ -66,8 +66,12 @@ const AdminSidebar = ({ onNavigate }) => {
             <button
               className={active === item.name ? "active" : ""}
               onClick={() => {
-                setActive(item.name);
-                if (onNavigate) onNavigate(item.name);
+                if (item.name === "Logout") {
+                  if (onLogout) onLogout(); // 🔑 call handleLogout
+                } else {
+                  setActive(item.name);
+                  if (onNavigate) onNavigate(item.name);
+                }
               }}
             >
               <span>{item.icon}</span>
@@ -77,7 +81,7 @@ const AdminSidebar = ({ onNavigate }) => {
             {item.children && active === item.name && (
               <div className="submenu">
                 {item.children.map((sub, i) => (
-                  <button key={i} onClick={() => onNavigate(sub)}>
+                  <button key={i} onClick={() => onNavigate(item.name, sub)}>
                     {sub}
                   </button>
                 ))}
