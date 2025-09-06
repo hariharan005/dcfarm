@@ -103,6 +103,8 @@ app.post("/api/orders/create", async (req, res) => {
   }
 });
 
+
+
 // Verify Payment & Save Order
 app.post("/api/payment/verify", async (req, res) => {
   try {
@@ -184,6 +186,30 @@ app.get("/api/admin/orders", (req, res) => {
   const data = JSON.parse(fs.readFileSync(ordersFile));
   res.json(data.sort((a, b) => new Date(b.date) - new Date(a.date)));
 });
+
+// Get customer list directly from orders.json
+app.get("/api/admin/customers", (req, res) => {
+  if (!req.session.admin) {
+    return res.status(401).json({ success: false, message: "Unauthorized" });
+  }
+
+  try {
+    const orders = JSON.parse(fs.readFileSync(ordersFile, "utf8"));
+
+    // map only name + email from orders
+    const customers = orders.map(order => ({
+      name: order.customerName,
+      email: order.customerEmail
+    }));
+
+    res.json(customers);
+  } catch (err) {
+    console.error("Error reading customers:", err);
+    res.status(500).json({ success: false, message: "Failed to load customers" });
+  }
+});
+
+
 
 // ================= new admin profile endpoints ================= //
 

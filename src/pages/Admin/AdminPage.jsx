@@ -4,7 +4,10 @@ import AdminSidebar from "../../components/Admin/AdminSidebar";
 import "../../css/Admin/AdminPage.css";
 import AdminDashboard from "./Dashboard";
 import AdminProfile from "./ProfileAndAuth"; // ✅ Import the Profile component
+import AdminSettings from "./Settings"; // ✅ Import the Settings component
+import CustomersData from "./Customers"; // ✅ Import the Customers component
 
+// Configure axios to send cookies with requests
 axios.defaults.withCredentials = true;
 
 const AdminPage = () => {
@@ -121,6 +124,9 @@ const AdminPage = () => {
         {/* ✅ Render content based on active section */}
         {activeSection === "Dashboard" && <AdminDashboard />}
 
+        {activeSection === "Customers" && <CustomersData />}
+
+        {activeSection === "Settings" && <AdminSettings />}
         {/* ✅ Render content based on active section */}
         {activeSection === "Profile" && <AdminProfile />}
 
@@ -143,9 +149,6 @@ const AdminPage = () => {
             )}
           </div>
         )}
-
-        {activeSection === "Products" && <p>Products management will go here...</p>}
-        {activeSection === "Customers" && <p>Customers list will go here...</p>}
       </div>
     </div>
   );

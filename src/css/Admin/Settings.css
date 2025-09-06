@@ -1,0 +1,120 @@
+/* Container */
+.settings-container {
+  padding: 20px;
+  max-width: 1100px;
+  margin: auto;
+  font-family: "Arial", sans-serif;
+}
+
+.settings-container h2 {
+  margin-bottom: 20px;
+  color: #064e3b;
+}
+
+/* Layout */
+.settings-layout {
+  display: flex;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Sidebar */
+.settings-sidebar {
+  width: 220px;
+  background: #f0fdf4;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-sidebar button {
+  padding: 12px;
+  margin-bottom: 10px;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 15px;
+  cursor: pointer;
+  border-radius: 6px;
+  color: #064e3b;
+  transition: 0.3s;
+}
+
+.settings-sidebar button:hover {
+  background: #d1fae5;
+}
+
+.settings-sidebar .active {
+  background: #10b981;
+  color: white;
+}
+
+/* Content */
+.settings-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.settings-content h3 {
+  margin-bottom: 15px;
+  color: #047857;
+}
+
+.settings-content form {
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-content label {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.settings-content input,
+.settings-content select,
+.settings-content textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  width: 100%;
+}
+
+.settings-content textarea {
+  min-height: 80px;
+}
+
+/* Buttons */
+.save-btn {
+  background: #10b981;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.save-btn:hover {
+  background: #059669;
+}
+
+/* Logs */
+.logs-list {
+  list-style: none;
+  padding: 0;
+}
+
+.logs-list li {
+  background: #f9fafb;
+  padding: 10px;
+  border: 1px solid #eee;
+  margin-bottom: 6px;
+  border-radius: 6px;
+}
