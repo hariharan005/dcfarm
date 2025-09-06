@@ -7,6 +7,7 @@ import AdminProfile from "./ProfileAndAuth";
 import AdminSettings from "./Settings";
 import CustomersData from "./Customers";
 import Orders from "./Orders";
+import ProductPage from "./Products";
 
 axios.defaults.withCredentials = true;
 
@@ -108,6 +109,7 @@ const AdminPage = () => {
         {activeSection === "Orders" && (
           <Orders filter={activeSub || "All Orders"} />
         )}
+        {activeSection === "Products" && <ProductPage />}
       </div>
     </div>
   );

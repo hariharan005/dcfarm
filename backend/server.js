@@ -268,6 +268,71 @@ app.put("/api/admin/password", (req, res) => {
   }
 });
 
+
+
+// --- products endpoints ---
+// Public: fetch products
+app.get("/api/products", (req, res) => {
+  try {
+    const products = readProducts();
+    res.json(products);
+  } catch (e) {
+    res.status(500).json({ error: "Failed to load products" });
+  }
+});
+
+// Admin: add product
+app.post("/api/products", (req, res) => {
+  try {
+    const products = readProducts();
+    const newProduct = {
+      id: Date.now(),
+      name: req.body.name,
+      price: Number(req.body.price),
+      unit: req.body.unit || "unit",
+      image: req.body.image || "https://via.placeholder.com/150",
+      category: req.body.category || "General",
+      stock: Number(req.body.stock) || 0,
+      createdAt: new Date().toISOString(),
+    };
+    products.push(newProduct);
+    writeProducts(products);
+    res.json(newProduct);
+  } catch (e) {
+    res.status(500).json({ error: "Failed to add product" });
+  }
+});
+
+// Admin: update product
+app.put("/api/products/:id", (req, res) => {
+  try {
+    const id = parseInt(req.params.id, 10);
+    const products = readProducts();
+    const idx = products.findIndex((p) => p.id === id);
+    if (idx === -1) return res.status(404).json({ error: "Not found" });
+
+    const updated = { ...products[idx], ...req.body };
+    products[idx] = updated;
+    writeProducts(products);
+    res.json(updated);
+  } catch (e) {
+    res.status(500).json({ error: "Failed to update product" });
+  }
+});
+
+// Admin: delete product
+app.delete("/api/products/:id", (req, res) => {
+  try {
+    const id = parseInt(req.params.id, 10);
+    let products = readProducts();
+    products = products.filter((p) => p.id !== id);
+    writeProducts(products);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: "Failed to delete product" });
+  }
+});
+
 // health
 app.get("/health", (_req, res) => res.json({ ok: true }));
 
