@@ -1,57 +1,64 @@
-// src/pages/Orders.jsx
-import React, { useState, useEffect } from "react";
+// src/pages/Admin/Orders.jsx
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "../../css/Admin/Orders.css";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
+
+  const fetchOrders = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/api/admin/orders");
+      setOrders(res.data);
+    } catch (err) {
+      console.error("Failed to fetch orders", err);
+    }
+  };
 
   useEffect(() => {
-    // Fetch orders from backend (replace with your API endpoint)
-    const fetchOrders = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/api/orders");
-        const data = await response.json();
-        setOrders(data);
-      } catch (error) {
-        console.error("Error fetching orders:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchOrders();
+    const interval = setInterval(fetchOrders, 30000);
+    return () => clearInterval(interval);
   }, []);
 
-  if (loading) {
-    return <div className="p-6">Loading orders...</div>;
-  }
-
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Orders</h1>
+    <div className="orders-page">
+      <h2 className="orders-title">📦 Orders List</h2>
+      <p className="orders-subtitle">Auto-refreshes every 30s</p>
+
       {orders.length === 0 ? (
-        <p>No orders found.</p>
+        <p className="no-orders">No orders found.</p>
       ) : (
-        <table className="min-w-full border border-gray-200">
-          <thead>
-            <tr className="bg-gray-100 text-left">
-              <th className="px-4 py-2 border">Order ID</th>
-              <th className="px-4 py-2 border">Customer</th>
-              <th className="px-4 py-2 border">Status</th>
-              <th className="px-4 py-2 border">Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders.map((order) => (
-              <tr key={order.id} className="hover:bg-gray-50">
-                <td className="px-4 py-2 border">{order.id}</td>
-                <td className="px-4 py-2 border">{order.customerName}</td>
-                <td className="px-4 py-2 border">{order.status}</td>
-                <td className="px-4 py-2 border">₹{order.total}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="orders-grid">
+          {orders.map((order) => (
+            <div key={order.id} className="order-card">
+              <div className="order-header">
+                <span className="order-id">#{order.id}</span>
+                <span
+                  className={`status-badge ${
+                    order.paymentStatus === "Paid"
+                      ? "status-paid"
+                      : "status-pending"
+                  }`}
+                >
+                  {order.paymentStatus || "Pending"}
+                </span>
+              </div>
+
+              <div className="order-details">
+                <p><b>Name:</b> {order.customerName}</p>
+                <p><b>Email:</b> {order.customerEmail}</p>
+                <p><b>Phone:</b> {order.customerPhone || "N/A"}</p>
+                <p><b>Address:</b> {order.customerAddress || "N/A"}</p>
+              </div>
+
+              <div className="order-footer">
+                <span className="order-total">₹{order.totalAmount}</span>
+                <span className="order-date">{order.date}</span>
+              </div>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );

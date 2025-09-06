@@ -68,6 +68,8 @@ const Checkout = () => {
         prefill: {
           name: form.name,
           email: form.email,
+          phone: form.phone, // optional
+          address: form.address, // optional
         },
         handler: async function (response) {
           // 4. Verify payment with backend
@@ -81,6 +83,8 @@ const Checkout = () => {
                 razorpay_signature: response.razorpay_signature,
                 customerName: form.name,
                 customerEmail: form.email,
+                customerPhone: form.phone,
+                customerAddress: form.address,
                 items: cartItems,
                 totalAmount: grandTotal,
               }),
@@ -166,6 +170,33 @@ const Checkout = () => {
                 style={{ width: "100%", padding: 6 }}
               />
             </div>
+            <div style={{ marginBottom: 12 }}>
+              <label>Phone:</label>
+              <input
+                name="phone"
+                type="tel"
+                value={form.phone}
+                onChange={(e) => {
+                  let value = e.target.value;
+
+                  // Always start with +91
+                  if (!value.startsWith("+91")) {
+                    value = "+91 " + value.replace(/[^0-9]/g, "");
+                  } else {
+                    // Remove non-numeric chars after +91
+                    const digits = value.replace("+91", "").replace(/\D/g, "");
+                    value = "+91 " + digits.slice(0, 10); // limit 10 digits
+                  }
+
+                  setForm({ ...form, phone: value });
+                }}
+                required
+                placeholder="+91 9876543210"
+                style={{ width: "100%", padding: 6 }}
+              />
+            </div>
+
+
             <div style={{ marginBottom: 12 }}>
               <label>Email:</label>
               <input

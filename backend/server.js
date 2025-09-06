@@ -114,6 +114,8 @@ app.post("/api/payment/verify", async (req, res) => {
       razorpay_signature,
       customerName,
       customerEmail,
+      customerPhone,
+      customerAddress,
       items,
       totalAmount,
     } = req.body;
@@ -127,14 +129,17 @@ app.post("/api/payment/verify", async (req, res) => {
     if (razorpay_signature === expectedSign) {
       const order = {
         id: Date.now(),
-        customerName,
-        customerEmail,
-        items,
-        totalAmount,
+        customerName: customerName || "Unknown",
+        customerEmail: customerEmail || "N/A",
+        customerPhone: customerPhone || "N/A",
+        customerAddress: customerAddress || "N/A",
+        items: items || [],
+        totalAmount: totalAmount || 0,
         paymentId: razorpay_payment_id,
         paymentStatus: "SUCCESS",
         date: new Date().toLocaleString(),
       };
+
 
       const data = JSON.parse(fs.readFileSync(ordersFile));
       data.push(order);
@@ -199,7 +204,9 @@ app.get("/api/admin/customers", (req, res) => {
     // map only name + email from orders
     const customers = orders.map(order => ({
       name: order.customerName,
-      email: order.customerEmail
+      email: order.customerEmail,
+      phone: order.customerPhone,
+      address: order.customerAddress,
     }));
 
     res.json(customers);
