@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "name": "Hariharan",
+  "username": "admin",
+  "email": "admin@example.com",
+  "role": "Super Admin",
+  "phone": "+91 9876543210",
+  "address": "Chennai, India",
+  "lastLogin": "7/9/2025, 6:32:02 pm",
+  "createdAt": "2025-09-07",
+  "profilePic": "https://via.placeholder.com/120",
+  "password": "admin@123"
+}

@@ -79,8 +79,17 @@ const Checkout = () => {
               }),
             });
 
-            const verifyData = await verifyRes.json();
+            let verifyData;
+            try {
+              verifyData = await verifyRes.json();
+            } catch (e) {
+              const text = await verifyRes.text();
+              console.error("❌ Backend returned non-JSON:", text);
+              alert("Payment verification failed. Please contact support.");
+              return;
+            }
             if (verifyData.success) {
+              alert("✅ Payment successful!");
               setPaymentStatus("success");
               await clearCart();
               setSubmitted(true);
@@ -88,11 +97,13 @@ const Checkout = () => {
               const audio = new Audio(popSoundUrl);
               audio.play().catch(() => console.log("Sound play failed"));
             } else {
+              alert("❌ Payment failed: " + verifyData.message);
               setPaymentStatus("failed");
               alert("Payment verification failed!");
             }
-          } catch (err) {
-            console.error("Verification error:", err);
+          } catch (error) {
+            console.error("❌ Verification error:", error);
+            alert("Payment failed. Please try again.");
             setPaymentStatus("failed");
           }
         },
