@@ -1,6 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { getAllItems, clearCart } from "../../DB/CartDB";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import confetti from "canvas-confetti";
+import "../../css/Checkout.css";
+import popSound from "../../sounds/Pop.mp3"; // Ensure this path is correct
+
+const popSoundUrl = popSound; // Ensure this path is correct
 
 const Checkout = () => {
   const [form, setForm] = useState({ name: "", address: "", email: "" });
@@ -8,6 +14,7 @@ const Checkout = () => {
   const [submitted, setSubmitted] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState("");
   const navigate = useNavigate();
+  const sparkRef = useRef(null);
 
   // Load cart
   useEffect(() => {
@@ -20,59 +27,41 @@ const Checkout = () => {
 
   const grandTotal = cartItems.reduce((sum, item) => sum + item.total, 0);
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  // ✅ Handle Razorpay Payment
   const handlePayment = async (e) => {
     e.preventDefault();
-
     if (!form.name || !form.address || !form.email) {
       alert("Please fill all details");
       return;
     }
 
     try {
-      // 1. Create order in backend
       const orderRes = await fetch("http://localhost:5000/api/orders/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ totalAmount: grandTotal }),
       });
-
       const orderData = await orderRes.json();
-      if (!orderData.id) {
-        throw new Error("Failed to create Razorpay order");
-      }
+      if (!orderData.id) throw new Error("Failed to create Razorpay order");
 
-      // 2. Load Razorpay script if not already loaded
       if (!window.Razorpay) {
         const script = document.createElement("script");
         script.src = "https://checkout.razorpay.com/v1/checkout.js";
         script.async = true;
         document.body.appendChild(script);
-        await new Promise((resolve) => {
-          script.onload = resolve;
-        });
+        await new Promise((resolve) => (script.onload = resolve));
       }
 
-      // 3. Razorpay options
       const options = {
-        key: "rzp_test_RD73HneQyWEpFH", // replace with your Razorpay key_id
+        key: "rzp_test_RD73HneQyWEpFH",
         amount: orderData.amount,
         currency: orderData.currency,
         name: "MyStore",
         description: "Order Payment",
         order_id: orderData.id,
-        prefill: {
-          name: form.name,
-          email: form.email,
-          phone: form.phone, // optional
-          address: form.address, // optional
-        },
+        prefill: { name: form.name, email: form.email, phone: form.phone, address: form.address },
         handler: async function (response) {
-          // 4. Verify payment with backend
           try {
             const verifyRes = await fetch("http://localhost:5000/api/payment/verify", {
               method: "POST",
@@ -91,11 +80,13 @@ const Checkout = () => {
             });
 
             const verifyData = await verifyRes.json();
-
             if (verifyData.success) {
               setPaymentStatus("success");
               await clearCart();
               setSubmitted(true);
+
+              const audio = new Audio(popSoundUrl);
+              audio.play().catch(() => console.log("Sound play failed"));
             } else {
               setPaymentStatus("failed");
               alert("Payment verification failed!");
@@ -105,26 +96,127 @@ const Checkout = () => {
             setPaymentStatus("failed");
           }
         },
-        theme: {
-          color: "#3399cc",
-        },
+        theme: { color: "#3399cc" },
       };
 
-      // 5. Open Razorpay checkout
-      const rzp = new window.Razorpay(options);
-      rzp.open();
+      new window.Razorpay(options).open();
     } catch (err) {
       console.error("Payment error:", err);
       alert("Something went wrong. Try again!");
     }
   };
 
-  // ✅ Order confirmation page
+  // Confetti + sparkles effect
+  useEffect(() => {
+    if (submitted && paymentStatus === "success") {
+      const duration = 2 * 1000;
+      const end = Date.now() + duration;
+      (function frame() {
+        confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, emojis: ["🎁", "✨", "🎉"] });
+        confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, emojis: ["🎁", "✨", "🎉"] });
+        if (Date.now() < end) requestAnimationFrame(frame);
+      })();
+
+      setTimeout(() => {
+        for (let i = 0; i < 3; i++) {
+          setTimeout(() => {
+            confetti({
+              particleCount: 80,
+              spread: 120,
+              origin: { x: 0.5, y: 0.55 },
+              emojis: ["🎁", "🎉", "✨", "💝", "💎"],
+              scalar: 1.8,
+            });
+          }, i * 300);
+        }
+      }, 1500);
+
+      // Sparkle effect
+      const interval = setInterval(() => {
+        if (sparkRef.current) {
+          const sparkle = document.createElement("div");
+          sparkle.style.position = "absolute";
+          sparkle.style.width = "6px";
+          sparkle.style.height = "6px";
+          sparkle.style.background = "gold";
+          sparkle.style.borderRadius = "50%";
+          sparkle.style.top = `${sparkRef.current.offsetTop + 50 + Math.random() * 20}px`;
+          sparkle.style.left = `${sparkRef.current.offsetLeft + 50 + Math.random() * 20}px`;
+          sparkle.style.opacity = 1;
+          sparkle.style.pointerEvents = "none";
+          sparkle.style.transition = "all 0.8s ease-out";
+          document.body.appendChild(sparkle);
+
+          setTimeout(() => {
+            sparkle.style.top = `${sparkRef.current.offsetTop - 50}px`;
+            sparkle.style.left = `${sparkRef.current.offsetLeft + Math.random() * 100 - 50}px`;
+            sparkle.style.opacity = 0;
+          }, 50);
+
+          setTimeout(() => document.body.removeChild(sparkle), 900);
+        }
+      }, 150);
+
+      setTimeout(() => clearInterval(interval), 3500);
+    }
+  }, [submitted, paymentStatus]);
+
   if (submitted) {
     return (
-      <div style={{ maxWidth: 400, margin: "40px auto", textAlign: "center" }}>
+      <div className="thankyou-container">
         <h2>🎉 Thank you for your order!</h2>
         <p>Your payment was successful and your order is placed.</p>
+
+        {/* Gift Box with sparkle reference */}
+        <div
+          ref={sparkRef}
+          style={{ position: "relative", width: "120px", height: "120px", margin: "20px auto" }}
+        >
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: [0, 1.2, 1], rotate: [0, 10, -10, 0], boxShadow: ["0 0 0px #fff", "0 0 20px #ffcc00", "0 0 0px #fff"] }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+            style={{
+              width: "100px",
+              height: "70px",
+              background: "#FFCC00",
+              borderRadius: "6px",
+              position: "absolute",
+              bottom: 0,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "2.5rem",
+            }}
+          >
+            🎁
+          </motion.div>
+
+          <motion.div
+            initial={{ rotateX: 0, y: 0 }}
+            animate={{ rotateX: [-10, -120, -100], y: [-5, -60, -50] }}
+            transition={{ delay: 1, duration: 0.8, ease: "easeOut" }}
+            style={{
+              width: "100px",
+              height: "30px",
+              background: "#FF9900",
+              borderRadius: "6px 6px 0 0",
+              position: "absolute",
+              top: 0,
+              transformOrigin: "top center",
+            }}
+          />
+
+          <motion.div
+            initial={{ y: 0, scale: 0 }}
+            animate={{ y: -150, scale: 1 }}
+            transition={{ delay: 1.5, duration: 1.5, ease: "easeOut" }}
+            style={{ position: "absolute", top: "20px", left: "25px", fontSize: "2.5rem" }}
+          >
+            🎁
+          </motion.div>
+        </div>
+
         <button onClick={() => navigate("/products")} style={{ marginTop: 16 }}>
           Back to Products
         </button>
@@ -132,91 +224,44 @@ const Checkout = () => {
     );
   }
 
+  // Checkout Form
   return (
-    <div style={{ maxWidth: 400, margin: "40px auto" }}>
+    <div className="checkout-container">
       <h2>Checkout</h2>
       {cartItems.length === 0 ? (
         <p>Your cart is empty</p>
       ) : (
         <>
-          <ul style={{ marginBottom: 20 }}>
+          <ul className="cart-list">
             {cartItems.map((item) => (
-              <li key={item.id} style={{ marginBottom: 8 }}>
-                {item.name} × {item.qty} = ₹{item.total}
-              </li>
+              <li key={item.id}>{item.name} × {item.qty} = ₹{item.total}</li>
             ))}
           </ul>
-          <h3>Total Amount: ₹{grandTotal}</h3>
-          <form onSubmit={handlePayment}>
-            <div style={{ marginBottom: 12 }}>
-              <label>Name:</label>
-              <input
-                name="name"
-                type="text"
-                value={form.name}
-                onChange={handleChange}
-                required
-                style={{ width: "100%", padding: 6 }}
-              />
-            </div>
-            <div style={{ marginBottom: 12 }}>
-              <label>Address:</label>
-              <input
-                name="address"
-                type="text"
-                value={form.address}
-                onChange={handleChange}
-                required
-                style={{ width: "100%", padding: 6 }}
-              />
-            </div>
-            <div style={{ marginBottom: 12 }}>
-              <label>Phone:</label>
-              <input
-                name="phone"
-                type="tel"
-                value={form.phone}
-                onChange={(e) => {
-                  let value = e.target.value;
-
-                  // Always start with +91
-                  if (!value.startsWith("+91")) {
-                    value = "+91 " + value.replace(/[^0-9]/g, "");
-                  } else {
-                    // Remove non-numeric chars after +91
-                    const digits = value.replace("+91", "").replace(/\D/g, "");
-                    value = "+91 " + digits.slice(0, 10); // limit 10 digits
-                  }
-
-                  setForm({ ...form, phone: value });
-                }}
-                required
-                placeholder="+91 9876543210"
-                style={{ width: "100%", padding: 6 }}
-              />
-            </div>
-
-
-            <div style={{ marginBottom: 12 }}>
-              <label>Email:</label>
-              <input
-                name="email"
-                type="email"
-                value={form.email}
-                onChange={handleChange}
-                required
-                style={{ width: "100%", padding: 6 }}
-              />
-            </div>
-            <button type="submit" style={{ marginTop: 16 }}>
-              Pay ₹{grandTotal}
-            </button>
+          <h3 className="total-amount">Total Amount: ₹{grandTotal}</h3>
+          <form className="checkout-form" onSubmit={handlePayment}>
+            <label>Name:</label>
+            <input name="name" type="text" value={form.name} onChange={handleChange} required />
+            <label>Address:</label>
+            <input name="address" type="text" value={form.address} onChange={handleChange} required />
+            <label>Phone:</label>
+            <input
+              name="phone"
+              type="tel"
+              value={form.phone || ""}
+              onChange={(e) => {
+                let value = e.target.value;
+                if (!value.startsWith("+91")) value = "+91 " + value.replace(/[^0-9]/g, "");
+                else value = "+91 " + value.replace("+91", "").replace(/\D/g, "").slice(0, 10);
+                setForm({ ...form, phone: value });
+              }}
+              required
+              placeholder="+91 9876543210"
+            />
+            <label>Email:</label>
+            <input name="email" type="email" value={form.email} onChange={handleChange} required />
+            <button type="submit">Pay ₹{grandTotal}</button>
           </form>
-          {paymentStatus === "failed" && (
-            <p style={{ color: "red", marginTop: 10 }}>
-              Payment failed. Please try again.
-            </p>
-          )}
+          {paymentStatus === "failed" && <p className="payment-failed">Payment failed. Please try again.</p>}
         </>
       )}
     </div>
