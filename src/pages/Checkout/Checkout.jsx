@@ -57,7 +57,7 @@ const Checkout = () => {
         key: "rzp_test_RD73HneQyWEpFH",
         amount: orderData.amount,
         currency: orderData.currency,
-        name: "MyStore",
+        name: "HA Farm",
         description: "Order Payment",
         order_id: orderData.id,
         prefill: { name: form.name, email: form.email, phone: form.phone, address: form.address },
@@ -89,7 +89,7 @@ const Checkout = () => {
               return;
             }
             if (verifyData.success) {
-              alert("✅ Payment successful!");
+              //alert("✅ Payment successful!");
               setPaymentStatus("success");
               await clearCart();
               setSubmitted(true);

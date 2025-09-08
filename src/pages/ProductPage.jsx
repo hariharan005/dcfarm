@@ -2,31 +2,47 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/ProductPage.css";
 import { addOrUpdateItem, removeItem, getAllItems } from "../DB/CartDB";
+import tomato from "../assets/images/Blog/tomato.jpg"
+import onion from "../assets/images/Blog/onion.jpg"
+import brinjal from "../assets/images/Blog/brinjal.jpg"
+import ladiesfinger from "../assets/images/Blog/ladiesfinger.jpg"
+import greenchilli from "../assets/images/Blog/greenchilli.jpg"
+import carrot from "../assets/images/Blog/carrot.jpg"
+import beetroot from "../assets/images/Blog/beetroot.jpg"
+import potato from "../assets/images/Blog/potato.jpg"
+import curryleaf from "../assets/images/Blog/curryleaf.jpg"
+import coriander from "../assets/images/Blog/coriander.jpg"
+import radish from "../assets/images/Blog/radish.jpg"
+import pumpkin from "../assets/images/Blog/pumpkin.jpg"
+import cucumber from "../assets/images/Blog/cucumber.jpg"
+import cauliflower from "../assets/images/Blog/cauliflower.jpg"
+import bittergourd from "../assets/images/Blog/bittergourd.jpg"
+
 
 const productsData = {
   Vegetables: [
-    { id: 1, name: "Tomato", price: 1, unit: "kg", image: "https://via.placeholder.com/150" }, 
-    { id: 2, name: "Onion", price: 35, unit: "kg", image: "https://via.placeholder.com/150" }, 
-    { id: 3, name: "Brinjal", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 4, name: "Ladies Finger", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 5, name: "GreenChilli", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 6, name: "Carrot", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 7, name: "Beetroot", price: 40, unit: "kg", image: "https://via.placeholder.com/150" }, 
-    { id: 8, name: "Potatoes", price: 35, unit: "kg", image: "https://via.placeholder.com/150" }, 
+    { id: 1, name: "Tomato", price: 1, unit: "kg", image: tomato }, 
+    { id: 2, name: "Onion", price: 35, unit: "kg", image: onion }, 
+    { id: 3, name: "Brinjal", price: 60, unit: "kg", image: brinjal },
+    { id: 4, name: "Ladies Finger", price: 60, unit: "kg", image: ladiesfinger },
+    { id: 5, name: "GreenChilli", price: 60, unit: "kg", image: greenchilli },
+    { id: 6, name: "Carrot", price: 60, unit: "kg", image: carrot },
+    { id: 7, name: "Beetroot", price: 40, unit: "kg", image: beetroot }, 
+    { id: 8, name: "Potatoes", price: 35, unit: "kg", image: potato }, 
     { id: 9, name: "Beans", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
     { id: 10, name: "Peas", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
     { id: 11, name: "Drumstick", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 12, name: "Curry Leaves", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 13, name: "Coriander", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 14, name: "Radish", price: 40, unit: "kg", image: "https://via.placeholder.com/150" }, 
+    { id: 12, name: "Curry Leaves", price: 60, unit: "kg", image: curryleaf },
+    { id: 13, name: "Coriander", price: 60, unit: "kg", image: coriander },
+    { id: 14, name: "Radish", price: 40, unit: "kg", image: radish }, 
     { id: 15, name: "Tapioca", price: 35, unit: "kg", image: "https://via.placeholder.com/150" }, 
-    { id: 16, name: "Pumpkin", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 17, name: "Cucumber", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 18, name: "Cauliflower", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
+    { id: 16, name: "Pumpkin", price: 60, unit: "kg", image: pumpkin },
+    { id: 17, name: "Cucumber", price: 60, unit: "kg", image: cucumber },
+    { id: 18, name: "Cauliflower", price: 60, unit: "kg", image: cauliflower },
     { id: 19, name: "Sundaikai", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
     { id: 20, name: "AshGourd", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
     { id: 21, name: "SnakeGourd", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 22, name: "BitterGourd", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
+    { id: 22, name: "BitterGourd", price: 60, unit: "kg", image: bittergourd },
 
   ], 
   Greens: [

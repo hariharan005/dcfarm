@@ -21,7 +21,6 @@ const Orders = ({ activeSection }) => {
     return () => clearInterval(interval);
   }, []);
 
-  // ✅ Render badge based on status
   const renderStatus = (status) => {
     switch (status?.toLowerCase()) {
       case "success":
@@ -44,18 +43,14 @@ const Orders = ({ activeSection }) => {
     }
   };
 
-  // ✅ Decide filter from sidebar section
   const getFilter = () => {
     if (!activeSection) return "All Orders";
-
-    // Handle submenus (Pending Orders, Cancelled Orders, etc.)
     if (activeSection.includes("Orders")) return activeSection;
     return "All Orders";
   };
 
   const filter = getFilter();
 
-  // ✅ Filter logic
   const filteredOrders =
     filter === "All Orders"
       ? orders
@@ -66,6 +61,12 @@ const Orders = ({ activeSection }) => {
             order.status?.toLowerCase() ===
               filter.replace(" Orders", "").toLowerCase()
         );
+
+  // 🔘 Assign Delivery (mock – you can connect to API)
+  const handleAssignDelivery = (orderId) => {
+    alert(`🚚 Delivery assigned for order #${orderId}`);
+    // TODO: send request to backend: axios.post(`/api/admin/orders/${orderId}/assign-delivery`)
+  };
 
   return (
     <div className="orders-page">
@@ -96,11 +97,38 @@ const Orders = ({ activeSection }) => {
                 <p>
                   <b>Address:</b> {order.customerAddress || "N/A"}
                 </p>
+
+                {/* ✅ Items List */}
+                <div className="order-items">
+                  <b>Items:</b>
+                  <ul>
+                    {order.items?.map((item) => (
+                      <li key={item.id}>
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          style={{ width: "40px", marginRight: "8px" }}
+                        />
+                        {item.name} ({item.unit}) × {item.qty} = ₹{item.total}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
 
               <div className="order-footer">
                 <span className="order-total">₹{order.totalAmount}</span>
                 <span className="order-date">{order.date}</span>
+              </div>
+
+              {/* ✅ Assign Delivery Button */}
+              <div className="order-actions">
+                <button
+                  className="assign-btn"
+                  onClick={() => handleAssignDelivery(order.id)}
+                >
+                  🚚 Assign Delivery
+                </button>
               </div>
             </div>
           ))}
