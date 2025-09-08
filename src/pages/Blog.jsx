@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../css/Blog.css";
 import Okra from "../assets/images/Blog/Okra.jpg";
+import Carrot from "../assets/images/Blog/carrot.jpg";
 
 const recipes = [
   {
@@ -16,7 +17,7 @@ const recipes = [
     id: 2,
     title: "Ladies Finger Curry",
     description: "Traditional curry made with fresh ladies finger and spices.",
-    image: Okra,
+    image: Carrot,
     ingredients: ["Ladies finger", "Onion", "Tomato", "Coconut milk", "Spices"],
     instructions:
       "Cook onion and tomato, add ladies finger and spices, finish with coconut milk.",
