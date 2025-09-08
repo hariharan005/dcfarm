@@ -50,81 +50,131 @@ const Orders = () => {
         { orderId },
         { withCredentials: true }
       )
-      .then((response) => {
-        console.log("assign-delivery response:", response.data);
+      .then(() => {
         alert(`🚚 Delivery successfully assigned for order #${orderId}`);
         fetchOrders();
       })
       .catch((error) => {
-        console.error("Failed to assign delivery", error.response || error);
         const msg = error?.response?.data?.message || "Failed to assign delivery";
         alert(`❌ ${msg}`);
       });
   };
+
+  // 🔹 Group orders by date only (normalize to YYYY-MM-DD)
+  const groupedOrders = orders.reduce((groups, order) => {
+    const dateKey = new Date(order.date).toISOString().split("T")[0];
+    if (!groups[dateKey]) groups[dateKey] = [];
+    groups[dateKey].push(order);
+    return groups;
+  }, {});
+
+  // 🔹 Grand total across all dates
+  const grandTotal = orders.reduce((sum, o) => sum + (o.totalAmount || 0), 0);
 
   return (
     <div className="orders-page">
       <h2 className="orders-title">📦 All Orders</h2>
       <p className="orders-subtitle">Auto-refreshes every 30s</p>
 
+      {/* 🔹 Grand Total Summary */}
+      <div className="grand-total-box">
+        <h3>
+          🏆 Grand Total: ₹{grandTotal} ({orders.length}{" "}
+          {orders.length === 1 ? "order" : "orders"})
+        </h3>
+      </div>
+
       {orders.length === 0 ? (
         <p className="no-orders">No orders found.</p>
       ) : (
-        <div className="orders-grid">
-          {orders.map((order) => (
-            <div key={order.id} className="order-card">
-              <div className="order-header">
-                <span className="order-id">#{order.id}</span>
-                {renderStatus(order.paymentStatus)}
-              </div>
+        Object.entries(groupedOrders)
+          .sort(([a], [b]) => new Date(b) - new Date(a)) // latest first
+          .map(([dateKey, ordersForDate]) => {
+            // Calculate total revenue for this date
+            const totalRevenue = ordersForDate.reduce(
+              (sum, o) => sum + (o.totalAmount || 0),
+              0
+            );
 
-              <div className="order-details">
-                <p>
-                  <b>Name:</b> {order.customerName}
-                </p>
-                <p>
-                  <b>Email:</b> {order.customerEmail}
-                </p>
-                <p>
-                  <b>Phone:</b> {order.customerPhone || "N/A"}
-                </p>
-                <p>
-                  <b>Address:</b> {order.customerAddress || "N/A"}
-                </p>
+            return (
+              <div key={dateKey} className="orders-by-date">
+                {/* Heading with date, count, and total revenue */}
+                <h3 className="order-date-heading">
+                  📅{" "}
+                  {new Date(dateKey).toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  })}{" "}
+                  ({ordersForDate.length}{" "}
+                  {ordersForDate.length > 1 ? "orders" : "order"}) | 💰 Total:
+                  ₹{totalRevenue}
+                </h3>
 
-                <div className="order-items">
-                  <b>Items:</b>
-                  <ul>
-                    {order.items?.map((item) => (
-                      <li key={item.id}>
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                          style={{ width: "40px", marginRight: "8px" }}
-                        />
-                        {item.name} ({item.unit}) × {item.qty} = ₹{item.total}
-                      </li>
-                    ))}
-                  </ul>
+                <div className="orders-grid">
+                  {ordersForDate.map((order) => (
+                    <div key={order.id} className="order-card">
+                      <div className="order-header">
+                        <span className="order-id">#{order.id}</span>
+                        {renderStatus(order.paymentStatus)}
+                      </div>
+
+                      <div className="order-details">
+                        <p>
+                          <b>Name:</b> {order.customerName}
+                        </p>
+                        <p>
+                          <b>Email:</b> {order.customerEmail}
+                        </p>
+                        <p>
+                          <b>Phone:</b> {order.customerPhone || "N/A"}
+                        </p>
+                        <p>
+                          <b>Address:</b> {order.customerAddress || "N/A"}
+                        </p>
+
+                        <div className="order-items">
+                          <b>Items:</b>
+                          <ul>
+                            {order.items?.map((item) => (
+                              <li key={item.id}>
+                                <img
+                                  src={item.image}
+                                  alt={item.name}
+                                  style={{ width: "40px", marginRight: "8px" }}
+                                />
+                                {item.name} ({item.unit}) × {item.qty} = ₹
+                                {item.total}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+
+                      <div className="order-footer">
+                        <span className="order-total">₹{order.totalAmount}</span>
+                        <span className="order-time">
+                          {new Date(order.date).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </span>
+                      </div>
+
+                      <div className="order-actions">
+                        <button
+                          className="assign-btn"
+                          onClick={() => handleAssignDelivery(order.id)}
+                        >
+                          🚚 Assign Delivery
+                        </button>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
-
-              <div className="order-footer">
-                <span className="order-total">₹{order.totalAmount}</span>
-                <span className="order-date">{order.date}</span>
-              </div>
-
-              <div className="order-actions">
-                <button
-                  className="assign-btn"
-                  onClick={() => handleAssignDelivery(order.id)}
-                >
-                  🚚 Assign Delivery
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+            );
+          })
       )}
     </div>
   );
