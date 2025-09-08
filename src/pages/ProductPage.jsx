@@ -7,7 +7,6 @@ import onion from "../assets/images/Blog/onion.jpg"
 import brinjal from "../assets/images/Blog/brinjal.jpg"
 import ladiesfinger from "../assets/images/Blog/ladiesfinger.jpg"
 import greenchilli from "../assets/images/Blog/greenchilli.jpg"
-import carrot from "../assets/images/Blog/carrot.jpg"
 import beetroot from "../assets/images/Blog/beetroot.jpg"
 import potato from "../assets/images/Blog/potato.jpg"
 import curryleaf from "../assets/images/Blog/curryleaf.jpg"
@@ -26,7 +25,7 @@ const productsData = {
     { id: 3, name: "Brinjal", price: 60, unit: "kg", image: brinjal },
     { id: 4, name: "Ladies Finger", price: 60, unit: "kg", image: ladiesfinger },
     { id: 5, name: "GreenChilli", price: 60, unit: "kg", image: greenchilli },
-    { id: 6, name: "Carrot", price: 60, unit: "kg", image: carrot },
+    { id: 6, name: "Carrot", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
     { id: 7, name: "Beetroot", price: 40, unit: "kg", image: beetroot }, 
     { id: 8, name: "Potatoes", price: 35, unit: "kg", image: potato }, 
     { id: 9, name: "Beans", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
