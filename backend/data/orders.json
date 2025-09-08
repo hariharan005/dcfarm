@@ -55,7 +55,8 @@
     "totalAmount": 201,
     "paymentId": "pay_RF1aZe2GbrroR1",
     "paymentStatus": "SUCCESS",
-    "date": "8/9/2025, 12:57:31 pm"
+    "date": "8/9/2025, 12:57:31 pm",
+    "status": "delivery"
   },
   {
     "id": 1757325274119,
@@ -77,6 +78,7 @@
     "totalAmount": 105,
     "paymentId": "pay_RF45smlD1Jg87S",
     "paymentStatus": "SUCCESS",
-    "date": "8/9/2025, 3:24:34 pm"
+    "date": "8/9/2025, 3:24:34 pm",
+    "status": "delivery"
   }
 ]

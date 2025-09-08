@@ -21,13 +21,12 @@ const AdminSidebar = ({ onNavigate, onLogout }) => {
     {
       name: "Products",
       icon: <Package size={18} />,
-      children: ["All Products", "Add Product", "Categories", "Stock Management"],
+      children: ["Add Product", "Categories", "Stock Management"],
     },
     {
       name: "Orders",
       icon: <ShoppingCart size={18} />,
       children: [
-        "All Orders",
         "Pending Orders",
         "Packed Orders",
         "Shipped Orders",

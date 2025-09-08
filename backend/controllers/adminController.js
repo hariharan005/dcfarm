@@ -106,3 +106,37 @@ exports.updatePassword = (req, res) => {
     res.status(500).json({ error: "Failed to update password" });
   }
 };
+
+
+// controllers/adminController.js
+// --- add below other exports in this file ---
+exports.assignDelivery = (req, res) => {
+  if (!req.session.admin)
+    return res.status(401).json({ success: false, message: "Unauthorized" });
+
+  try {
+    const { orderId } = req.body;
+    if (!orderId) return res.status(400).json({ success: false, message: "orderId required" });
+
+    const data = readJSON(ordersFile);
+    if (!Array.isArray(data)) {
+      console.error("ordersFile does not contain an array:", data);
+      return res.status(500).json({ success: false, message: "Orders storage invalid" });
+    }
+
+    const idx = data.findIndex((o) => o.id == orderId);
+    if (idx === -1) {
+      return res.status(404).json({ success: false, message: "Order not found" });
+    }
+
+    // update status to 'delivery'
+    data[idx].status = "delivery";
+    writeJSON(ordersFile, data);
+
+    console.log(`Assigned order ${orderId} to delivery (admin: ${!!req.session.admin})`);
+    return res.json({ success: true, message: `Order #${orderId} assigned to delivery`, order: data[idx] });
+  } catch (err) {
+    console.error("assignDelivery error:", err);
+    return res.status(500).json({ success: false, message: "Failed to assign delivery" });
+  }
+};

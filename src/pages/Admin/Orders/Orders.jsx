@@ -1,9 +1,9 @@
 // src/pages/Admin/Orders.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../../css/Admin/Orders.css";
+import "../../../css/Admin/Orders.css";
 
-const Orders = ({ activeSection }) => {
+const Orders = () => {
   const [orders, setOrders] = useState([]);
 
   const fetchOrders = async () => {
@@ -43,41 +43,35 @@ const Orders = ({ activeSection }) => {
     }
   };
 
-  const getFilter = () => {
-    if (!activeSection) return "All Orders";
-    if (activeSection.includes("Orders")) return activeSection;
-    return "All Orders";
-  };
-
-  const filter = getFilter();
-
-  const filteredOrders =
-    filter === "All Orders"
-      ? orders
-      : orders.filter(
-          (order) =>
-            order.paymentStatus?.toLowerCase() ===
-              filter.replace(" Orders", "").toLowerCase() ||
-            order.status?.toLowerCase() ===
-              filter.replace(" Orders", "").toLowerCase()
-        );
-
-  // 🔘 Assign Delivery (mock – you can connect to API)
   const handleAssignDelivery = (orderId) => {
-    alert(`🚚 Delivery assigned for order #${orderId}`);
-    // TODO: send request to backend: axios.post(`/api/admin/orders/${orderId}/assign-delivery`)
+    axios
+      .post(
+        "http://localhost:5000/api/admin/orders/assign-delivery",
+        { orderId },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        console.log("assign-delivery response:", response.data);
+        alert(`🚚 Delivery successfully assigned for order #${orderId}`);
+        fetchOrders();
+      })
+      .catch((error) => {
+        console.error("Failed to assign delivery", error.response || error);
+        const msg = error?.response?.data?.message || "Failed to assign delivery";
+        alert(`❌ ${msg}`);
+      });
   };
 
   return (
     <div className="orders-page">
-      <h2 className="orders-title">📦 {filter}</h2>
+      <h2 className="orders-title">📦 All Orders</h2>
       <p className="orders-subtitle">Auto-refreshes every 30s</p>
 
-      {filteredOrders.length === 0 ? (
-        <p className="no-orders">No {filter.toLowerCase()} found.</p>
+      {orders.length === 0 ? (
+        <p className="no-orders">No orders found.</p>
       ) : (
         <div className="orders-grid">
-          {filteredOrders.map((order) => (
+          {orders.map((order) => (
             <div key={order.id} className="order-card">
               <div className="order-header">
                 <span className="order-id">#{order.id}</span>
@@ -98,7 +92,6 @@ const Orders = ({ activeSection }) => {
                   <b>Address:</b> {order.customerAddress || "N/A"}
                 </p>
 
-                {/* ✅ Items List */}
                 <div className="order-items">
                   <b>Items:</b>
                   <ul>
@@ -121,7 +114,6 @@ const Orders = ({ activeSection }) => {
                 <span className="order-date">{order.date}</span>
               </div>
 
-              {/* ✅ Assign Delivery Button */}
               <div className="order-actions">
                 <button
                   className="assign-btn"

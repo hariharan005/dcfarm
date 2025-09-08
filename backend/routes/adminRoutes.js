@@ -8,6 +8,7 @@ const {
   getProfile,
   updateProfile,
   updatePassword,
+  assignDelivery,
 } = require("../controllers/adminController");
 
 const router = express.Router();
@@ -19,6 +20,7 @@ router.get("/check", check);
 
 // Orders & Customers
 router.get("/orders", getOrders);
+router.post("/orders/assign-delivery", assignDelivery);
 router.get("/customers", getCustomers);
 
 // Profile

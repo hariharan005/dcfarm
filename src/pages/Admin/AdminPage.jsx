@@ -2,13 +2,41 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AdminSidebar from "../../components/Admin/AdminSidebar";
 import "../../css/Admin/AdminPage.css";
-import AdminDashboard from "./Dashboard";
+import AdminDashboard from "./Dashboard/Dashboard";
 import AdminProfile from "./ProfileAndAuth";
 import AdminSettings from "./Settings";
 import CustomersData from "./Customers";
-import Orders from "./Orders";
-import ProductPage from "./Products";
 
+
+// Products menu and sub menu
+import Products from "./Products/Products";
+import AddProduct from "./Products/AddProduct";
+import Categories from "./Products/Categories";
+import StockManagement from "./Products/StockManagement";
+
+
+// Orders menu and sub menu
+import Orders from "./Orders/Orders";
+import PendingOrders from "./Orders/PendingOrder";
+import PackedOrder from "./Orders/PackedOrder";
+import ShippedOrders from "./Orders/ShippedOrder";
+import DeliveredOrders from "./Orders/DeliveredOrder";  
+import CancelledOrders from "./Orders/CancelledOrder";
+
+// Delivery menu and sub menu
+import Delivery from "./Delivery/Delivery";
+import DeliveryPartners from "./Delivery/DeliveryPartners";
+import AssignedOrder from "./Delivery/AssignedOrder";
+import DeliveryTracking from "./Delivery/DeliveryTracking";
+
+
+// Marketing menu and sub menu
+import Marketing from "./Marketing/Marketing";
+import Coupons from "./Marketing/Coupons";
+import LoyaltyPoint from "./Marketing/LoyaltyPoint";
+import Notification from "./Marketing/SendNotification";
+
+// Configure axios to send cookies with requests
 axios.defaults.withCredentials = true;
 
 const AdminPage = () => {
@@ -106,10 +134,48 @@ const AdminPage = () => {
         {activeSection === "Customers" && <CustomersData />}
         {activeSection === "Settings" && <AdminSettings />}
         {activeSection === "Profile" && <AdminProfile />}
-        {activeSection === "Orders" && (
-          <Orders filter={activeSub || "All Orders"} />
+
+        {/* Product Section with submenu*/}
+        {activeSection === "Products" && (
+          <>
+            {activeSub === "Add Product" && <AddProduct />}
+            {activeSub === "Categories" && <Categories />}
+            {activeSub === "Stock Management" && <StockManagement />}
+            {!activeSub && <Products />} {/* default Products page */}
+          </>
         )}
-        {activeSection === "Products" && <ProductPage />}
+
+        {/* Order Section with submenu*/}
+        {activeSection === "Orders" && (
+          <>
+            {activeSub === "Pending Orders" && <PendingOrders />}
+            {activeSub === "Packed Orders" && <PackedOrder />}
+            {activeSub === "Shipped Orders" && <ShippedOrders />}
+            {activeSub === "Delivered Orders" && <DeliveredOrders />}
+            {activeSub === "Cancelled Orders" && <CancelledOrders />}
+            {!activeSub && <Orders />} {/* default Orders page */}
+          </>
+        )}
+
+        {/* Delivery Section with submenu*/}
+        {activeSection === "Delivery" && (
+          <>
+            {activeSub === "Assign Orders" && <AssignedOrder />}
+            {activeSub === "Delivery Partners" && <DeliveryPartners />}
+            {activeSub === "Delivery Tracking" && <DeliveryTracking />}
+            {!activeSub && <Delivery />} {/* default Orders page */}
+          </>
+        )}
+
+        {/* Marketing section with submenus */}
+        {activeSection === "Marketing" && (
+          <>
+            {activeSub === "Coupons" && <Coupons />}
+            {activeSub === "Send Notifications" && <Notification />}
+            {activeSub === "Loyalty Points" && <LoyaltyPoint />}
+            {!activeSub && <Marketing />} {/* default Marketing page */}
+          </>
+        )}
       </div>
     </div>
   );

@@ -43,6 +43,7 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/payment", paymentRoutes);
+//app.use("/api/assign-delivery", orderRoutes); // New route for assigning delivery
 
 // Health check endpoint
 
