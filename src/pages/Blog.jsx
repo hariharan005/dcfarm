@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../css/Blog.css";
 import Okra from "../assets/images/Blog/Okra.jpg";
-import carrot from "../assets/images/Blog/carrot.jpg";
 
 const recipes = [
   {
@@ -17,82 +16,10 @@ const recipes = [
     id: 2,
     title: "Ladies Finger Curry",
     description: "Traditional curry made with fresh ladies finger and spices.",
-    image: carrot,
+    image: Okra,
     ingredients: ["Ladies finger", "Onion", "Tomato", "Coconut milk", "Spices"],
     instructions:
       "Cook onion and tomato, add ladies finger and spices, finish with coconut milk.",
-  },
-  {
-    id: 3,
-    title: "Okra Sambar",
-    description: "South Indian style tangy sambar with ladies finger.",
-    image: Okra,
-    ingredients: ["Ladies finger", "Tamarind", "Toor dal", "Sambar powder", "Curry leaves"],
-    instructions:
-      "Cook dal, add tamarind extract, sambar powder, and simmer with ladies finger.",
-  },
-  {
-    id: 4,
-    title: "Brinjal Curry",
-    description: "Delicious brinjal curry with South Indian spices.",
-    image: Okra,
-    ingredients: ["Brinjal", "Onion", "Tomato", "Spices"],
-    instructions:
-      "Fry brinjal, cook with onion, tomato, and spices until soft and flavorful.",
-  },
-  {
-    id: 5,
-    title: "Stuffed Brinjal Fry",
-    description: "Tasty stuffed brinjal fry with masala filling.",
-    image: Okra,
-    ingredients: ["Brinjal", "Ground masala", "Oil", "Salt"],
-    instructions:
-      "Stuff brinjal with masala, shallow fry until cooked well and crispy.",
-  },
-  {
-    id: 6,
-    title: "Crispy Ladies Finger Fry",
-    description: "Crispy and tasty fried ladies finger snack.",
-    image: Okra,
-    ingredients: ["Ladies finger", "Oil", "Chili powder", "Salt", "Turmeric"],
-    instructions:
-      "Slice ladies finger, mix with spices, deep fry until golden and crispy.",
-  },
-  {
-    id: 7,
-    title: "Ladies Finger Curry",
-    description: "Traditional curry made with fresh ladies finger and spices.",
-    image: carrot,
-    ingredients: ["Ladies finger", "Onion", "Tomato", "Coconut milk", "Spices"],
-    instructions:
-      "Cook onion and tomato, add ladies finger and spices, finish with coconut milk.",
-  },
-  {
-    id: 8,
-    title: "Okra Sambar",
-    description: "South Indian style tangy sambar with ladies finger.",
-    image: Okra,
-    ingredients: ["Ladies finger", "Tamarind", "Toor dal", "Sambar powder", "Curry leaves"],
-    instructions:
-      "Cook dal, add tamarind extract, sambar powder, and simmer with ladies finger.",
-  },
-  {
-    id: 9,
-    title: "Brinjal Curry",
-    description: "Delicious brinjal curry with South Indian spices.",
-    image: Okra,
-    ingredients: ["Brinjal", "Onion", "Tomato", "Spices"],
-    instructions:
-      "Fry brinjal, cook with onion, tomato, and spices until soft and flavorful.",
-  },
-  {
-    id: 10,
-    title: "Stuffed Brinjal Fry",
-    description: "Tasty stuffed brinjal fry with masala filling.",
-    image: Okra,
-    ingredients: ["Brinjal", "Ground masala", "Oil", "Salt"],
-    instructions:
-      "Stuff brinjal with masala, shallow fry until cooked well and crispy.",
   }
 ];
 
