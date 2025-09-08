@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../css/Blog.css";
 import Okra from "../assets/images/Blog/Okra.jpg";
-import Carrot from "../assets/images/Blog/carrot.jpg";
 
 const recipes = [
   {
@@ -12,15 +11,6 @@ const recipes = [
     ingredients: ["Ladies finger", "Oil", "Chili powder", "Salt", "Turmeric"],
     instructions:
       "Slice ladies finger, mix with spices, deep fry until golden and crispy.",
-  },
-  {
-    id: 2,
-    title: "Ladies Finger Curry",
-    description: "Traditional curry made with fresh ladies finger and spices.",
-    image: Carrot,
-    ingredients: ["Ladies finger", "Onion", "Tomato", "Coconut milk", "Spices"],
-    instructions:
-      "Cook onion and tomato, add ladies finger and spices, finish with coconut milk.",
   }
 ];
 
