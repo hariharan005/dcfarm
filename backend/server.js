@@ -5,7 +5,7 @@ const session = require("express-session");
 const path = require("path");
 const fs = require("fs");
 const Razorpay = require("razorpay");
-const { RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET } = require("./config/config");
+const { RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET, FRONTEND_URL, SESSION_SECRET } = require("./config/config");
 
 // Routes
 const adminRoutes = require("./routes/adminRoutes");
@@ -18,13 +18,13 @@ const PORT = process.env.PORT || 5000; // ✅ use environment variable
 
 // ✅ Middlewares
 app.use(cors({ 
-  origin: process.env.FRONTEND_URL || "https://dcfarm.vercel.app/", 
+  origin: FRONTEND_URL || "http://localhost:3000", 
   credentials: true 
 }));
 app.use(bodyParser.json());
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "supersecretkey",
+    secret: SESSION_SECRET || "supersecretkey",
     resave: false,
     saveUninitialized: false,
     cookie: { httpOnly: true, maxAge: 6 * 60 * 60 * 1000 },
