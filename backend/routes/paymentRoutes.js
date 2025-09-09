@@ -2,7 +2,7 @@
 const express = require("express");
 const crypto = require("crypto");
 const path = require("path");
-const { RAZORPAY_KEY_SECRET } = require("../config");
+const { RAZORPAY_KEY_SECRET } = require("../config/config");
 const { readJSON, writeJSON } = require("../utils/fileHandler");
 const sendEmail = require("../utils/sendEmail");
 

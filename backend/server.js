@@ -5,7 +5,7 @@ const session = require("express-session");
 const path = require("path");
 const fs = require("fs");
 const Razorpay = require("razorpay");
-const { RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET } = require("./config");
+const { RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET } = require("./config/config");
 
 // Routes
 const adminRoutes = require("./routes/adminRoutes");

@@ -1,6 +1,6 @@
 const path = require("path");
 const { readJSON, writeJSON } = require("../utils/fileUtils");
-const { ADMIN_USER, ADMIN_PASS } = require("../config");
+const { ADMIN_USER, ADMIN_PASS } = require("../config/config");
 
 const adminFile = path.join(__dirname, "../data/admin.json");
 const ordersFile = path.join(__dirname, "../data/orders.json");
