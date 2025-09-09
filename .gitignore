@@ -13,7 +13,9 @@
 
 
 # DB 
-/backend/data/*.json
+/backend/data/order.json
+/backend/data/admin.json
+/backend/data/products.json
 
 # misc
 .env
