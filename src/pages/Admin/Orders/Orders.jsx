@@ -8,7 +8,7 @@ const Orders = () => {
 
   const fetchOrders = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/admin/orders");
+      const res = await axios.get("/api/admin/orders");
       setOrders(res.data);
     } catch (err) {
       console.error("Failed to fetch orders", err);
@@ -46,7 +46,7 @@ const Orders = () => {
   const handleAssignDelivery = (orderId) => {
     axios
       .post(
-        "http://localhost:5000/api/admin/orders/assign-delivery",
+        "/api/admin/orders/assign-delivery",
         { orderId },
         { withCredentials: true }
       )

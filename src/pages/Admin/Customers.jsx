@@ -8,7 +8,7 @@ const Customers = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/admin/orders");
+        const res = await axios.get("/api/admin/orders");
 
         // Extract only unique customers by email
         const unique = {};

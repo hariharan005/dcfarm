@@ -37,7 +37,7 @@ const Checkout = () => {
     }
 
     try {
-      const orderRes = await fetch("http://localhost:5000/api/orders/create", {
+      const orderRes = await fetch("/api/orders/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ totalAmount: grandTotal }),
@@ -63,7 +63,7 @@ const Checkout = () => {
         prefill: { name: form.name, email: form.email, phone: form.phone, address: form.address },
         handler: async function (response) {
           try {
-            const verifyRes = await fetch("http://localhost:5000/api/payment/verify", {
+            const verifyRes = await fetch("/api/payment/verify", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({

@@ -14,14 +14,17 @@ const productRoutes = require("./routes/productRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000; // ✅ use environment variable
 
 // ✅ Middlewares
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors({ 
+  origin: process.env.FRONTEND_URL || "https://dcfarm.vercel.app/", 
+  credentials: true 
+}));
 app.use(bodyParser.json());
 app.use(
   session({
-    secret: "supersecretkey",
+    secret: process.env.SESSION_SECRET || "supersecretkey",
     resave: false,
     saveUninitialized: false,
     cookie: { httpOnly: true, maxAge: 6 * 60 * 60 * 1000 },
@@ -43,11 +46,9 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/payment", paymentRoutes);
-//app.use("/api/assign-delivery", orderRoutes); // New route for assigning delivery
 
-// Health check endpoint
-
+// ✅ Health check endpoint
 app.get("/health", (_req, res) => res.json({ ok: true }));
 
 // ✅ Start server
-app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

@@ -2,7 +2,7 @@ import axios from "axios";
 
 axios.defaults.withCredentials = true;
 
-const API_URL = "http://localhost:5000/api/admin";
+const API_URL = "/api/admin";
 
 // 🔹 Get profile
 export const getProfile = async () => {
