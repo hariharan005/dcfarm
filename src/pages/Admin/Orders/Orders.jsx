@@ -3,12 +3,16 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../../css/Admin/Orders.css";
 
+// Configure axios to send cookies with requests
+axios.defaults.baseURL = process.env.REACT_APP_API_URL || "https://dcfarm.onrender.com"; // Update if backend is hosted elsewhere
+axios.defaults.withCredentials = true;
+
 const Orders = () => {
   const [orders, setOrders] = useState([]);
 
   const fetchOrders = async () => {
     try {
-      const res = await axios.get("https://dcfarm.onrender.com/api/admin/orders", { withCredentials: true });
+      const res = await axios.get("/api/admin/orders");
       setOrders(res.data);
     } catch (err) {
       console.error("Failed to fetch orders", err);
@@ -46,9 +50,8 @@ const Orders = () => {
   const handleAssignDelivery = (orderId) => {
     axios
       .post(
-        "https://dcfarm.onrender.com/api/admin/orders/assign-delivery",
+        "/api/admin/orders/assign-delivery",
         { orderId },
-        { withCredentials: true }
       )
       .then(() => {
         alert(`🚚 Delivery successfully assigned for order #${orderId}`);
