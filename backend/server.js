@@ -28,7 +28,11 @@ mongoose.connect(MONGO_URI, {
 
 // ✅ Middlewares
 app.use(cors({ 
-  origin: process.env.FRONTEND_URL || "https://dcfarm.vercel.app", // Render Frontend URL
+  origin: [
+    process.env.FRONTEND_URL || "https://dcfarm.vercel.app", // production frontend
+    '/\.vercel\.app$/', // vercel preview deployments
+    "http://localhost:3000", // local frontend
+    ],
   credentials: true , 
 }));
 app.use(bodyParser.json());
