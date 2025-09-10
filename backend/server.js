@@ -31,23 +31,18 @@ mongoose
   });
 
 // ✅ Dynamic CORS config
-const allowedOrigins = [
-  "http://localhost:3000", // dev frontend
-  process.env.FRONTEND_URL, // main prod frontend
-];
+
 
 app.use(
   cors({
     origin: function (origin, callback) {
       if (!origin) return callback(null, true); // allow mobile apps / curl / Postman
       if (
-        allowedOrigins.includes(origin) ||
-        /\.vercel\.app$/.test(origin) // allow Vercel previews
+        origin === process.env.FRONTEND_URL || /\.vercel\.app$/.test(origin) // allow Vercel previews
       ) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
+        return callback(null, true);
+      } 
+      return callback(null, false);
     },
     credentials: true,
   })
