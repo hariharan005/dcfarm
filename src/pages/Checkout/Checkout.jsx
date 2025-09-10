@@ -9,7 +9,7 @@ import popSound from "../../sounds/Pop.mp3"; // Ensure this path is correct
 const popSoundUrl = popSound; // Ensure this path is correct
 
 const Checkout = () => {
-  const [form, setForm] = useState({ name: "", address: "", email: "" });
+  const [form, setForm] = useState({ name: "", address: "", email: "", phone: "" });
   const [cartItems, setCartItems] = useState([]);
   const [submitted, setSubmitted] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState("");
@@ -63,7 +63,7 @@ const Checkout = () => {
         prefill: { name: form.name, email: form.email, phone: form.phone, address: form.address },
         handler: async function (response) {
           try {
-            const verifyRes = await fetch("/api/payment/verify", {
+            const verifyRes = await fetch("/api/orders/verify", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
