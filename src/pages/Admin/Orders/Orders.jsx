@@ -3,28 +3,42 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../../css/Admin/Orders.css";
 
+// ✅ Configure axios
+axios.defaults.baseURL = "https://dcfarm.onrender.com/api/admin";
 axios.defaults.withCredentials = true;
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
+  // 🔹 Fetch all orders
   const fetchOrders = async () => {
     try {
-      const res = await axios.get("https://dcfarm.onrender.com/api/admin/orders", { withCredentials: true });
+      const res = await axios.get("/orders");
       setOrders(res.data);
+      setError("");
     } catch (err) {
-      console.error("Failed to fetch orders", err);
+      console.error("Failed to fetch orders:", err);
+      setError(
+        err?.response?.data?.message || "Failed to fetch orders. Try logging in."
+      );
+      setOrders([]);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchOrders();
-    const interval = setInterval(fetchOrders, 30000);
+    const interval = setInterval(fetchOrders, 30000); // auto-refresh every 30s
     return () => clearInterval(interval);
   }, []);
 
+  // 🔹 Render payment/order status
   const renderStatus = (status) => {
-    switch (status?.toLowerCase()) {
+    const s = (status || "").toLowerCase();
+    switch (s) {
       case "success":
       case "paid":
         return <span className="status-badge status-paid">Paid</span>;
@@ -35,6 +49,7 @@ const Orders = () => {
       case "shipped":
         return <span className="status-badge status-shipped">Shipped</span>;
       case "delivery":
+      case "delivered":
         return <span className="status-badge status-delivered">Delivered</span>;
       case "cancelled":
         return <span className="status-badge status-cancelled">Cancelled</span>;
@@ -45,24 +60,19 @@ const Orders = () => {
     }
   };
 
-  const handleAssignDelivery = (orderId) => {
-    axios
-      .post(
-        "https://dcfarm.onrender.com/api/admin/orders/assign-delivery",
-        { orderId },
-        { withCredentials: true }
-      )
-      .then(() => {
-        alert(`🚚 Delivery successfully assigned for order #${orderId}`);
-        fetchOrders();
-      })
-      .catch((error) => {
-        const msg = error?.response?.data?.message || "Failed to assign delivery";
-        alert(`❌ ${msg}`);
-      });
+  // 🔹 Assign delivery
+  const handleAssignDelivery = async (orderId) => {
+    try {
+      await axios.post("/orders/assign-delivery", { orderId });
+      alert(`🚚 Delivery successfully assigned for order #${orderId}`);
+      fetchOrders();
+    } catch (err) {
+      const msg = err?.response?.data?.message || "Failed to assign delivery";
+      alert(`❌ ${msg}`);
+    }
   };
 
-  // 🔹 Group orders by date only (normalize to YYYY-MM-DD)
+  // 🔹 Group orders by date (YYYY-MM-DD)
   const groupedOrders = orders.reduce((groups, order) => {
     const dateKey = new Date(order.date).toISOString().split("T")[0];
     if (!groups[dateKey]) groups[dateKey] = [];
@@ -70,15 +80,18 @@ const Orders = () => {
     return groups;
   }, {});
 
-  // 🔹 Grand total across all dates
+  // 🔹 Grand total
   const grandTotal = orders.reduce((sum, o) => sum + (o.totalAmount || 0), 0);
+
+  if (loading) return <p className="loading-text">Loading orders...</p>;
+  if (error) return <p className="error-text">{error}</p>;
 
   return (
     <div className="orders-page">
       <h2 className="orders-title">📦 All Orders</h2>
       <p className="orders-subtitle">Auto-refreshes every 30s</p>
 
-      {/* 🔹 Grand Total Summary */}
+      {/* Grand total */}
       <div className="grand-total-box">
         <h3>
           🏆 Grand Total: ₹{grandTotal} ({orders.length}{" "}
@@ -92,7 +105,6 @@ const Orders = () => {
         Object.entries(groupedOrders)
           .sort(([a], [b]) => new Date(b) - new Date(a)) // latest first
           .map(([dateKey, ordersForDate]) => {
-            // Calculate total revenue for this date
             const totalRevenue = ordersForDate.reduce(
               (sum, o) => sum + (o.totalAmount || 0),
               0
@@ -100,7 +112,6 @@ const Orders = () => {
 
             return (
               <div key={dateKey} className="orders-by-date">
-                {/* Heading with date, count, and total revenue */}
                 <h3 className="order-date-heading">
                   📅{" "}
                   {new Date(dateKey).toLocaleDateString("en-GB", {

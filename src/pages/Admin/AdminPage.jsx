@@ -37,6 +37,7 @@ import LoyaltyPoint from "./Marketing/LoyaltyPoint";
 import Notification from "./Marketing/SendNotification";
 
 // Configure axios to send cookies with requests
+axios.defaults.baseURL = "https://dcfarm.onrender.com"; // backend
 axios.defaults.withCredentials = true;
 
 const AdminPage = () => {
@@ -46,6 +47,7 @@ const AdminPage = () => {
   const [activeSection, setActiveSection] = useState("Dashboard");
   const [activeSub, setActiveSub] = useState(""); // ✅ Track submenu click
 
+  // Check session on mount
   useEffect(() => {
     const checkSession = async () => {
       try {

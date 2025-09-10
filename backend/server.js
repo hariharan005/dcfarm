@@ -17,7 +17,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // ✅ Connect to MongoDB
-mongoose.connect(MONGO_URI, {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => console.log("✅ Connected to MongoDB"))
@@ -26,13 +26,17 @@ mongoose.connect(MONGO_URI, {
     process.exit(1);
   });
 
-// ✅ CORS setup
-// ✅ Middlewares
+// ✅ CORS setup 
 app.use(cors({ 
   origin: process.env.FRONTEND_URL || "https://dcfarm.vercel.app", 
   credentials: true 
 }));
+
+// ✅ Middlewares
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// ✅ Session setup
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "supersecretkey",
