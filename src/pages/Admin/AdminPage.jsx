@@ -30,7 +30,7 @@ import LoyaltyPoint from "./Marketing/LoyaltyPoint";
 import Notification from "./Marketing/SendNotification";
 
 // Configure axios to send cookies with requests
-axios.defaults.baseURL = process.env.REACT_APP_API_URL || "https://dcfarm.onrender.com/api"; // Update if backend is hosted elsewhere
+axios.defaults.baseURL = process.env.REACT_APP_API_URL || "https://dcfarm.onrender.com"; // Update if backend is hosted elsewhere
 axios.defaults.withCredentials = true;
 
 const AdminPage = () => {
