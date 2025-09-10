@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 5000;
 // ✅ CORS setup
 app.use(
   cors({
-    origin: FRONTEND_URL || "http://localhost:3000",
+    origin: FRONTEND_URL || "https://dcfarm.vercel.app",
     credentials: true,
   })
 );
