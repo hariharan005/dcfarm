@@ -70,4 +70,19 @@ const verifyPayment = async (req, res) => {
   }
 };
 
-module.exports = { createOrder, verifyPayment };
+
+// Admin Get all orders from MongoDB
+const getAllOrders = async (req, res) => {
+  try {
+    if (!req.session.admin) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+    const orders = await Order.find().sort({ createdAt: -1 });
+    res.json({ success: true, orders });
+  } catch (err) {
+    console.error("❌ getAllOrders error:", err);
+    res.status(500).json({ success: false, message: "Failed to fetch orders" });
+  }
+};
+
+module.exports = { createOrder, verifyPayment, getAllOrders };
