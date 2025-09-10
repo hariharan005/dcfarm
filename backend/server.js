@@ -27,13 +27,6 @@ mongoose.connect(MONGO_URI, {
   });
 
 // ✅ CORS setup
-app.use(
-  cors({
-    origin: FRONTEND_URL || "https://dcfarm.vercel.app",
-    credentials: true,
-  })
-);
-
 // ✅ Middlewares
 app.use(cors({ 
   origin: process.env.FRONTEND_URL || "https://dcfarm.vercel.app", 
@@ -45,11 +38,11 @@ app.use(
     secret: process.env.SESSION_SECRET || "supersecretkey",
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI, collectionName: 'sessions' }),
     cookie: {
       httpOnly: true,
-      secure: true, // ✅ secure cookies only in prod
-      sameSite: 'none', // ✅ cross-site cookies
+      secure: process.env.NODE_ENV === "production", // HTTPS only
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       maxAge: 6 * 60 * 60 * 1000, // 6 hours
     },
   })
