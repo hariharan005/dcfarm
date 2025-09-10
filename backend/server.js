@@ -27,7 +27,7 @@ mongoose.connect(MONGO_URI, {
 
 // ✅ Middlewares
 app.use(cors({ 
-  origin: "http://localhost:3000", 
+  origin: "https://dcfarm.onrender.com", 
   credentials: true ,
 }));
 app.use(bodyParser.json());
