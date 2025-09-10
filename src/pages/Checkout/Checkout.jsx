@@ -65,6 +65,7 @@ const Checkout = () => {
           try {
             const verifyRes = await fetch("https://dcfarm.onrender.com/api/orders/verify", {
               method: "POST",
+              withcredentials: true,
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 razorpay_order_id: response.razorpay_order_id,

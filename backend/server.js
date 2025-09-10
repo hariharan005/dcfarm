@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const MongoStore = require("connect-mongo");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const session = require("express-session");
@@ -35,7 +36,7 @@ app.use(
 
 // ✅ Middlewares
 app.use(cors({ 
-  origin: process.env.FRONTEND_URL || "https://dcfarm.vercel.app/", 
+  origin: process.env.FRONTEND_URL || "https://dcfarm.vercel.app", 
   credentials: true 
 }));
 app.use(bodyParser.json());
@@ -44,10 +45,11 @@ app.use(
     secret: process.env.SESSION_SECRET || "supersecretkey",
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
     cookie: {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // ✅ secure cookies only in prod
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      secure: true, // ✅ secure cookies only in prod
+      sameSite: 'none', // ✅ cross-site cookies
       maxAge: 6 * 60 * 60 * 1000, // 6 hours
     },
   })
