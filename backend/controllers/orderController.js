@@ -1,11 +1,9 @@
-const path = require("path");
 const crypto = require("crypto");
-const { readJSON, writeJSON } = require("../utils/fileHandler");
 const sendEmail = require("../utils/sendEmail");
+const Order = require("../models/Orders");
 
-const ordersFile = path.join(__dirname, "../data/orders.json");
-
-exports.createOrder = async (req, res) => {
+// Create Razorpay order
+const createOrder = async (req, res) => {
   try {
     const { totalAmount } = req.body;
     const options = {
@@ -16,11 +14,13 @@ exports.createOrder = async (req, res) => {
     const order = await req.app.locals.razorpay.orders.create(options);
     res.json(order);
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Failed to create order" });
   }
 };
 
-exports.verifyPayment = async (req, res) => {
+// Verify payment + save order to MongoDB
+const verifyPayment = async (req, res) => {
   try {
     const {
       razorpay_order_id,
@@ -40,35 +40,34 @@ exports.verifyPayment = async (req, res) => {
       .update(sign.toString())
       .digest("hex");
 
-    if (razorpay_signature === expectedSign) {
-      const order = {
-        id: Date.now(),
-        customerName,
-        customerEmail,
-        customerPhone,
-        customerAddress,
-        items,
-        totalAmount,
-        paymentId: razorpay_payment_id,
-        paymentStatus: "SUCCESS",
-        date: new Date().toLocaleString(),
-      };
-
-      const data = readJSON(ordersFile);
-      data.push(order);
-      writeJSON(ordersFile, data);
-
-      await sendEmail(
-        customerEmail,
-        "Order Confirmation",
-        `Hello ${customerName},\n\nYour order has been placed successfully.\nOrder ID: ${order.id}\nTotal: ₹${totalAmount}`
-      );
-
-      return res.json({ success: true, message: "Payment verified & order saved", order });
-    } else {
+    if (razorpay_signature !== expectedSign) {
       return res.status(400).json({ success: false, message: "Invalid signature" });
     }
+
+    const order = new Order({
+      customerName,
+      customerEmail,
+      customerPhone,
+      customerAddress,
+      items,
+      totalAmount,
+      paymentId: razorpay_payment_id,
+      paymentStatus: "SUCCESS",
+    });
+
+    await order.save();
+
+    await sendEmail(
+      customerEmail,
+      "Order Confirmation",
+      `Hello ${customerName},\n\nYour order has been placed successfully.\nOrder ID: ${order._id}\nTotal: ₹${totalAmount}`
+    );
+
+    return res.json({ success: true, message: "Payment verified & order saved", order });
   } catch (err) {
+    console.error("❌ verifyPayment error:", err);
     res.status(500).json({ message: "Payment verification failed" });
   }
 };
+
+module.exports = { createOrder, verifyPayment };

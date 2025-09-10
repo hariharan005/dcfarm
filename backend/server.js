@@ -1,11 +1,10 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const session = require("express-session");
-const path = require("path");
-const fs = require("fs");
 const Razorpay = require("razorpay");
-const { RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET, FRONTEND_URL } = require("./config/config");
+const { RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET, FRONTEND_URL, MONGO_URI } = require("./config/config");
 
 // Import routes
 const adminRoutes = require("./routes/adminRoutes");
@@ -15,6 +14,16 @@ const paymentRoutes = require("./routes/paymentRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// ✅ Connect to MongoDB
+mongoose.connect(MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => console.log("✅ Connected to MongoDB"))
+  .catch((err) => {
+    console.error("❌ MongoDB connection error:", err);
+    process.exit(1);
+  });
 
 // ✅ CORS setup
 app.use(
@@ -43,10 +52,6 @@ app.use(
     },
   })
 );
-
-// ✅ Ensure data dir exists
-const dataDir = path.join(__dirname, "data");
-if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir);
 
 // ✅ Razorpay instance
 if (!RAZORPAY_KEY_ID || !RAZORPAY_KEY_SECRET) {

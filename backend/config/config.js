@@ -14,4 +14,6 @@ module.exports = {
   SESSION_SECRET: process.env.SESSION_SECRET,
   REACT_APP_API_URL: process.env.REACT_APP_API_URL,
 
+  MONGO_URI: process.env.MONGO_URI,
+
 };

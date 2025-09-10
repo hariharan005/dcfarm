@@ -1,9 +1,5 @@
-const path = require("path");
-const { readJSON, writeJSON } = require("../utils/fileUtils");
+const Order = require("../models/Orders");
 const { ADMIN_USER, ADMIN_PASS } = require("../config/config");
-
-const adminFile = path.join(__dirname, "../data/admin.json");
-const ordersFile = path.join(__dirname, "../data/orders.json");
 
 // 🟢 Auth: login
 exports.login = (req, res) => {
@@ -26,12 +22,18 @@ exports.check = (req, res) => {
   res.json({ loggedIn: !!req.session.admin });
 };
 
-// 🟢 Get all orders
-exports.getOrders = (req, res) => {
+// 🟢 Get all orders from MongoDB
+exports.getOrders = async (req, res) => {
   if (!req.session.admin)
     return res.status(401).json({ success: false, message: "Unauthorized" });
-  const data = readJSON(ordersFile);
-  res.json(data.sort((a, b) => new Date(b.date) - new Date(a.date)));
+
+  try {
+    const orders = await Order.find().sort({ date: -1 }); // latest first
+    res.json(orders);
+  } catch (err) {
+    console.error("Error fetching orders from MongoDB:", err);
+    res.status(500).json({ success: false, message: "Failed to fetch orders" });
+  }
 };
 
 // 🟢 Get customers
@@ -108,9 +110,8 @@ exports.updatePassword = (req, res) => {
 };
 
 
-// controllers/adminController.js
-// --- add below other exports in this file ---
-exports.assignDelivery = (req, res) => {
+// 🟢 Assign delivery
+exports.assignDelivery = async (req, res) => {
   if (!req.session.admin)
     return res.status(401).json({ success: false, message: "Unauthorized" });
 
@@ -118,23 +119,14 @@ exports.assignDelivery = (req, res) => {
     const { orderId } = req.body;
     if (!orderId) return res.status(400).json({ success: false, message: "orderId required" });
 
-    const data = readJSON(ordersFile);
-    if (!Array.isArray(data)) {
-      console.error("ordersFile does not contain an array:", data);
-      return res.status(500).json({ success: false, message: "Orders storage invalid" });
-    }
+    const order = await Order.findById(orderId);
+    if (!order) return res.status(404).json({ success: false, message: "Order not found" });
 
-    const idx = data.findIndex((o) => o.id == orderId);
-    if (idx === -1) {
-      return res.status(404).json({ success: false, message: "Order not found" });
-    }
+    // Update status
+    order.paymentStatus = "shipped"; // or "delivery" as per your workflow
+    await order.save();
 
-    // update status to 'delivery'
-    data[idx].status = "delivery";
-    writeJSON(ordersFile, data);
-
-    console.log(`Assigned order ${orderId} to delivery (admin: ${!!req.session.admin})`);
-    return res.json({ success: true, message: `Order #${orderId} assigned to delivery`, order: data[idx] });
+    return res.json({ success: true, message: `Order #${orderId} assigned to delivery`, order });
   } catch (err) {
     console.error("assignDelivery error:", err);
     return res.status(500).json({ success: false, message: "Failed to assign delivery" });

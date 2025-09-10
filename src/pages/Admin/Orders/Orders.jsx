@@ -32,7 +32,7 @@ const Orders = () => {
         return <span className="status-badge status-packed">Packed</span>;
       case "shipped":
         return <span className="status-badge status-shipped">Shipped</span>;
-      case "delivered":
+      case "delivery":
         return <span className="status-badge status-delivered">Delivered</span>;
       case "cancelled":
         return <span className="status-badge status-cancelled">Cancelled</span>;
@@ -113,9 +113,9 @@ const Orders = () => {
 
                 <div className="orders-grid">
                   {ordersForDate.map((order) => (
-                    <div key={order.id} className="order-card">
+                    <div key={order._id} className="order-card">
                       <div className="order-header">
-                        <span className="order-id">#{order.id}</span>
+                        <span className="order-id">#{order._id.slice(-6)}</span>
                         {renderStatus(order.paymentStatus)}
                       </div>
 
@@ -164,7 +164,7 @@ const Orders = () => {
                       <div className="order-actions">
                         <button
                           className="assign-btn"
-                          onClick={() => handleAssignDelivery(order.id)}
+                          onClick={() => handleAssignDelivery(order._id)}
                         >
                           🚚 Assign Delivery
                         </button>
