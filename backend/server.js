@@ -5,14 +5,7 @@ const session = require("express-session");
 const path = require("path");
 const fs = require("fs");
 const Razorpay = require("razorpay");
-
-// Import config AFTER dotenv
-const {
-  RAZORPAY_KEY_ID,
-  RAZORPAY_KEY_SECRET,
-  FRONTEND_URL,
-  SESSION_SECRET,
-} = require("./config/config");
+const { RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET } = require("./config/config");
 
 // Import routes
 const adminRoutes = require("./routes/adminRoutes");
@@ -32,10 +25,14 @@ app.use(
 );
 
 // ✅ Middlewares
+app.use(cors({ 
+  origin: process.env.FRONTEND_URL || "https://dcfarm.vercel.app/", 
+  credentials: true 
+}));
 app.use(bodyParser.json());
 app.use(
   session({
-    secret: SESSION_SECRET || "supersecretkey",
+    secret: process.env.SESSION_SECRET || "supersecretkey",
     resave: false,
     saveUninitialized: false,
     cookie: {

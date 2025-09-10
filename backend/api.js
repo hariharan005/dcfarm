@@ -8,8 +8,8 @@ const baseURL =
     : "https://dcfarm.onrender.com/api");
 
 const api = axios.create({
-  baseURL,
-  withCredentials: true, // ✅ send cookies
+  baseURL: "https://dcfarm.onrender.com/api",
+  withCredentials: true,
 });
 
 export default api;
