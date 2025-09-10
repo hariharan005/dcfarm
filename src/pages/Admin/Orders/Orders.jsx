@@ -8,7 +8,7 @@ const Orders = () => {
 
   const fetchOrders = async () => {
     try {
-      const res = await axios.get("/api/admin/orders", { withCredentials: true });
+      const res = await axios.get("https://dcfarm.onrender.com/api/admin/orders", { withCredentials: true });
       setOrders(res.data);
     } catch (err) {
       console.error("Failed to fetch orders", err);
@@ -46,7 +46,7 @@ const Orders = () => {
   const handleAssignDelivery = (orderId) => {
     axios
       .post(
-        "/api/admin/orders/assign-delivery",
+        "https://dcfarm.onrender.com/api/admin/orders/assign-delivery",
         { orderId },
         { withCredentials: true }
       )
