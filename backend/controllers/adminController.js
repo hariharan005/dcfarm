@@ -13,12 +13,8 @@ exports.login = (req, res) => {
 
 // 🟢 Auth: logout
 exports.logout = (req, res) => {
-  req.session.destroy( err => {
-    if (err) 
-      console.error("Session destruction error:", err);
-      return res.status(500).json({ success: false, message: "Logout failed" });
-    });
-  
+  req.session.destroy();
+  res.json({ success: true, message: "Logged out" });
 };
 
 // 🟢 Auth: check session

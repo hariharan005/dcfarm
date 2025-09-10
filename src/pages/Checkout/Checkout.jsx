@@ -37,7 +37,7 @@ const Checkout = () => {
     }
 
     try {
-      const orderRes = await fetch("https://dcfarm.onrender.com/api/orders/create", {
+      const orderRes = await fetch("http://localhost:5000/api/orders/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ totalAmount: grandTotal }),
@@ -63,9 +63,8 @@ const Checkout = () => {
         prefill: { name: form.name, email: form.email, phone: form.phone, address: form.address },
         handler: async function (response) {
           try {
-            const verifyRes = await fetch("https://dcfarm.onrender.com/api/orders/verify", {
+            const verifyRes = await fetch("http://localhost:5000/api/orders/verify", {
               method: "POST",
-              withcredentials: true,
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 razorpay_order_id: response.razorpay_order_id,

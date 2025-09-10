@@ -6,15 +6,11 @@ import AdminDashboard from "./Dashboard/Dashboard";
 import AdminProfile from "./ProfileAndAuth";
 import AdminSettings from "./Settings";
 import CustomersData from "./Customers";
-
-
 // Products menu and sub menu
 import Products from "./Products/Products";
 import AddProduct from "./Products/AddProduct";
 import Categories from "./Products/Categories";
 import StockManagement from "./Products/StockManagement";
-
-
 // Orders menu and sub menu
 import Orders from "./Orders/Orders";
 import PendingOrders from "./Orders/PendingOrder";
@@ -22,14 +18,11 @@ import PackedOrder from "./Orders/PackedOrder";
 import ShippedOrders from "./Orders/ShippedOrder";
 import DeliveredOrders from "./Orders/DeliveredOrder";  
 import CancelledOrders from "./Orders/CancelledOrder";
-
 // Delivery menu and sub menu
 import Delivery from "./Delivery/Delivery";
 import DeliveryPartners from "./Delivery/DeliveryPartners";
 import AssignedOrder from "./Delivery/AssignedOrder";
 import DeliveryTracking from "./Delivery/DeliveryTracking";
-
-
 // Marketing menu and sub menu
 import Marketing from "./Marketing/Marketing";
 import Coupons from "./Marketing/Coupons";
@@ -37,7 +30,7 @@ import LoyaltyPoint from "./Marketing/LoyaltyPoint";
 import Notification from "./Marketing/SendNotification";
 
 // Configure axios to send cookies with requests
-axios.defaults.baseURL = "https://dcfarm.onrender.com"; // backend
+axios.defaults.baseURL = "http://localhost:5000"; // Update if backend is hosted elsewhere
 axios.defaults.withCredentials = true;
 
 const AdminPage = () => {
@@ -47,7 +40,6 @@ const AdminPage = () => {
   const [activeSection, setActiveSection] = useState("Dashboard");
   const [activeSub, setActiveSub] = useState(""); // ✅ Track submenu click
 
-  // Check session on mount
   useEffect(() => {
     const checkSession = async () => {
       try {

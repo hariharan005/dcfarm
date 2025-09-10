@@ -1,11 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const MongoStore = require("connect-mongo");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const Razorpay = require("razorpay");
-const { RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET, FRONTEND_URL, MONGO_URI } = require("./config/config");
+const { RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET, MONGO_URI } = require("./config/config");
 
 // Import routes
 const adminRoutes = require("./routes/adminRoutes");
@@ -17,7 +16,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // ✅ Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
+mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => console.log("✅ Connected to MongoDB"))
@@ -26,27 +25,21 @@ mongoose.connect(process.env.MONGO_URI, {
     process.exit(1);
   });
 
-// ✅ CORS setup 
-app.use(cors({ 
-  origin: process.env.FRONTEND_URL || "https://dcfarm.vercel.app", 
-  credentials: true 
-}));
-
 // ✅ Middlewares
+app.use(cors({ 
+  origin: "http://localhost:3000", 
+  credentials: true ,
+}));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// ✅ Session setup
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "supersecretkey",
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI, collectionName: 'sessions' }),
     cookie: {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // HTTPS only
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      secure: false, // ✅ secure cookies only in prod
+      sameSite: "lax",
       maxAge: 6 * 60 * 60 * 1000, // 6 hours
     },
   })
