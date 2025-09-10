@@ -4,6 +4,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const Razorpay = require("razorpay");
+const MongoStore = require("connect-mongo"); // Optional: For session storage in MongoDB
 const { RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET, MONGO_URI } = require("./config/config");
 
 // Import routes
@@ -27,19 +28,22 @@ mongoose.connect(MONGO_URI, {
 
 // ✅ Middlewares
 app.use(cors({ 
-  origin: "https://dcfarm.onrender.com", 
-  credentials: true ,
+  origin: process.env.FRONTEND_URL || "https://dcfarm.vercel.app", // Render Frontend URL
+  credentials: true , 
 }));
 app.use(bodyParser.json());
+
+// Secure session storage with MongoDB
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "supersecretkey",
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: MONGO_URI, collectionName: 'sessions' }),
     cookie: {
       httpOnly: true,
-      secure: false, // ✅ secure cookies only in prod
-      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production", // true in production
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       maxAge: 6 * 60 * 60 * 1000, // 6 hours
     },
   })
