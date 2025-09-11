@@ -12,7 +12,7 @@ const Orders = () => {
 
   const fetchOrders = async () => {
     try {
-      const res = await axios.get("/api/admin/orders");
+      const res = await axios.get("/admin/orders");
       setOrders(res.data);
     } catch (err) {
       console.error("Failed to fetch orders", err);
@@ -50,7 +50,7 @@ const Orders = () => {
   const handleAssignDelivery = (orderId) => {
     axios
       .post(
-        "/api/admin/orders/assign-delivery",
+        "/admin/orders/assign-delivery",
         { orderId },
       )
       .then(() => {

@@ -5,7 +5,7 @@ const Delivery = () => {
   const [deliveryOrders, setDeliveryOrders] = useState([]);
 
   useEffect(() => {
-    axios.get("/api/admin/orders")
+    axios.get("/admin/orders")
       .then(res => {
         const deliveryOnly = res.data.filter(
           o => o.status?.toLowerCase() === "delivery" // make sure backend sets this
