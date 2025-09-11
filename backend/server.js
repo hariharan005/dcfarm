@@ -35,17 +35,7 @@ mongoose
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true); // allow mobile apps / curl / Postman
-      if (
-        origin === process.env.FRONTEND_URL ||
-        /\.vercel\.app$/.test(origin) // allow Vercel previews
-      ) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: process.env.FRONTEND_URL || "https://dcfarm.vercel.app", // Update if frontend is hosted elsewhere
     credentials: true,
   })
 );

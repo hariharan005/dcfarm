@@ -3,11 +3,9 @@ const express = require("express");
 const crypto = require("crypto");
 const path = require("path");
 const { RAZORPAY_KEY_SECRET } = require("../config/config");
-const { readJSON, writeJSON } = require("../utils/fileHandler");
 const sendEmail = require("../utils/sendEmail");
 
 const router = express.Router();
-const ordersFile = path.join(__dirname, "../data/orders.json");
 
 // ✅ Verify payment
 router.post("/verify", async (req, res) => {
