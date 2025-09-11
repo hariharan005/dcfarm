@@ -40,7 +40,7 @@ const AdminPage = () => {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const res = await axios.get("/api/admin/check");
+        const res = await axios.get("/admin/check");
         if (res.data.loggedIn) setIsLoggedIn(true);
       } catch (err) {
         console.log("Session check failed", err);
@@ -57,7 +57,7 @@ const AdminPage = () => {
       return;
     }
     try {
-      const res = await axios.post("/api/admin/login", login);
+      const res = await axios.post("/admin/login", login);
       if (res.data.success) setIsLoggedIn(true);
       else alert("Invalid credentials");
     } catch (err) {
@@ -68,7 +68,7 @@ const AdminPage = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post("/api/admin/logout");
+      await axios.post("/admin/logout");
       setIsLoggedIn(false);
       setLogin({ username: "", password: "" });
     } catch (err) {

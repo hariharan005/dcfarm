@@ -2,7 +2,7 @@ import axios from "axios";
 
 axios.defaults.withCredentials = true;
 
-const API_URL = "/api/admin";
+const API_URL = "/admin";
 
 // 🔹 Get profile
 export const getProfile = async () => {
