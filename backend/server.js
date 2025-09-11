@@ -41,6 +41,7 @@ app.use(
 );
 
 app.use(bodyParser.json());
+app.set("trust proxy", 1); // Trust first proxy if behind a proxy (e.g., Heroku, Vercel)
 
 // ✅ Secure session storage with MongoDB
 app.use(
@@ -54,8 +55,8 @@ app.use(
     }),
     cookie: {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // cookies only over HTTPS in prod
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      secure: true, // Set to true if using HTTPS
+      sameSite: "none", // Adjust based on your frontend/backend setup
       maxAge: 6 * 60 * 60 * 1000, // 6 hours
     },
   })
