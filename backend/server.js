@@ -65,8 +65,8 @@ app.use(
     }),
     cookie: {
       httpOnly: true,
-      secure: false, // Set to true if using HTTPS
-      sameSite: "lax", // Adjust based on your frontend/backend setup
+      secure: true, // Set to true if using HTTPS
+      sameSite: "none", // Adjust based on your frontend/backend setup
       maxAge: 6 * 60 * 60 * 1000, // 6 hours
     },
   })
