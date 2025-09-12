@@ -1,10 +1,9 @@
 const Order = require("../models/Orders");
-const { ADMIN_USER, ADMIN_PASS } = require("../config/config");
 
 // 🟢 Auth: login
 exports.login = (req, res) => {
   const { username, password } = req.body;
-  if (username === ADMIN_USER && password === ADMIN_PASS) {
+  if (username === process.env.ADMIN_USER && password === process.env.ADMIN_PASS) {
     req.session.admin = true;
     return res.json({ success: true });
   }

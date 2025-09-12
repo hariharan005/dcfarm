@@ -2,7 +2,6 @@
 const express = require("express");
 const crypto = require("crypto");
 const path = require("path");
-const { RAZORPAY_KEY_SECRET } = require("../config/config");
 const sendEmail = require("../utils/sendEmail");
 
 const router = express.Router();
@@ -27,7 +26,7 @@ router.post("/verify", async (req, res) => {
 
     const sign = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSign = crypto
-      .createHmac("sha256", RAZORPAY_KEY_SECRET)
+      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
       .update(sign.toString())
       .digest("hex");
 

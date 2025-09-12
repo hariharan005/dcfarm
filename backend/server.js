@@ -1,3 +1,13 @@
+const path = require("path");
+const dotenv = require("dotenv");
+// Pick env file based on NODE_ENV (default = development)
+const envFile = `.env.${process.env.NODE_ENV || "development"}`;
+dotenv.config({ path: path.resolve(__dirname, envFile) });
+
+console.log(`[dotenv] Loaded ${envFile}`);
+console.log("EMAIL_USER:", process.env.EMAIL_USER);
+console.log("EMAIL_PASS exists?", !!process.env.EMAIL_PASS);
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -5,9 +15,7 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const Razorpay = require("razorpay");
 const MongoStore = require("connect-mongo");
-require("dotenv").config();
 
-const { RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET, MONGO_URI } = require("./config/config");
 
 // Import routes
 const adminRoutes = require("./routes/adminRoutes");
@@ -15,12 +23,14 @@ const orderRoutes = require("./routes/orderRoutes");
 const productRoutes = require("./routes/productRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+
 // ✅ Connect to MongoDB
 mongoose
-  .connect(MONGO_URI, {
+  .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -35,7 +45,7 @@ mongoose
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "https://dcfarm.vercel.app", // Update if frontend is hosted elsewhere
+    origin: process.env.FRONTEND_URL || "http://localhost:3000",
     credentials: true,
   })
 );
@@ -50,27 +60,27 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-      mongoUrl: MONGO_URI,
+      mongoUrl: process.env.MONGO_URI,
       collectionName: "sessions",
     }),
     cookie: {
       httpOnly: true,
-      secure: true, // Set to true if using HTTPS
-      sameSite: "none", // Adjust based on your frontend/backend setup
+      secure: false, // Set to true if using HTTPS
+      sameSite: "lax", // Adjust based on your frontend/backend setup
       maxAge: 6 * 60 * 60 * 1000, // 6 hours
     },
   })
 );
 
 // ✅ Razorpay instance
-if (!RAZORPAY_KEY_ID || !RAZORPAY_KEY_SECRET) {
+if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
   console.error("❌ Razorpay keys missing! Check your .env file.");
   process.exit(1);
 }
 
 app.locals.razorpay = new Razorpay({
-  key_id: RAZORPAY_KEY_ID,
-  key_secret: RAZORPAY_KEY_SECRET,
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
 // ✅ Routes

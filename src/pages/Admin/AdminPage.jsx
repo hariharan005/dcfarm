@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import AdminSidebar from "../../components/Admin/AdminSidebar";
 import "../../css/Admin/AdminPage.css";
 import AdminDashboard from "./Dashboard/Dashboard";
@@ -28,6 +27,8 @@ import Marketing from "./Marketing/Marketing";
 import Coupons from "./Marketing/Coupons";
 import LoyaltyPoint from "./Marketing/LoyaltyPoint";
 import Notification from "./Marketing/SendNotification";
+import axios from "../../api";
+
 
 
 const AdminPage = () => {

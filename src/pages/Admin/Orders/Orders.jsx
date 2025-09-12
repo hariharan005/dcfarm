@@ -1,11 +1,8 @@
 // src/pages/Admin/Orders.jsx
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../../api";
 import "../../../css/Admin/Orders.css";
 
-// Configure axios to send cookies with requests
-axios.defaults.baseURL = process.env.REACT_APP_API_URL || "https://dcfarm.onrender.com"; // Update if backend is hosted elsewhere
-axios.defaults.withCredentials = true;
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);

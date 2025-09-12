@@ -5,8 +5,9 @@ import { motion } from "framer-motion";
 import confetti from "canvas-confetti";
 import "../../css/Checkout.css";
 import popSound from "../../sounds/Pop.mp3"; // Ensure this path is correct
+import axios from "../../api"; // Your axios instance
 
-const popSoundUrl = popSound; // Ensure this path is correct
+const popSoundUrl = popSound;
 
 const Checkout = () => {
   const [form, setForm] = useState({ name: "", address: "", email: "", phone: "" });
@@ -37,14 +38,13 @@ const Checkout = () => {
     }
 
     try {
-      const orderRes = await fetch("https://dcfarm.onrender.com/api/orders/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ totalAmount: grandTotal }),
-      });
-      const orderData = await orderRes.json();
+      // Create order with axios
+      const orderRes = await axios.post("/orders/create", { totalAmount: grandTotal });
+      const orderData = orderRes.data;
+
       if (!orderData.id) throw new Error("Failed to create Razorpay order");
 
+      // Load Razorpay script if not loaded
       if (!window.Razorpay) {
         const script = document.createElement("script");
         script.src = "https://checkout.razorpay.com/v1/checkout.js";
@@ -63,33 +63,22 @@ const Checkout = () => {
         prefill: { name: form.name, email: form.email, phone: form.phone, address: form.address },
         handler: async function (response) {
           try {
-            const verifyRes = await fetch("https://dcfarm.onrender.com/api/orders/verify", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                razorpay_order_id: response.razorpay_order_id,
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature,
-                customerName: form.name,
-                customerEmail: form.email,
-                customerPhone: form.phone,
-                customerAddress: form.address,
-                items: cartItems,
-                totalAmount: grandTotal,
-              }),
+            // Verify payment using axios
+            const verifyRes = await axios.post("/orders/verify", {
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+              customerName: form.name,
+              customerEmail: form.email,
+              customerPhone: form.phone,
+              customerAddress: form.address,
+              items: cartItems,
+              totalAmount: grandTotal,
             });
 
-            let verifyData;
-            try {
-              verifyData = await verifyRes.json();
-            } catch (e) {
-              const text = await verifyRes.text();
-              console.error("❌ Backend returned non-JSON:", text);
-              alert("Payment verification failed. Please contact support.");
-              return;
-            }
+            const verifyData = verifyRes.data;
+
             if (verifyData.success) {
-              //alert("✅ Payment successful!");
               setPaymentStatus("success");
               await clearCart();
               setSubmitted(true);
@@ -99,7 +88,6 @@ const Checkout = () => {
             } else {
               alert("❌ Payment failed: " + verifyData.message);
               setPaymentStatus("failed");
-              alert("Payment verification failed!");
             }
           } catch (error) {
             console.error("❌ Verification error:", error);
@@ -117,7 +105,7 @@ const Checkout = () => {
     }
   };
 
-  // Confetti + sparkles effect
+  // Confetti + sparkle effect
   useEffect(() => {
     if (submitted && paymentStatus === "success") {
       const duration = 2 * 1000;
@@ -142,7 +130,6 @@ const Checkout = () => {
         }
       }, 1500);
 
-      // Sparkle effect
       const interval = setInterval(() => {
         if (sparkRef.current) {
           const sparkle = document.createElement("div");
@@ -177,47 +164,21 @@ const Checkout = () => {
       <div className="thankyou-container">
         <h2>🎉 Thank you for your order!</h2>
         <p>Your payment was successful and your order is placed.</p>
-
-        {/* Gift Box with sparkle reference */}
-        <div
-          ref={sparkRef}
-          style={{ position: "relative", width: "120px", height: "120px", margin: "20px auto" }}
-        >
+        <div ref={sparkRef} style={{ position: "relative", width: "120px", height: "120px", margin: "20px auto" }}>
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: [0, 1.2, 1], rotate: [0, 10, -10, 0], boxShadow: ["0 0 0px #fff", "0 0 20px #ffcc00", "0 0 0px #fff"] }}
             transition={{ duration: 1.2, ease: "easeOut" }}
-            style={{
-              width: "100px",
-              height: "70px",
-              background: "#FFCC00",
-              borderRadius: "6px",
-              position: "absolute",
-              bottom: 0,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "2.5rem",
-            }}
+            style={{ width: "100px", height: "70px", background: "#FFCC00", borderRadius: "6px", position: "absolute", bottom: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "2.5rem" }}
           >
             🎁
           </motion.div>
-
           <motion.div
             initial={{ rotateX: 0, y: 0 }}
             animate={{ rotateX: [-10, -120, -100], y: [-5, -60, -50] }}
             transition={{ delay: 1, duration: 0.8, ease: "easeOut" }}
-            style={{
-              width: "100px",
-              height: "30px",
-              background: "#FF9900",
-              borderRadius: "6px 6px 0 0",
-              position: "absolute",
-              top: 0,
-              transformOrigin: "top center",
-            }}
+            style={{ width: "100px", height: "30px", background: "#FF9900", borderRadius: "6px 6px 0 0", position: "absolute", top: 0, transformOrigin: "top center" }}
           />
-
           <motion.div
             initial={{ y: 0, scale: 0 }}
             animate={{ y: -150, scale: 1 }}
@@ -227,7 +188,6 @@ const Checkout = () => {
             🎁
           </motion.div>
         </div>
-
         <button onClick={() => navigate("/products")} style={{ marginTop: 16 }}>
           Back to Products
         </button>
@@ -235,7 +195,6 @@ const Checkout = () => {
     );
   }
 
-  // Checkout Form
   return (
     <div className="checkout-container">
       <h2>Checkout</h2>
@@ -245,7 +204,9 @@ const Checkout = () => {
         <>
           <ul className="cart-list">
             {cartItems.map((item) => (
-              <li key={item.id}>{item.name} × {item.qty} = ₹{item.total}</li>
+              <li key={item.id}>
+                {item.name} × {item.qty} = ₹{item.total}
+              </li>
             ))}
           </ul>
           <h3 className="total-amount">Total Amount: ₹{grandTotal}</h3>
