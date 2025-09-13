@@ -44,7 +44,7 @@ mongoose
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: process.env.FRONTEND_URL || "https://dcfarmdashboard.vercel.app" || "https://dcfarm.vercel.app",
     credentials: true,
   })
 );
