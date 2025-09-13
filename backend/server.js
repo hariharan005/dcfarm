@@ -1,20 +1,12 @@
+// server.js
 const path = require("path");
 const dotenv = require("dotenv");
-// Pick env file based on NODE_ENV (default = development)
-const envFile = `.env.${process.env.NODE_ENV || "development"}`;
-dotenv.config({ path: path.resolve(__dirname, envFile) });
-
-console.log(`[dotenv] Loaded ${envFile}`);
-console.log("EMAIL_USER:", process.env.EMAIL_USER);
-console.log("EMAIL_PASS exists?", !!process.env.EMAIL_PASS);
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors");
-const bodyParser = require("body-parser");
 const session = require("express-session");
-const Razorpay = require("razorpay");
 const MongoStore = require("connect-mongo");
-
+const bodyParser = require("body-parser");
+const Razorpay = require("razorpay");
 
 // Import routes
 const adminRoutes = require("./routes/adminRoutes");
@@ -22,10 +14,16 @@ const orderRoutes = require("./routes/orderRoutes");
 const productRoutes = require("./routes/productRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 
+// Load environment variables based on NODE_ENV
+const envFile = `.env.${process.env.NODE_ENV || "development"}`;
+dotenv.config({ path: path.resolve(__dirname, envFile) });
+
+console.log(`[dotenv] Loaded ${envFile}`);
+console.log("EMAIL_USER:", process.env.EMAIL_USER);
+console.log("EMAIL_PASS exists?", !!process.env.EMAIL_PASS);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
 
 // ✅ Connect to MongoDB
 mongoose
@@ -39,23 +37,32 @@ mongoose
     process.exit(1);
   });
 
-// ✅ Dynamic CORS config
+// ✅ Dynamic CORS setup
+const allowedOrigins = (process.env.FRONTEND_URL || "").split(",");
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.setHeader("Access-Control-Allow-Credentials", "true");
 
+  if (req.method === "OPTIONS") return res.sendStatus(200); // handle preflight
+  next();
+});
 
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL || "https://dcfarmdashboard.vercel.app" || "https://dcfarm.vercel.app",
-    credentials: true,
-  })
-);
-
+// ✅ Body parser
 app.use(bodyParser.json());
-app.set("trust proxy", 1); // Trust first proxy if behind a proxy (e.g., Heroku, Vercel)
 
-// ✅ Secure session storage with MongoDB
+// ✅ Session setup with MongoDB
+app.set("trust proxy", 1); // trust first proxy (Render, Vercel, etc.)
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "supersecretkey",
+    secret: process.env.SESSION_SECRET || "superSecretRandomKey",
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
@@ -64,14 +71,14 @@ app.use(
     }),
     cookie: {
       httpOnly: true,
-      secure: true, // Set to true if using HTTPS production
-      sameSite: "none", // Adjust based on your frontend/backend setup none production
+      secure: true, // true if using HTTPS in production
+      sameSite: "none", // for cross-origin requests
       maxAge: 6 * 60 * 60 * 1000, // 6 hours
     },
   })
 );
 
-// ✅ Razorpay instance
+// ✅ Razorpay setup
 if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
   console.error("❌ Razorpay keys missing! Check your .env file.");
   process.exit(1);
