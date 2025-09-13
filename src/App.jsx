@@ -28,7 +28,6 @@ import PrivacyPolicy from "./pages/Policy/PrivacyPolicy";
 import ShippingPolicy from "./pages/Policy/ShippingPolicy";
 import TermsAndService from "./pages/Policy/TermsAndConditions";
 
-import AdminPage from "./pages/Admin/AdminPage";
 
 
 function App() {
@@ -54,9 +53,6 @@ function App() {
 
         {/*Not Found Routes*/}
         <Route path="*" element={<NotFound />} />
-
-        {/*Admin Route*/}
-        <Route path="/admin" element={<AdminPage />} />
       </Routes>
       
       {/* ✅ Add Analytics here so it's loaded on every page */}

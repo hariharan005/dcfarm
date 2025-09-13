@@ -7,7 +7,6 @@ dotenv.config({ path: path.resolve(__dirname, envFile) });
 console.log(`[dotenv] Loaded ${envFile}`);
 console.log("EMAIL_USER:", process.env.EMAIL_USER);
 console.log("EMAIL_PASS exists?", !!process.env.EMAIL_PASS);
-
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -45,7 +44,7 @@ mongoose
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   })
 );
@@ -65,8 +64,8 @@ app.use(
     }),
     cookie: {
       httpOnly: true,
-      secure: true, // Set to true if using HTTPS
-      sameSite: "none", // Adjust based on your frontend/backend setup
+      secure: true, // Set to true if using HTTPS production
+      sameSite: "none", // Adjust based on your frontend/backend setup none production
       maxAge: 6 * 60 * 60 * 1000, // 6 hours
     },
   })
