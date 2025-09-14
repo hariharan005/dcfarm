@@ -71,8 +71,8 @@ app.use(
     }),
     cookie: {
       httpOnly: true,
-      secure: false, // true if using HTTPS in production
-      sameSite: "lax", // for cross-origin requests
+      secure: true, // true if using HTTPS in production
+      sameSite: "none", // for cross-origin requests
       maxAge: 6 * 60 * 60 * 1000, // 6 hours
     },
   })
@@ -92,7 +92,7 @@ app.locals.razorpay = new Razorpay({
 // ✅ Routes
 app.use("/api/admin", adminRoutes);
 app.use("/api/orders", orderRoutes);
-app.use("/api/products", productRoutes);
+//app.use("/api/products", productRoutes);
 app.use("/api/payment", paymentRoutes);
 
 // ✅ Health check
