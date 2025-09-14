@@ -1,6 +1,9 @@
-// server.js
+// Load environment variables based on NODE_ENV
 const path = require("path");
 const dotenv = require("dotenv");
+const envFile = `.env.${process.env.NODE_ENV || "development"}`;
+dotenv.config({ path: path.resolve(__dirname, envFile) });
+
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
@@ -14,9 +17,6 @@ const orderRoutes = require("./routes/orderRoutes");
 const productRoutes = require("./routes/productRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 
-// Load environment variables based on NODE_ENV
-const envFile = `.env.${process.env.NODE_ENV || "development"}`;
-dotenv.config({ path: path.resolve(__dirname, envFile) });
 
 console.log(`[dotenv] Loaded ${envFile}`);
 console.log("EMAIL_USER:", process.env.EMAIL_USER);
@@ -71,8 +71,8 @@ app.use(
     }),
     cookie: {
       httpOnly: true,
-      secure: true, // true if using HTTPS in production
-      sameSite: "none", // for cross-origin requests
+      secure: false, // true if using HTTPS in production
+      sameSite: "lax", // for cross-origin requests
       maxAge: 6 * 60 * 60 * 1000, // 6 hours
     },
   })

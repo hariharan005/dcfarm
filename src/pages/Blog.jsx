@@ -8,9 +8,200 @@ const recipes = [
     title: "Crispy Ladies Finger Fry",
     description: "Crispy and tasty fried ladies finger snack.",
     image: Okra,
-    ingredients: ["Ladies finger", "Oil", "Chili powder", "Salt", "Turmeric"],
-    instructions:
-      "Slice ladies finger, mix with spices, deep fry until golden and crispy.",
+    prepTime: "10 mins",
+    cookTime: "15 mins",
+    servings: "2–3 people",
+    difficulty: "Easy",
+    ingredients: ["Ladies finger (Okra) – 200g", "Oil – for deep frying", "Chili powder – 1 tsp", "Salt – to taste", "Turmeric – ½ tsp"],
+    instructions: [
+      "Wash and pat dry the ladies finger. Slice them into thin pieces.",
+      "In a bowl, mix sliced okra with chili powder, turmeric, and salt.",
+      "Heat oil in a pan on medium flame.",
+      "Deep fry the spiced okra until golden brown and crispy.",
+      "Remove and drain excess oil on tissue paper before serving."
+    ],
+    tips: ["Make sure okra is completely dry before frying to avoid stickiness.", "You can add rice flour or corn flour for extra crispiness."],
+    variations: ["Air fry instead of deep fry for a healthier version.", "Add curry leaves for extra flavor."],
+    faqs: [
+      { q: "Can I use frozen okra?", a: "Yes, but thaw and pat dry before frying to avoid sogginess." },
+      { q: "How do I store fried okra?", a: "Best eaten fresh, but can be stored in an airtight container for up to 1 day." }
+    ],
+    nutrition: { calories: "180 kcal", carbs: "10g", protein: "2g", fat: "12g" }
+  },
+  {
+    id: 2,
+    title: "Ladies Finger Pulikulambu",
+    description: "Crispy and tasty fried ladies finger snack.",
+    image: Okra,
+    prepTime: "10 mins",
+    cookTime: "15 mins",
+    servings: "2–3 people",
+    difficulty: "Easy",
+    ingredients: ["Ladies finger (Okra) – 200g", "Oil – for deep frying", "Chili powder – 1 tsp", "Salt – to taste", "Turmeric – ½ tsp"],
+    instructions: [
+      "Wash and pat dry the ladies finger. Slice them into thin pieces.",
+      "In a bowl, mix sliced okra with chili powder, turmeric, and salt.",
+      "Heat oil in a pan on medium flame.",
+      "Deep fry the spiced okra until golden brown and crispy.",
+      "Remove and drain excess oil on tissue paper before serving."
+    ],
+    tips: ["Make sure okra is completely dry before frying to avoid stickiness.", "You can add rice flour or corn flour for extra crispiness."],
+    variations: ["Air fry instead of deep fry for a healthier version.", "Add curry leaves for extra flavor."],
+    faqs: [
+      { q: "Can I use frozen okra?", a: "Yes, but thaw and pat dry before frying to avoid sogginess." },
+      { q: "How do I store fried okra?", a: "Best eaten fresh, but can be stored in an airtight container for up to 1 day." }
+    ],
+    nutrition: { calories: "180 kcal", carbs: "10g", protein: "2g", fat: "12g" }
+  },
+  {
+    id: 3,
+    title: "Crispy Ladies Finger Fry",
+    description: "Crispy and tasty fried ladies finger snack.",
+    image: Okra,
+    prepTime: "10 mins",
+    cookTime: "15 mins",
+    servings: "2–3 people",
+    difficulty: "Easy",
+    ingredients: ["Ladies finger (Okra) – 200g", "Oil – for deep frying", "Chili powder – 1 tsp", "Salt – to taste", "Turmeric – ½ tsp"],
+    instructions: [
+      "Wash and pat dry the ladies finger. Slice them into thin pieces.",
+      "In a bowl, mix sliced okra with chili powder, turmeric, and salt.",
+      "Heat oil in a pan on medium flame.",
+      "Deep fry the spiced okra until golden brown and crispy.",
+      "Remove and drain excess oil on tissue paper before serving."
+    ],
+    tips: ["Make sure okra is completely dry before frying to avoid stickiness.", "You can add rice flour or corn flour for extra crispiness."],
+    variations: ["Air fry instead of deep fry for a healthier version.", "Add curry leaves for extra flavor."],
+    faqs: [
+      { q: "Can I use frozen okra?", a: "Yes, but thaw and pat dry before frying to avoid sogginess." },
+      { q: "How do I store fried okra?", a: "Best eaten fresh, but can be stored in an airtight container for up to 1 day." }
+    ],
+    nutrition: { calories: "180 kcal", carbs: "10g", protein: "2g", fat: "12g" }
+  },
+  {
+    id: 4,
+    title: "Ladies Finger Pulikulambu",
+    description: "Crispy and tasty fried ladies finger snack.",
+    image: Okra,
+    prepTime: "10 mins",
+    cookTime: "15 mins",
+    servings: "2–3 people",
+    difficulty: "Easy",
+    ingredients: ["Ladies finger (Okra) – 200g", "Oil – for deep frying", "Chili powder – 1 tsp", "Salt – to taste", "Turmeric – ½ tsp"],
+    instructions: [
+      "Wash and pat dry the ladies finger. Slice them into thin pieces.",
+      "In a bowl, mix sliced okra with chili powder, turmeric, and salt.",
+      "Heat oil in a pan on medium flame.",
+      "Deep fry the spiced okra until golden brown and crispy.",
+      "Remove and drain excess oil on tissue paper before serving."
+    ],
+    tips: ["Make sure okra is completely dry before frying to avoid stickiness.", "You can add rice flour or corn flour for extra crispiness."],
+    variations: ["Air fry instead of deep fry for a healthier version.", "Add curry leaves for extra flavor."],
+    faqs: [
+      { q: "Can I use frozen okra?", a: "Yes, but thaw and pat dry before frying to avoid sogginess." },
+      { q: "How do I store fried okra?", a: "Best eaten fresh, but can be stored in an airtight container for up to 1 day." }
+    ],
+    nutrition: { calories: "180 kcal", carbs: "10g", protein: "2g", fat: "12g" }
+  },
+  {
+    id: 5,
+    title: "Crispy Ladies Finger Fry",
+    description: "Crispy and tasty fried ladies finger snack.",
+    image: Okra,
+    prepTime: "10 mins",
+    cookTime: "15 mins",
+    servings: "2–3 people",
+    difficulty: "Easy",
+    ingredients: ["Ladies finger (Okra) – 200g", "Oil – for deep frying", "Chili powder – 1 tsp", "Salt – to taste", "Turmeric – ½ tsp"],
+    instructions: [
+      "Wash and pat dry the ladies finger. Slice them into thin pieces.",
+      "In a bowl, mix sliced okra with chili powder, turmeric, and salt.",
+      "Heat oil in a pan on medium flame.",
+      "Deep fry the spiced okra until golden brown and crispy.",
+      "Remove and drain excess oil on tissue paper before serving."
+    ],
+    tips: ["Make sure okra is completely dry before frying to avoid stickiness.", "You can add rice flour or corn flour for extra crispiness."],
+    variations: ["Air fry instead of deep fry for a healthier version.", "Add curry leaves for extra flavor."],
+    faqs: [
+      { q: "Can I use frozen okra?", a: "Yes, but thaw and pat dry before frying to avoid sogginess." },
+      { q: "How do I store fried okra?", a: "Best eaten fresh, but can be stored in an airtight container for up to 1 day." }
+    ],
+    nutrition: { calories: "180 kcal", carbs: "10g", protein: "2g", fat: "12g" }
+  },
+  {
+    id: 6,
+    title: "Ladies Finger Pulikulambu",
+    description: "Crispy and tasty fried ladies finger snack.",
+    image: Okra,
+    prepTime: "10 mins",
+    cookTime: "15 mins",
+    servings: "2–3 people",
+    difficulty: "Easy",
+    ingredients: ["Ladies finger (Okra) – 200g", "Oil – for deep frying", "Chili powder – 1 tsp", "Salt – to taste", "Turmeric – ½ tsp"],
+    instructions: [
+      "Wash and pat dry the ladies finger. Slice them into thin pieces.",
+      "In a bowl, mix sliced okra with chili powder, turmeric, and salt.",
+      "Heat oil in a pan on medium flame.",
+      "Deep fry the spiced okra until golden brown and crispy.",
+      "Remove and drain excess oil on tissue paper before serving."
+    ],
+    tips: ["Make sure okra is completely dry before frying to avoid stickiness.", "You can add rice flour or corn flour for extra crispiness."],
+    variations: ["Air fry instead of deep fry for a healthier version.", "Add curry leaves for extra flavor."],
+    faqs: [
+      { q: "Can I use frozen okra?", a: "Yes, but thaw and pat dry before frying to avoid sogginess." },
+      { q: "How do I store fried okra?", a: "Best eaten fresh, but can be stored in an airtight container for up to 1 day." }
+    ],
+    nutrition: { calories: "180 kcal", carbs: "10g", protein: "2g", fat: "12g" }
+  },
+  {
+    id: 7,
+    title: "Crispy Ladies Finger Fry",
+    description: "Crispy and tasty fried ladies finger snack.",
+    image: Okra,
+    prepTime: "10 mins",
+    cookTime: "15 mins",
+    servings: "2–3 people",
+    difficulty: "Easy",
+    ingredients: ["Ladies finger (Okra) – 200g", "Oil – for deep frying", "Chili powder – 1 tsp", "Salt – to taste", "Turmeric – ½ tsp"],
+    instructions: [
+      "Wash and pat dry the ladies finger. Slice them into thin pieces.",
+      "In a bowl, mix sliced okra with chili powder, turmeric, and salt.",
+      "Heat oil in a pan on medium flame.",
+      "Deep fry the spiced okra until golden brown and crispy.",
+      "Remove and drain excess oil on tissue paper before serving."
+    ],
+    tips: ["Make sure okra is completely dry before frying to avoid stickiness.", "You can add rice flour or corn flour for extra crispiness."],
+    variations: ["Air fry instead of deep fry for a healthier version.", "Add curry leaves for extra flavor."],
+    faqs: [
+      { q: "Can I use frozen okra?", a: "Yes, but thaw and pat dry before frying to avoid sogginess." },
+      { q: "How do I store fried okra?", a: "Best eaten fresh, but can be stored in an airtight container for up to 1 day." }
+    ],
+    nutrition: { calories: "180 kcal", carbs: "10g", protein: "2g", fat: "12g" }
+  },
+  {
+    id: 8,
+    title: "Ladies Finger Pulikulambu",
+    description: "Crispy and tasty fried ladies finger snack.",
+    image: Okra,
+    prepTime: "10 mins",
+    cookTime: "15 mins",
+    servings: "2–3 people",
+    difficulty: "Easy",
+    ingredients: ["Ladies finger (Okra) – 200g", "Oil – for deep frying", "Chili powder – 1 tsp", "Salt – to taste", "Turmeric – ½ tsp"],
+    instructions: [
+      "Wash and pat dry the ladies finger. Slice them into thin pieces.",
+      "In a bowl, mix sliced okra with chili powder, turmeric, and salt.",
+      "Heat oil in a pan on medium flame.",
+      "Deep fry the spiced okra until golden brown and crispy.",
+      "Remove and drain excess oil on tissue paper before serving."
+    ],
+    tips: ["Make sure okra is completely dry before frying to avoid stickiness.", "You can add rice flour or corn flour for extra crispiness."],
+    variations: ["Air fry instead of deep fry for a healthier version.", "Add curry leaves for extra flavor."],
+    faqs: [
+      { q: "Can I use frozen okra?", a: "Yes, but thaw and pat dry before frying to avoid sogginess." },
+      { q: "How do I store fried okra?", a: "Best eaten fresh, but can be stored in an airtight container for up to 1 day." }
+    ],
+    nutrition: { calories: "180 kcal", carbs: "10g", protein: "2g", fat: "12g" }
   }
 ];
 
@@ -18,84 +209,121 @@ export default function BlogPage() {
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [search, setSearch] = useState("");
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+  const [parallaxStyle, setParallaxStyle] = useState({});
 
-  // Track cursor movement
+  // Track cursor movement for 3D effect
   useEffect(() => {
     const handleMouseMove = (e) => {
+      const { innerWidth, innerHeight } = window;
+      const moveX = (e.clientX / innerWidth - 0.5) * 20; // -15° to +15°
+      const moveY = (e.clientY / innerHeight - 0.5) * 20; // -15° to +15°
+
       setCursorPos({ x: e.clientX, y: e.clientY });
+      setParallaxStyle({
+        transform: `perspective(1000px) rotateX(${moveY}deg) rotateY(${-moveX}deg) scale(1.05)`,
+        transition: "transform 0.1s ease-out",
+      });
     };
+
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   // Filter recipes based on search
-  const filteredRecipes = recipes.filter((recipe) =>
-    recipe.title.toLowerCase().includes(search.toLowerCase()) ||
-    recipe.description.toLowerCase().includes(search.toLowerCase())
+  const filteredRecipes = recipes.filter(
+    (recipe) =>
+      recipe.title.toLowerCase().includes(search.toLowerCase()) ||
+      recipe.description.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
-    <div className="blog-container">
-      <h1>🍲 Recipes from Our Harvest</h1>
+    <div className="parallax-wrapper">
+      {/* Parallax Background Layer */}
+      <div className="parallax-bg" style={parallaxStyle}></div>
 
-      {/* Floating Cook Emoji */}
-      <div
-        className="cook-emoji"
-        style={{
-          left: cursorPos.x + 10,
-          top: cursorPos.y + 10,
-        }}
-      >
-        👨‍🍳
+      {/* Main Blog Content */}
+      <div className="blog-container">
+        <h1>🍲 Recipes from Our Harvest</h1>
+
+        {/* Floating Cook Emoji */}
+        <div className="cook-emoji" style={{ left: cursorPos.x + 10, top: cursorPos.y + 10 }}>
+          👨‍🍳
+        </div>
+
+        {/* Search Box */}
+        {!selectedRecipe && (
+          <input
+            type="text"
+            className="search-box"
+            placeholder="🔍 Search recipes (e.g. brinjal, okra)..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        )}
+
+        {/* Recipe Details or List */}
+        {selectedRecipe ? (
+          <div className="recipe-details">
+            <img src={selectedRecipe.image} alt={selectedRecipe.title} />
+            <h2>{selectedRecipe.title}</h2>
+            <p>{selectedRecipe.description}</p>
+            <button className="print-btn" onClick={() => window.print()}>🖨️ Print Recipe</button>
+            <div className="recipe-meta">
+              <p>⏱️ <b>Prep time:</b> {selectedRecipe.prepTime}</p>
+              <p>🔥 <b>Cook time:</b> {selectedRecipe.cookTime}</p>
+              <p>🍴 <b>Servings:</b> {selectedRecipe.servings}</p>
+              <p>⭐ <b>Difficulty:</b> {selectedRecipe.difficulty}</p>
+            </div>
+            <h3>🛒 Ingredients</h3>
+            <ul>{selectedRecipe.ingredients.map((ing, i) => <li key={i}>{ing}</li>)}</ul>
+            <h3>👩‍🍳 Instructions</h3>
+            <ol>{selectedRecipe.instructions.map((step, i) => <li key={i}>{step}</li>)}</ol>
+            {selectedRecipe.tips && (
+              <>
+                <h3>🌟 Tips</h3>
+                <ul>{selectedRecipe.tips.map((tip, i) => <li key={i}>{tip}</li>)}</ul>
+              </>
+            )}
+            {selectedRecipe.variations && (
+              <>
+                <h3>🍽️ Variations</h3>
+                <ul>{selectedRecipe.variations.map((variation, i) => <li key={i}>{variation}</li>)}</ul>
+              </>
+            )}
+            {selectedRecipe.faqs && (
+              <>
+                <h3>❓ FAQs</h3>
+                {selectedRecipe.faqs.map((faq, i) => (
+                  <p key={i}><b>{faq.q}</b><br />{faq.a}</p>
+                ))}
+              </>
+            )}
+            {selectedRecipe.nutrition && (
+              <>
+                <h3>🔥 Nutrition (per serving)</h3>
+                <p>
+                  Calories: {selectedRecipe.nutrition.calories} | Carbs: {selectedRecipe.nutrition.carbs} | Protein: {selectedRecipe.nutrition.protein} | Fat: {selectedRecipe.nutrition.fat}
+                </p>
+              </>
+            )}
+            <button className="back-btn" onClick={() => setSelectedRecipe(null)}>⬅ Back to Recipes</button>
+          </div>
+        ) : (
+          <div className="recipe-list">
+            {filteredRecipes.length > 0 ? (
+              filteredRecipes.map((recipe) => (
+                <div className="recipe-card" key={recipe.id} onClick={() => setSelectedRecipe(recipe)}>
+                  <img src={recipe.image} alt={recipe.title} />
+                  <h2>{recipe.title}</h2>
+                  <p>{recipe.description}</p>
+                </div>
+              ))
+            ) : (
+              <p className="no-results">❌ No recipes found for "{search}"</p>
+            )}
+          </div>
+        )}
       </div>
-
-      {/* Search Box */}
-      {!selectedRecipe && (
-        <input
-          type="text"
-          className="search-box"
-          placeholder="🔍 Search recipes (e.g. brinjal, okra)..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      )}
-
-      {/* Recipe Details or List */}
-      {selectedRecipe ? (
-        <div className="recipe-details">
-          <img src={selectedRecipe.image} alt={selectedRecipe.title} />
-          <h2>{selectedRecipe.title}</h2>
-          <h3>Ingredients</h3>
-          <ul>
-            {selectedRecipe.ingredients.map((ing, i) => (
-              <li key={i}>{ing}</li>
-            ))}
-          </ul>
-          <h3>Instructions</h3>
-          <p>{selectedRecipe.instructions}</p>
-          <button className="back-btn" onClick={() => setSelectedRecipe(null)}>
-            ⬅ Back to Recipes
-          </button>
-        </div>
-      ) : (
-        <div className="recipe-list">
-          {filteredRecipes.length > 0 ? (
-            filteredRecipes.map((recipe) => (
-              <div
-                className="recipe-card"
-                key={recipe.id}
-                onClick={() => setSelectedRecipe(recipe)}
-              >
-                <img src={recipe.image} alt={recipe.title} />
-                <h2>{recipe.title}</h2>
-                <p>{recipe.description}</p>
-              </div>
-            ))
-          ) : (
-            <p className="no-results">❌ No recipes found for "{search}"</p>
-          )}
-        </div>
-      )}
     </div>
   );
 }
