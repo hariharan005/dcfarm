@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const envFile = `.env.${process.env.NODE_ENV || "development"}`;
 dotenv.config({ path: path.resolve(__dirname, envFile) });
 
+// Required files 
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
@@ -11,10 +12,10 @@ const MongoStore = require("connect-mongo");
 const bodyParser = require("body-parser");
 const Razorpay = require("razorpay");
 
+
 // Import routes
 const adminRoutes = require("./routes/adminRoutes");
 const orderRoutes = require("./routes/orderRoutes");
-const productRoutes = require("./routes/productRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 
 
@@ -71,8 +72,8 @@ app.use(
     }),
     cookie: {
       httpOnly: true,
-      secure: true, // true if using HTTPS in production
-      sameSite: "none", // for cross-origin requests
+      secure: true, // true if using HTTPS in production (in dev fals, whille pushing to git change to TRUE)
+      sameSite: "none", // for cross-origin requests (while pushing to git change none)
       maxAge: 6 * 60 * 60 * 1000, // 6 hours
     },
   })
@@ -92,7 +93,6 @@ app.locals.razorpay = new Razorpay({
 // ✅ Routes
 app.use("/api/admin", adminRoutes);
 app.use("/api/orders", orderRoutes);
-//app.use("/api/products", productRoutes);
 app.use("/api/payment", paymentRoutes);
 
 // ✅ Health check
