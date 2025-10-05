@@ -27,6 +27,10 @@ import PrivacyPolicy from "./pages/Policy/PrivacyPolicy";
 //import RefundPolicy from "./pages/Policy/RefundPolicy";
 import ShippingPolicy from "./pages/Policy/ShippingPolicy";
 import TermsAndService from "./pages/Policy/TermsAndConditions";
+import OrderSuccess from "./pages/order/order-success";
+
+import Certificate from "./pages/Certificates/certificate";
+
 
 
 
@@ -40,6 +44,7 @@ function App() {
         <Route path="/products" element={<ProductPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/order-success" element={<OrderSuccess />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/journey" element={<JourneyPage />} />
         <Route path="/blog" element={<Blog />} />
@@ -50,6 +55,10 @@ function App() {
         {/* <Route path="/refund-policy" element={<RefundPolicy />} /> */}
         <Route path="/shipping-policy" element={<ShippingPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndService />} />
+
+        {/* This is for certificate page */}
+        <Route path="/certificate" element={<Certificate />} />
+       
 
         {/*Not Found Routes*/}
         <Route path="*" element={<NotFound />} />

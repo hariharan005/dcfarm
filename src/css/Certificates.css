@@ -1,0 +1,103 @@
+/* Base Certificate Styles */
+.certificate {
+  width: 800px; /* Original design width */
+  height: 600px; /* Original design height */
+  padding: 40px;
+  border: 8px solid #2e7d32;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #f1f8e9, #dcedc8);
+  text-align: center;
+  font-family: Georgia, serif;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Logo */
+.certificate-logo {
+  width: 100px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+/* Titles */
+.certificate-title {
+  font-size: 32px;
+  color: #1b5e20;
+  margin-bottom: 10px;
+}
+
+.certificate-subtitle {
+  font-size: 24px;
+  color: #33691e;
+  margin-bottom: 30px;
+}
+
+/* Main Text */
+.certificate-text {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.certificate-name {
+  font-size: 28px;
+  color: #2e7d32;
+  margin: 20px 0;
+}
+
+.certificate-date {
+  font-size: 14px;
+  margin-top: 40px;
+}
+
+/* Signature */
+.certificate-signature {
+  margin-top: 50px;
+}
+
+.signature-img {
+  width: 120px;
+}
+
+/* ============================= */
+/* Print Optimization for A4 PDF */
+@media print {
+  /* Scale to fit A4 landscape */
+  .certificate {
+    width: 100%;
+    height: auto;
+    padding: 2cm; /* Printable margin */
+    border-width: 4px; /* Slightly smaller border for print */
+    border-radius: 10px;
+    background: #ffffff; /* Optional: plain background for print */
+    page-break-after: always;
+  }
+
+  /* Make fonts scalable for print */
+  .certificate-title {
+    font-size: 36pt;
+  }
+  .certificate-subtitle {
+    font-size: 24pt;
+  }
+  .certificate-text {
+    font-size: 18pt;
+  }
+  .certificate-name {
+    font-size: 28pt;
+  }
+  .certificate-date {
+    font-size: 12pt;
+  }
+
+  /* Hide logo if printing ink is a concern */
+  /* .certificate-logo { display: none; } */
+
+  /* Signature */
+  .certificate-signature {
+    margin-top: 40px;
+  }
+  .signature-img {
+    width: 150px;
+  }
+}

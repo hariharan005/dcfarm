@@ -159,7 +159,8 @@ const Checkout = () => {
     }
   }, [submitted, paymentStatus]);
 
-  if (submitted) {
+  // ✅ Show thank-you page before checking cart
+  if (submitted && paymentStatus === "success") {
     return (
       <div className="thankyou-container">
         <h2>🎉 Thank you for your order!</h2>
@@ -167,9 +168,24 @@ const Checkout = () => {
         <div ref={sparkRef} style={{ position: "relative", width: "120px", height: "120px", margin: "20px auto" }}>
           <motion.div
             initial={{ scale: 0 }}
-            animate={{ scale: [0, 1.2, 1], rotate: [0, 10, -10, 0], boxShadow: ["0 0 0px #fff", "0 0 20px #ffcc00", "0 0 0px #fff"] }}
+            animate={{
+              scale: [0, 1.2, 1],
+              rotate: [0, 10, -10, 0],
+              boxShadow: ["0 0 0px #fff", "0 0 20px #ffcc00", "0 0 0px #fff"],
+            }}
             transition={{ duration: 1.2, ease: "easeOut" }}
-            style={{ width: "100px", height: "70px", background: "#FFCC00", borderRadius: "6px", position: "absolute", bottom: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "2.5rem" }}
+            style={{
+              width: "100px",
+              height: "70px",
+              background: "#FFCC00",
+              borderRadius: "6px",
+              position: "absolute",
+              bottom: 0,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "2.5rem",
+            }}
           >
             🎁
           </motion.div>
@@ -177,7 +193,15 @@ const Checkout = () => {
             initial={{ rotateX: 0, y: 0 }}
             animate={{ rotateX: [-10, -120, -100], y: [-5, -60, -50] }}
             transition={{ delay: 1, duration: 0.8, ease: "easeOut" }}
-            style={{ width: "100px", height: "30px", background: "#FF9900", borderRadius: "6px 6px 0 0", position: "absolute", top: 0, transformOrigin: "top center" }}
+            style={{
+              width: "100px",
+              height: "30px",
+              background: "#FF9900",
+              borderRadius: "6px 6px 0 0",
+              position: "absolute",
+              top: 0,
+              transformOrigin: "top center",
+            }}
           />
           <motion.div
             initial={{ y: 0, scale: 0 }}
@@ -195,6 +219,7 @@ const Checkout = () => {
     );
   }
 
+  // Normal checkout screen
   return (
     <div className="checkout-container">
       <h2>Checkout</h2>

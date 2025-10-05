@@ -29,6 +29,7 @@ const CartPage = () => {
       return;
     }
     //alert("Checkout successful!");
+    console.log("Proceeding to checkout with items:", cartItems);
     navigate("/checkout", { state: { cartItems, grandTotal } });
   };
 
@@ -57,9 +58,9 @@ const CartPage = () => {
 
   return (
     <div className="cart-page">
-      <h2>🛒 Your Cart</h2>
+      <h2>🛒 Your Cart1</h2>
       {cartItems.length === 0 ? (
-        <p>Your cart is empty</p>
+        <p>Your cart is emptythis page only1</p>
       ) : (
         <>
           <ul>
