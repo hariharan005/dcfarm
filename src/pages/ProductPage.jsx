@@ -7,110 +7,127 @@ import onion from "../assets/images/Blog/onion.jpg"
 import brinjal from "../assets/images/Blog/brinjal.jpg"
 import ladiesfinger from "../assets/images/Blog/ladiesfinger.jpg"
 import greenchilli from "../assets/images/Blog/greenchilli.jpg"
-import beetroot from "../assets/images/Blog/beetroot.jpg"
 import potato from "../assets/images/Blog/potato.jpg"
-import curryleaf from "../assets/images/Blog/curryleaf.jpg"
 import coriander from "../assets/images/Blog/coriander.jpg"
 import radish from "../assets/images/Blog/radish.jpg"
 import pumpkin from "../assets/images/Blog/pumpkin.jpg"
 import cucumber from "../assets/images/Blog/cucumber.jpg"
-import cauliflower from "../assets/images/Blog/cauliflower.jpg"
 import bittergourd from "../assets/images/Blog/bittergourd.jpg"
+
+// Fallback image URL
+import fallbackImage from "../assets/images/Blog/comingsoon.png";
 
 
 const productsData = {
   Vegetables: [
-    { id: 1, name: "Tomato", price: 1, unit: "kg", image: tomato }, 
-    { id: 2, name: "Onion", price: 35, unit: "kg", image: onion }, 
-    { id: 3, name: "Brinjal", price: 60, unit: "kg", image: brinjal },
-    { id: 4, name: "Ladies Finger", price: 60, unit: "kg", image: ladiesfinger },
-    { id: 5, name: "GreenChilli", price: 60, unit: "kg", image: greenchilli },
-    { id: 6, name: "Carrot", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 7, name: "Beetroot", price: 40, unit: "kg", image: beetroot }, 
-    { id: 8, name: "Potatoes", price: 35, unit: "kg", image: potato }, 
-    { id: 9, name: "Beans", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 10, name: "Peas", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 11, name: "Drumstick", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 12, name: "Curry Leaves", price: 60, unit: "kg", image: curryleaf },
-    { id: 13, name: "Coriander", price: 60, unit: "kg", image: coriander },
-    { id: 14, name: "Radish", price: 40, unit: "kg", image: radish }, 
-    { id: 15, name: "Tapioca", price: 35, unit: "kg", image: "https://via.placeholder.com/150" }, 
-    { id: 16, name: "Pumpkin", price: 60, unit: "kg", image: pumpkin },
-    { id: 17, name: "Cucumber", price: 60, unit: "kg", image: cucumber },
-    { id: 18, name: "Cauliflower", price: 60, unit: "kg", image: cauliflower },
-    { id: 19, name: "Sundaikai", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 20, name: "AshGourd", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 21, name: "SnakeGourd", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 22, name: "BitterGourd", price: 60, unit: "kg", image: bittergourd },
+    { id: 'Veg_1', name: "Tomato", price: 40, unit: "Kg", image: tomato },
+    { id: 'Veg_2', name: "Onion", price: 60, unit: "Kg", image: onion },
+    { id: 'Veg_3', name: "Brinjal Blue", price: 45, unit: "Kg", image: brinjal },
+    { id: 'Veg_4', name: "Brinjal Green", price: 70, unit: "Kg", image: brinjal },
+    { id: 'Veg_5', name: "Brinjal offwhite Blue", price: 60, unit: "Kg", image: brinjal },
+    { id: 'Veg_6', name: "Ladies Finger", price: 35, unit: "Kg", image: ladiesfinger },
+    { id: 'Veg_7', name: "Green Chilli", price: 10, unit: "200G", image: greenchilli },
+    { id: 'Veg_8', name: "Bitter Gourd", price: 30, unit: "Kg", image: bittergourd },
+    { id: 'Veg_9', name: "Ridge Gourd", price: 50, unit: "Kg", image:  "https://via.placeholder.com/150" },
+    { id: 'Veg_10', name: "Snake Gourd", price: 30, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Veg_11', name: "Bottle Gourd", price: 25, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Veg_12', name: "Ash Gourd", price: 20, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Veg_13', name: "Potatoes", price: 30, unit: "Kg", image: potato },
+    { id: 'Veg_14', name: "Beans", price: 35, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Veg_15', name: "Peas", price: 80, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Veg_16', name: "Drumstick", price: 70, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Veg_17', name: "Curry Leaves", price: 20, unit: "Bunch", image: "https://via.placeholder.com/150" },
+    { id: 'Veg_18', name: "Coriander", price: 20, unit: "Bunch", image: coriander},
+    { id: 'Veg_19', name: "Mint", price: 20, unit: "Bunch", image: "https://via.placeholder.com/150" },
+    { id: 'Veg_20', name: "Banana Raw", price: 30, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Veg_21', name: "Banana Flower", price: 15, unit: "Piece", image: "https://via.placeholder.com/150" },
+    { id: 'Veg_22', name: "Banana Stem", price: 15, unit: "Piece", image: "https://via.placeholder.com/150" },
+    { id: 'Veg_23', name: "Banana Leaf", price: 2, unit: "Piece", image: "https://via.placeholder.com/150" },
+    { id: 'Veg_24', name: "Radish", price: 20, unit: "Kg", image: radish },
+    { id: 'Veg_25', name: "Tapioca", price: 40, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Veg_26', name: "Spinach Greens", price: 25, unit: "Bunch", image: "https://via.placeholder.com/150" },
+    { id: 'Veg_27', name: "Pumpkin", price: 40, unit: "Kg", image: pumpkin },
+    { id: 'Veg_28', name: "Karunai Kizhangu", price: 50, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Veg_29', name: "Senai Kizhangu", price: 40, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Veg_30', name: "Seppan Kizhangu", price: 45, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Veg_31', name: "Cucumber", price: 15, unit: "Kg", image: cucumber},
+    { id: 'Veg_32', name: "Sundaikai", price: 5, unit: "250G", image: "https://via.placeholder.com/150" },
+  ],
 
-  ], 
-  Greens: [
-    { id: 23, name: "SiruKeerai", price: 30, unit: "Bunch", image: "https://via.placeholder.com/150" }, 
-    { id: 24, name: "Araikeerai", price: 30, unit: "Bunch", image: "https://via.placeholder.com/150" }, 
-    { id: 25, name: "Ponnanganni", price: 30, unit: "Bunch", image: "https://via.placeholder.com/150" },
-    { id: 26, name: "PulichaiKeerai", price: 30, unit: "Bunch", image: "https://via.placeholder.com/150" },
-    { id: 27, name: "Thandukeerai", price: 30, unit: "Bunch", image: "https://via.placeholder.com/150" },
-    { id: 28, name: "MurungaiKeerai", price: 40, unit: "Bunch", image: "https://via.placeholder.com/150" },
-  ], 
-  Fruits: [
-    { id: 29, name: "Watermelon", price: 180, unit: "kg", image: "https://via.placeholder.com/150" }, 
-    { id: 30, name: "Banana", price: 60, unit: "dozen", image: "https://via.placeholder.com/150" },
-    { id: 31, name: "Papaya", price: 85, unit: "kg", image: "https://via.placeholder.com/150" },  
-    { id: 32, name: "Mango", price: 85, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 33, name: "Guava", price: 85, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 34, name: "Sapotta", price: 85, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 35, name: "Grapes", price: 85, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 36, name: "Muskmelon", price: 85, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 37, name: "Pineapple", price: 85, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 38, name: "Dragon Fruit", price: 85, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 39, name: "Lemon", price: 85, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 40, name: "JackFruit", price: 85, unit: "kg", image: "https://via.placeholder.com/150" },
-  ], 
-  Rices: [
-    { id: 41, name: "Basmati Rice", price: 90, unit: "kg", image: "https://via.placeholder.com/150" }, 
-    { id: 42, name: "Brown Rice", price: 120, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 43, name: "White Ponni", price: 120, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 44, name: "Samba", price: 120, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 45, name: "Matta", price: 120, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 46, name: "Idly Rice", price: 120, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 47, name: "Sona Masoori", price: 120, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 48, name: "Thooyamalli", price: 120, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 49, name: "Karuppukavuni", price: 120, unit: "kg", image: "https://via.placeholder.com/150" },
-
-  ], 
-  Millets: [
-    { id: 50, name: "Ragi", price: 70, unit: "kg", image: "https://via.placeholder.com/150" }, 
-    { id: 51, name: "Foxtail Millet", price: 85, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 52, name: "Ellu", price: 85, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 53, name: "Corn", price: 85, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 54, name: "Drychilli", price: 85, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 55, name: "Pachai Payaru", price: 85, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 56, name: "Kambu", price: 85, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 57, name: "Thinai", price: 85, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 58, name: "Varagu", price: 85, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 59, name: "Samai", price: 85, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 60, name: "Kuthiraivali", price: 85, unit: "kg", image: "https://via.placeholder.com/150" },  
-    { id: 61, name: "Ullundhu Black", price: 85, unit: "kg", image: "https://via.placeholder.com/150" },  
-    { id: 62, name: "Ullundhu White", price: 85, unit: "kg", image: "https://via.placeholder.com/150" },
-  ], 
-  DairyProducts: [
-    { id: 63, name: "Milk", price: 50, unit: "litre", image: "https://via.placeholder.com/150" }, 
-    { id: 64, name: "Curd", price: 60, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 65, name: "Butter", price: 250, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 66, name: "Ghee", price: 230, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 67, name: "Paneer", price: 300, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 68, name: "Cheese", price: 200, unit: "kg", image: "https://via.placeholder.com/150" },
-    { id: 69, name: "ButterMilk", price: 150, unit: "litre", image: "https://via.placeholder.com/150" },
-  ], 
   Eggs: [
-    { id: 70, name: "NattuKozhi", price: 15, unit: "Piece", image: "https://via.placeholder.com/150" }, 
-    { id: 71, name: "Duck", price: 20, unit: "Piece", image: "https://via.placeholder.com/150" },
-  ], 
+    { id: 'Egg_1', name: "Naatu Kozhi", price: 15, unit: "Piece", image: "https://via.placeholder.com/150" },
+    { id: 'Egg_2', name: "Duck", price: 10, unit: "Piece", image: "https://via.placeholder.com/150" },
+    { id: 'Egg_3', name: "Kaadai", price: 5, unit: "Piece", image: "https://via.placeholder.com/150" },
+    { id: 'Egg_4', name: "Turkey", price: 20, unit: "Piece", image: "https://via.placeholder.com/150" },
+  ],
+
+  Millets: [
+    { id: 'Mil_1', name: "Kelvaragu", price: 69, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Mil_2', name: "Kambu", price: 69, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Mil_3', name: "Thinai", price: 69, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Mil_4', name: "Saamai", price: 69, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Mil_5', name: "Varagu", price: 69, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Mil_6', name: "Kuthiravali", price: 69, unit: "Kg", image: "https://via.placeholder.com/150" },
+  ],
+
+  Cereals: [
+    { id: 'Cer_1', name: "Ellu White", price: 249, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Cer_2', name: "Ellu Black", price: 299, unit: "Kg", image: "https://via.placeholder.com/150" },
+  ],
+
+  Pulses: [
+    { id: 'Puls_1', name: "Corn", price: 20, unit: "Piece", image: "https://via.placeholder.com/150" },
+    { id: 'Puls_2', name: "Groundnuts", price: 299, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Puls_3', name: "Pachai Payiru", price: 150, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Puls_4', name: "Ulundhu Black", price: 100, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Puls_5', name: "Ulundhu White", price: 150, unit: "Kg", image: "https://via.placeholder.com/150" },
+  ],
+
+  Spices: [
+    { id: 'Spi_1', name: "Dry Chilli Long", price: 249, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Spi_2', name: "Dry Chilli Gundu", price: 399, unit: "Kg", image: "https://via.placeholder.com/150" },
+  ],
+
   Oils: [
-    { id: 72, name: "Coconut Oil", price: 250, unit: "litre", image: "https://via.placeholder.com/150" }, 
-    { id: 73, name: "Groundnut Oil", price: 230, unit: "litre", image: "https://via.placeholder.com/150" },
-    { id: 74, name: "Sesame Oil", price: 300, unit: "litre", image: "https://via.placeholder.com/150" },
-    { id: 75, name: "Sunflower Oil", price: 200, unit: "litre", image: "https://via.placeholder.com/150" },
+    { id: 'Oil_1', name: "Groundnut Oil", price: 300, unit: "Ltr", image: "https://via.placeholder.com/150" },
+    { id: 'Oil_2', name: "Sunflower Oil", price: 200, unit: "Ltr", image: "https://via.placeholder.com/150" },
+    { id: 'Oil_3', name: "Gingelly Oil", price: 400, unit: "Ltr", image: "https://via.placeholder.com/150" },
+  ],
+
+  Fruits: [
+    { id: 'Fru_1', name: "Papaya", price: 29, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Fru_2', name: "Banana", price: 89, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Fru_3', name: "Mango", price: 199, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Fru_4', name: "Guava", price: 79, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Fru_5', name: "Sapota", price: 99, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Fru_6', name: "Muskmelon", price: 39, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Fru_7', name: "Watermelon", price: 29, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Fru_8', name: "Dragon Fruit", price: 49, unit: "Kg", image: "https://via.placeholder.com/150" },
+    { id: 'Fru_9', name: "JackFruit", price: 49, unit: "Kg", image: "https://via.placeholder.com/150" },
+  ],
+
+  Dairy: [
+    { id: 'Dairy_1', name: "Milk", price: 50, unit: "Ltr", image: "https://via.placeholder.com/150" },
+    { id: 'Dairy_2', name: "Curd", price: 19.75, unit: "250G", image: "https://via.placeholder.com/150" },
+    { id: 'Dairy_3', name: "ButterMilk", price: 20, unit: "200G", image: "https://via.placeholder.com/150" },
+    { id: 'Dairy_4', name: "Butter", price: 125, unit: "500G", image: "https://via.placeholder.com/150" },
+    { id: 'Dairy_5', name: "Ghee", price: 200, unit: "500G", image: "https://via.placeholder.com/150" },
+  ],
+
+  ValueAdded: [
+    { id: 'ValAd_1', name: "Sundaikai Vathal", price: 48, unit: "500G", image: "https://via.placeholder.com/150" },
+    { id: 'ValAd_2', name: "Kothavarangai Vathal", price: 48, unit: "500G", image: "https://via.placeholder.com/150" },
+    { id: 'ValAd_3', name: "Vendai Vathal", price: 48, unit: "500G", image: "https://via.placeholder.com/150" },
+    { id: 'ValAd_4', name: "Pakar Vathal", price: 48, unit: "500G", image: "https://via.placeholder.com/150" },
+    { id: 'ValAd_5', name: "Milagai Vathal", price: 48, unit: "500G", image: "https://via.placeholder.com/150" },
+    { id: 'ValAd_6', name: "Mango Pickle", price: 55, unit: "250G", image: "https://via.placeholder.com/150" },
+    { id: 'ValAd_7', name: "Lemon Pickle", price: 45, unit: "250G", image: "https://via.placeholder.com/150" },
+    { id: 'ValAd_8', name: "Mixed Pickle", price: 60, unit: "250G", image: "https://via.placeholder.com/150" },
+  ],
+
+  PongalProducts: [
+    { id: 'PongProd_1', name: "Manjal Kizhangu", price: 20, unit: "2 Plant", image: "https://via.placeholder.com/150" },
+    { id: 'PongProd_2', name: "Sugarcane", price: 79, unit: "2 Full Size", image: "https://via.placeholder.com/150" },
   ],
 };
 
@@ -169,6 +186,12 @@ const ProductPage = () => {
   const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
   const totalPrice = cart.reduce((sum, item) => sum + item.total, 0);
 
+
+  // Image handler to use fallback image on error
+  const handleImageError = (e) => {
+    e.target.src = fallbackImage;
+  };
+
   return (
     <div className="product-page">
       <div className="sidebar">
@@ -193,7 +216,7 @@ const ProductPage = () => {
             const qty = getQty(product.id);
             return (
               <div key={product.id} className="product-card">
-                <img src={product.image} alt={product.name} />
+                <img src={product.image || fallbackImage} alt={product.name} onError={handleImageError} loading="lazy"/>
                 <h3>{product.name}</h3>
                 <p>₹{product.price}/{product.unit}</p>
                 <div className="quantity-controls">

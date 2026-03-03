@@ -6,6 +6,7 @@ dotenv.config({ path: path.resolve(__dirname, envFile) });
 
 // Required files 
 const express = require("express");
+const cors = require("cors");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
@@ -38,23 +39,31 @@ mongoose
     process.exit(1);
   });
 
-// ✅ Dynamic CORS setup
-const allowedOrigins = (process.env.FRONTEND_URL || "").split(",");
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
-  }
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  res.setHeader("Access-Control-Allow-Credentials", "true");
+// ✅ CORS setup using `cors` package
+const allowedOrigins = (process.env.FRONTEND_URL || "")
+  .split(",")
+  .map((s) => s.trim().replace(/\/+$/, ""))
+  .filter(Boolean);
 
-  if (req.method === "OPTIONS") return res.sendStatus(200); // handle preflight
-  next();
-});
+console.log("CORS allowed origins:", allowedOrigins);
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin) {
+        console.log("CORS check: no origin (server-to-server or curl)");
+        return callback(null, true);
+      }
+      const normalized = origin.replace(/\/+$/, "");
+      const allowed = allowedOrigins.includes(normalized);
+      console.log("CORS check:", { origin, normalized, allowed });
+      if (allowed) return callback(null, true);
+      return callback(new Error("CORS policy does not allow this origin."));
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  })
+);
 
 // ✅ Body parser
 app.use(bodyParser.json());
@@ -72,8 +81,8 @@ app.use(
     }),
     cookie: {
       httpOnly: true,
-      secure: true, // true if using HTTPS in production (in dev fals, whille pushing to git change to TRUE)
-      sameSite: "none", // for cross-origin requests (while pushing to git change none)
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       maxAge: 6 * 60 * 60 * 1000, // 6 hours
     },
   })

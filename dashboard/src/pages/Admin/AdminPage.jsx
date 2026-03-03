@@ -15,7 +15,7 @@ import Orders from "./Orders/Orders";
 import PendingOrders from "./Orders/PendingOrder";
 import PackedOrder from "./Orders/PackedOrder";
 import ShippedOrders from "./Orders/ShippedOrder";
-import DeliveredOrders from "./Orders/DeliveredOrder";  
+import DeliveredOrders from "./Orders/DeliveredOrder";
 import CancelledOrders from "./Orders/CancelledOrder";
 // Delivery menu and sub menu
 import Delivery from "./Delivery/Delivery";
@@ -34,6 +34,7 @@ import axios from "../../api";
 const AdminPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [login, setLogin] = useState({ username: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(true);
   const [activeSection, setActiveSection] = useState("Dashboard");
   const [activeSub, setActiveSub] = useState(""); // ✅ Track submenu click
@@ -89,13 +90,47 @@ const AdminPage = () => {
           value={login.username}
           onChange={(e) => setLogin({ ...login, username: e.target.value })}
         />
-        <input
-          type="password"
-          placeholder="Password"
-          value={login.password}
-          onChange={(e) => setLogin({ ...login, password: e.target.value })}
-        />
-        <button type="submit" onClick={handleLogin}>Login</button>
+        <div className="password-wrapper">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            value={login.password}
+            onChange={(e) => setLogin({ ...login, password: e.target.value })}
+          />
+          <span
+            className="toggle-eye"
+            onClick={() => setShowPassword((prev) => !prev)}
+            aria-label={showPassword ? "Hide password" : "Show password"}
+          >
+            {showPassword ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-5.52 0-10.16-3.57-11.72-8.5a11.2 11.2 0 0 1 4.3-5.59m4.43-2.05A10.94 10.94 0 0 1 12 4c5.52 0 10.16 3.57 11.72 8.5a11.2 11.2 0 0 1-2.2 3.45M1 1l22 22" />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            )}
+          </span>
+          <button type="submit" onClick={handleLogin}>Login</button>
+        </div>
       </div>
     );
   }

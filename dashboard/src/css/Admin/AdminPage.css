@@ -13,6 +13,47 @@
   margin-left: 250px; /* space for sidebar */
   transition: margin-left 0.3s ease;
 }
+/* ✅ Password field with show/hide eye icon */
+.password-wrapper {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding: 10px;
+  padding-right: 42px; /* leave space for the icon */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.password-wrapper input:focus {
+  border-color: #047857; /* blue-500 */
+}
+
+.toggle-eye {
+  position: absolute;
+  top: 40%;
+  right: 12px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #6b7280; /* gray-500 */
+  transition: color 0.2s ease, opacity 0.2s ease;
+  opacity: 0.7;
+}
+
+.toggle-eye:hover {
+  color: #065f46; /* darker hover */
+  opacity: 1;
+}
+
+.toggle-eye svg {
+  pointer-events: none; /* make sure only parent span gets clicks */
+}
 
 @media (max-width: 768px) {
   .admin-main {
