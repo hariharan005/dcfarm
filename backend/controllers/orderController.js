@@ -57,13 +57,15 @@ const verifyPayment = async (req, res) => {
 
     await order.save();
 
-    await sendEmail(
-      customerEmail,
-      "Order Confirmation",
-      `Hello ${customerName},\n\nYour order has been placed successfully.\nOrder ID: ${order._id}\nTotal: ₹${totalAmount}`
-    );
+    try {
+      await sendEmail(customerEmail, "Order Confirmation", `...`);
+    } catch (emailErr) {
+      console.error("❌ Email failed (non-fatal):", emailErr);
+      // don't rethrow — payment was already successful
+    }
 
     return res.json({ success: true, message: "Payment verified & order saved", order });
+
   } catch (err) {
     console.error("❌ verifyPayment error Full:", err);
     return res.status(500).json({ success: false, message: err.message || "Failed to verify payment" });
