@@ -17,6 +17,16 @@ const Checkout = () => {
   const navigate = useNavigate();
   const sparkRef = useRef(null);
 
+  // Preload Razorpay script as soon as checkout page opens
+  useEffect(() => {
+    if (!window.Razorpay) {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
+
   // Load cart
   useEffect(() => {
     const loadCart = async () => {
@@ -43,15 +53,6 @@ const Checkout = () => {
       const orderData = orderRes.data;
 
       if (!orderData.id) throw new Error("Failed to create Razorpay order");
-
-      // Load Razorpay script if not loaded
-      if (!window.Razorpay) {
-        const script = document.createElement("script");
-        script.src = "https://checkout.razorpay.com/v1/checkout.js";
-        script.async = true;
-        document.body.appendChild(script);
-        await new Promise((resolve) => (script.onload = resolve));
-      }
 
       const options = {
         key: "rzp_test_RD73HneQyWEpFH",
