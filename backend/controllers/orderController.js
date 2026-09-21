@@ -58,7 +58,7 @@ const verifyPayment = async (req, res) => {
     await order.save();
 
     try {
-      await sendEmail(customerEmail, "Order Confirmation", `...`);
+      await sendEmail(customerEmail, "Order Confirmation", `Thank you for your order, ${customerName}!\n\nYour order has been successfully placed. Here are the details:\n\nOrder ID: ${order._id}\nTotal Amount: ₹${totalAmount}\n\nWe will notify you once your order is shipped.\n\nThank you for shopping with us!`);
     } catch (emailErr) {
       console.error("❌ Email failed (non-fatal):", emailErr);
       // don't rethrow — payment was already successful
