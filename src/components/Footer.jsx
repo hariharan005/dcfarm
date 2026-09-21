@@ -2,14 +2,17 @@ import React from "react";
 import Logo from "../assets/images/icons/Logo.png";
 import "../css/Footer.css"; // Import styles
 
+// Get the current year 
+const currentYear = new Date().getFullYear();
+
 const Footer = () => {
     return (
         <footer className="footer">
             <div className="footer-container">
                 {/* Logo and Title */}
                 <div className="footer-logo">
-                    <img src={Logo} alt="HA Farm Logo" className="logo-img" />
-                    <span className="logo-text">HA Farm</span>
+                    <img src={Logo} alt="DC Farm Logo" className="logo-img" />
+                    <span className="logo-text">DC Farm</span>
                 </div>
 
                 {/* Contact */}
@@ -91,7 +94,7 @@ const Footer = () => {
             </div>
 
             <div className="footer-bottom">
-                © 2025 DC Farm. All Rights Reserved.
+                © 2025 -  {currentYear} DC Farm. All Rights Reserved.
             </div>
         </footer>
     );

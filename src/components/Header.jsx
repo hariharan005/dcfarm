@@ -80,10 +80,10 @@ export default function Header() {
   return (
     <header className="header" ref={headerRef}>
       <div className="header-left">
-        <Link className="logo-container" to="/" aria-label="HA Farm home">
-          <img src={Logo} alt="HA Farm logo" className="logo" />
+        <Link className="logo-container" to="/" aria-label="DC Farm home">
+          <img src={Logo} alt="DC Farm logo" className="logo" />
         </Link>
-        <span className="header-brand-name">HA Farm</span>
+        <span className="header-brand-name">DC Farm</span>
       </div>
 
       {/* Hamburger */}
