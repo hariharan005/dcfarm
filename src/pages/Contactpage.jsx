@@ -82,7 +82,7 @@ const Contact = () => {
                     <div className="contact-info">
                         <h2>Our Contact Information</h2>
                         <p><strong>Address:</strong>DC Farm, Kadambadi, Mahabalipuram</p>
-                        <p><strong>Phone:</strong> +91 9790755231</p>
+                        <p><strong>Phone:</strong> +91 97907 55231</p>
                         <p><strong>Email:</strong> hello@dcfarm.com</p>
 
                         <div className="map-container">

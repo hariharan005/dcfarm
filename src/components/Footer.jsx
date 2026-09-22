@@ -26,7 +26,7 @@ const Footer = () => {
                     </div>
                     <div className="footer-contact">
                         <span className="footer-icon">📞</span>
-                        <span className="footer-text">+91 7603918492</span>
+                        <span className="footer-text">+91 97907 55231</span>
                     </div>
                 </div>
 

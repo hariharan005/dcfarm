@@ -9,8 +9,8 @@ const Hero = () => {
             style={{ backgroundImage: `url(${grapesImage})` }}
         >
             <div className="hero-overlay">
-                <h1 className="brand-name">DC Farm</h1>
-                <p className="tagline">Fresh from our farm to your table</p>
+                <h1 className="brand-name">DC FARM</h1>
+                <p className="tagline"><strong>FRESH FROM OUR FARM TO YOUR TABLE</strong></p>
             </div>
         </section>
     );

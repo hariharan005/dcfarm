@@ -1,7 +1,8 @@
 // File: src/pages/AboutPage.jsx
 import React, { useEffect, useState } from "react";
 import "../css/Aboutpage.css";
-import Hero from "../assets/images/grapes.jpg"
+import Hero from "../assets/images/grapes.jpg";
+import Footer from "../components/Footer";
 
 // NOTE: replace placeholder image URLs with your own images (in /public or imported assets).
 const HERO_IMAGE = Hero; // e.g. public/images/farm-hero.jpg
@@ -273,7 +274,7 @@ export default function AboutPage() {
                         <address>
                             <strong>DC Farm</strong>
                             <div>Kadambadi, Mahabalipuram</div>
-                            <div>Phone: +91 7603918492</div>
+                            <div>Phone: +91 97907 55231</div>
                             <div>
                                 Email: <a href="mailto:hello@dcfarm.com">hello@dcfarm.com</a>
                             </div>
@@ -294,7 +295,9 @@ export default function AboutPage() {
                     </p>
                 </footer>
             </main>
+            <Footer />
         </div>
+        
     );
 }
 
