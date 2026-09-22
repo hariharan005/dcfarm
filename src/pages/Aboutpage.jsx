@@ -40,12 +40,6 @@ const teamMembers = [
         img: TEAM_PLACEHOLDER,
     },
     {
-        name: "Archana Hariharan",
-        role: "Operations & Markets",
-        bio: "Manages marketing, packaging and customer education programs.",
-        img: TEAM_PLACEHOLDER,
-    },
-    {
         name: "Shamnath",
         role: "Photographer & Storyteller",
         bio: "Focuses on Picturing, video editing, poster design.",
@@ -277,17 +271,17 @@ export default function AboutPage() {
                     </p>
                     <div className="contact-grid">
                         <address>
-                            <strong>HA Farm</strong>
+                            <strong>DC Farm</strong>
                             <div>Kadambadi, Mahabalipuram</div>
                             <div>Phone: +91 7603918492</div>
                             <div>
-                                Email: <a href="mailto:hello@hafarm.com">hello@hafarm.com</a>
+                                Email: <a href="mailto:hello@dcfarm.com">hello@dcfarm.com</a>
                             </div>
                         </address>
 
                         <div className="contact-actions">
-                            <a className="btn btn-primary" href="/book-visit">Book a visit</a>
-                            <a className="btn btn-ghost" href="/shop">Shop our produce</a>
+                            <a className="btn btn-primary" href="/contact">Book a visit</a>
+                            <a className="btn btn-ghost" href="/products">Shop our produce</a>
                         </div>
                     </div>
                 </section>

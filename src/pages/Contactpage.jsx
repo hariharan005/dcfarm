@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../css/Contactpage.css";
 import Footer from "../components/Footer";
+import api from "../api";
 
 const Contact = () => {
     const [formData, setFormData] = useState({
@@ -15,12 +16,18 @@ const Contact = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setStatus("Sending...");
 
-        // For now just show success message
-        setStatus("Message sent successfully! ✅");
-        setFormData({ name: "", email: "", message: "" });
+        try {
+            await api.post("/contact", formData);
+            setStatus("Message sent successfully! ✅");
+            setFormData({ name: "", email: "", message: "" });
+        } catch (error) {
+            console.error("Contact form submission failed:", error);
+            setStatus("Unable to send your message. Please try again.");
+        }
     };
 
     return (
@@ -74,14 +81,14 @@ const Contact = () => {
                     {/* Right Side - Contact Info */}
                     <div className="contact-info">
                         <h2>Our Contact Information</h2>
-                        <p><strong>Address:</strong> 123 Green Farm Road, Organic Valley, India</p>
-                        <p><strong>Phone:</strong> +91 98765 43210</p>
-                        <p><strong>Email:</strong> hello@greenfarm.com</p>
+                        <p><strong>Address:</strong>DC Farm, Kadambadi, Mahabalipuram</p>
+                        <p><strong>Phone:</strong> +91 9790755231</p>
+                        <p><strong>Email:</strong> hello@dcfarm.com</p>
 
                         <div className="map-container">
                             <iframe
                                 title="Farm Location"
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3915.8079!2d77.123!3d11.013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3!2sFarm%20Location!5e0!3m2!1sen!2sin!4v0000"
+                                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3391.8714833043873!2d80.1551049!3d12.594927!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a53ab003a19ea69%3A0x102c3522d5022fef!2sHA%20Organic%20Farm!5e1!3m2!1sen!2sin!4v1790050048767!5m2!1sen!2sin"
                                 width="100%"
                                 height="250"
                                 style={{ border: 0 }}

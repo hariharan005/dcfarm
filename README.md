@@ -82,6 +82,17 @@ git clone https://github.com/your-username/dcfarm.git
 cd dcfarm
 ```
 
+### For .env local dev create only .env and paste the variable 
+```
+only change the FRONTEND_URL=http://localhost:3000,http://localhost:5001,http://localhost:5002
+
+and 
+
+REACT_APP_API_URL="http://localhost:5000/api"
+
+other same as production, this is only for developer reference 
+```
+
 ### 2️⃣ Install dependencies
 
 ```bash
