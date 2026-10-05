@@ -160,10 +160,10 @@ const ProductPage = () => {
   const handleIncrease = async (product) => {
     const existingItem = cart.find(i => i.id === product.id);
     if (existingItem) {
-      const updatedItem = { ...existingItem, qty: existingItem.qty + 1, total: (existingItem.qty + 1) * product.price };
+      const updatedItem = { ...existingItem, category: selectedCategory, qty: existingItem.qty + 1, total: (existingItem.qty + 1) * product.price };
       await addOrUpdateItem(updatedItem);
     } else {
-      const newItem = { ...product, qty: 1, total: product.price };
+      const newItem = { ...product, category: selectedCategory, qty: 1, total: product.price };
       await addOrUpdateItem(newItem);
     }
   };

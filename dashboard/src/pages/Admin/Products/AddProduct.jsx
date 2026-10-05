@@ -4,6 +4,8 @@ const AddProduct = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         // Add product submission logic here
+        console.log('Product submitted:', event.target);
+        
     };
 
     return (
